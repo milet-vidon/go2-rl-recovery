@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "locomotion", "standard", "standard_stance")]
+    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust")]
     [string]$Stage = "locomotion",
     [string]$Checkpoint = "",
     [int]$VideoLength = 600,
@@ -40,6 +40,8 @@ $Task = if ($Stage -eq "recovery") {
     "Isaac-Recovery-Flat-Unitree-Go2-Play-v0"
 } elseif ($Stage -eq "standard_stance") {
     "Isaac-Standard-Flat-Unitree-Go2-Play-v0"
+} elseif ($Stage -eq "robust") {
+    "Isaac-Robust-Flat-Unitree-Go2-Play-v0"
 } elseif ($Stage -eq "standard") {
     "Isaac-Velocity-Flat-Unitree-Go2-Play-v0"
 } else {
