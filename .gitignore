@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+env/
+userdata/
+cache/
+tmp/
+logs/
+outputs/
+*.usd
+*.usda
+*.onnx
+*.ckpt
