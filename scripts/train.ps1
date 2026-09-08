@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust")]
+    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -50,6 +50,10 @@ if ($Stage -eq "locomotion" -and [string]::IsNullOrWhiteSpace($LoadRun)) {
 
 $Task = if ($Stage -eq "recovery") {
     "Isaac-Recovery-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "natural_stop") {
+    "Isaac-Natural-Stop-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "natural") {
+    "Isaac-Natural-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "standard_stance") {
     "Isaac-Standard-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "robust") {

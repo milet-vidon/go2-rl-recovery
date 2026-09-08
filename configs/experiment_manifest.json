@@ -1,12 +1,43 @@
 {
   "project": "go2-rl-recovery",
-  "simulator": "Isaac Sim 5.1 / Isaac Lab",
+  "simulator": "Isaac Sim 5.1.0.0 / Isaac Lab",
+  "isaaclab_commit": "37ddf626871758333d6ed89cf64ad702aef127d0",
+  "runtime": {"torch": "2.7.0+cu128", "rsl-rl-lib": "3.1.2", "numpy": "1.26.0", "opencv": "4.11.0"},
   "robot": "Unitree Go2",
   "device": "cuda:0",
   "storage_root": "E:/IsaacLab",
   "checkpoints": {
     "recovery": "models/recovery/recovery_stage30_model2200.pt",
-    "standard_stance": "models/locomotion/standard_stance_model950.pt"
+    "standard_stance": "models/locomotion/standard_stance_model950.pt",
+    "natural_baseline": "models/locomotion/natural_model950.pt",
+    "recommended": "models/locomotion/natural_stop_model1349.pt"
   },
-  "status": "research artifact; not hardware validated"
+  "recommended_task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "sha256": {
+    "models/locomotion/natural_model950.pt": "8f24061945e885ae435ce56ffc183d55037533fe150503f87d0f63e3bc71a040",
+    "models/locomotion/natural_stop_model1349.pt": "226e9a8df7e619a0430a17dbeef17f93ebbe7cc35fcc1f3be58305d790444403"
+  },
+  "training_lineage": [
+    {"run": "official_bootstrap", "checkpoint": "checkpoint.pt", "note": "Official flat Go2 warm start; not bundled in this portfolio"},
+    {"run": "2026-09-09_00-40-51_calibrated_standard_20260909", "checkpoint": "model_598.pt", "additional_iterations": 300, "num_envs": 128, "task": "Isaac-Standard-Flat-Unitree-Go2-v0", "note": "Supported but dragging feet; not recommended"},
+    {"run": "2026-09-09_01-15-32_natural_gait_20260909", "selected_checkpoint": "model_950.pt", "final_checkpoint": "model_1597.pt", "additional_iterations": 1000, "num_envs": 512, "additional_environment_steps": 12288000, "task": "Isaac-Natural-Flat-Unitree-Go2-v0", "parameters": "configs/natural-20260909", "note": "Final checkpoint rejected: keeps trotting at zero command"},
+    {"run": "2026-09-09_01-37-53_natural_stop_20260909", "parent_checkpoint": "natural_model950.pt", "selected_checkpoint": "model_1349.pt", "additional_iterations": 400, "num_envs": 512, "additional_environment_steps": 4915200, "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-v0", "parameters": "configs/natural-stop-20260909"}
+  ],
+  "evaluation": {
+    "protocol": "4 s stand, 8 s forward at 0.5 m/s, 6 s stop; continuous rollout without fall reset",
+    "seeds": [20260909, 20260910, 20260911],
+    "initial_pose": "Nominal upright, zero initial velocity; seeds affect startup mass/material randomization",
+    "metrics_settling_exclusion_s": 1.0,
+    "directory": "evaluations/natural-20260909",
+    "normal_reports": ["stop1349_video.json", "stop1349_seed20260910.json", "stop1349_seed20260911.json"],
+    "screening_passed": 3,
+    "screening_trials": 3,
+    "disturbance_report": "stop1349_push.json",
+    "disturbance_seed": 20260909,
+    "disturbance_delta_vy_m_s": [0.5, -0.5, 0.5],
+    "disturbance_times_s": [2.0, 8.0, 15.0],
+    "disturbance_screening_passed": true
+  },
+  "historical_failures": {"robust_model799.pt": "Collapsed stance", "standard_stance_model950.pt": "Early intermediate artifact; distinct from Natural 950", "natural_run_model1597.pt": "Failed quiet stand and stop"},
+  "status": "Selected for bounded simulation stand/walk/stop tests; explicit gait-reward PPO, not AMP; no hardware or arbitrary-fall validation"
 }

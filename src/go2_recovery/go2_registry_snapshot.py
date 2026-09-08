@@ -7,6 +7,26 @@ import gymnasium as gym
 
 from . import agents
 
+for task_id, config_name in (
+    ('Isaac-Natural-Stop-Flat-Unitree-Go2-v0', 'UnitreeGo2NaturalStopEnvCfg'),
+    ('Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0', 'UnitreeGo2NaturalStopEnvCfg_PLAY'),
+):
+    gym.register(
+        id=task_id, entry_point='isaaclab.envs:ManagerBasedRLEnv', disable_env_checker=True,
+        kwargs={'env_cfg_entry_point': f'{__name__}.natural_stop_env_cfg:{config_name}',
+                'rsl_rl_cfg_entry_point': f'{agents.__name__}.rsl_rl_ppo_cfg:UnitreeGo2NaturalStopPPORunnerCfg'},
+    )
+
+for task_id, config_name in (
+    ('Isaac-Natural-Flat-Unitree-Go2-v0', 'UnitreeGo2NaturalEnvCfg'),
+    ('Isaac-Natural-Flat-Unitree-Go2-Play-v0', 'UnitreeGo2NaturalEnvCfg_PLAY'),
+):
+    gym.register(
+        id=task_id, entry_point='isaaclab.envs:ManagerBasedRLEnv', disable_env_checker=True,
+        kwargs={'env_cfg_entry_point': f'{__name__}.natural_env_cfg:{config_name}',
+                'rsl_rl_cfg_entry_point': f'{agents.__name__}.rsl_rl_ppo_cfg:UnitreeGo2FlatPPORunnerCfg'},
+    )
+
 ##
 # Register Gym environments.
 ##

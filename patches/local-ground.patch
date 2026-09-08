@@ -1,0 +1,25 @@
+diff --git a/source/isaaclab/isaaclab/sim/spawners/from_files/from_files_cfg.py b/source/isaaclab/isaaclab/sim/spawners/from_files/from_files_cfg.py
+--- a/source/isaaclab/isaaclab/sim/spawners/from_files/from_files_cfg.py
++++ b/source/isaaclab/isaaclab/sim/spawners/from_files/from_files_cfg.py
+@@ -5,6 +5,8 @@
+ 
+ from __future__ import annotations
+ 
++import os
++
+ from collections.abc import Callable
+ from dataclasses import MISSING
+ 
+@@ -203,7 +205,11 @@ class GroundPlaneCfg(SpawnerCfg):
+ 
+     func: Callable = from_files.spawn_ground_plane
+ 
+-    usd_path: str = f"{ISAAC_NUCLEUS_DIR}/Environments/Grid/default_environment.usd"
++    usd_path: str = (
++        os.environ.get("ISAACLAB_GROUND_USD")
++        if os.environ.get("ISAACLAB_GROUND_USD") and os.path.isfile(os.environ["ISAACLAB_GROUND_USD"])
++        else f"{ISAAC_NUCLEUS_DIR}/Environments/Grid/default_environment.usd"
++    )
+     """Path to the USD file to spawn asset from. Defaults to the grid-world ground plane."""
+ 
+     color: tuple[float, float, float] | None = (0.0, 0.0, 0.0)

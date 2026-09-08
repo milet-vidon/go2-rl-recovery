@@ -24,7 +24,8 @@ class UnitreeGo2StandardEnvCfg(UnitreeGo2FlatEnvCfg):
             func=recovery_mdp.static_stance_reward,
             weight=3.0,
             params={
-                "target_height": 0.40,
+                # Experimental base-link height target for the 20260909 runs.
+                "target_height": 0.24,
                 "orientation_std": 0.25,
                 "height_std": 0.018,
                 "joint_std": 0.025,
