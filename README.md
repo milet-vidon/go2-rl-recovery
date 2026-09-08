@@ -29,6 +29,8 @@ The separation follows the hierarchical recovery idea of Lee et al. and the simu
 ## Demonstrations
 
 - [Standard stance video](videos/standard_stance_model950.mp4)
+- [Robust static stance after perturbation training](videos/robust_static_model799.mp4)
+- [Robust forward locomotion](videos/robust_forward_model799.mp4)
 - [Recovery from a 30-degree fore-aft start](videos/recovery_fore_aft_30deg.mp4)
 - [Recorded recovery metrics](evaluations/recovery_stage30_30deg.json)
 
@@ -39,6 +41,8 @@ The videos are intentionally kept as experiment artifacts. They make it easy to 
 The included recovery checkpoint was evaluated with 20 deterministic trials per pose class. On 30-degree starts it achieved **17/20 fore-aft recoveries** and **1/20 side recoveries**. Full side-fall and upside-down recovery are still open research tasks in this repository.
 
 The standard-stance checkpoint is an intermediate training artifact. Use it to reproduce the current experiment, not as a deployment controller.
+
+The robust checkpoint is a separate experiment trained with bounded random velocity pushes every 2--5 seconds and a 25% standing-command mixture. It is the current candidate for disturbance-rejection testing in simulation.
 
 ## Repository Structure
 
