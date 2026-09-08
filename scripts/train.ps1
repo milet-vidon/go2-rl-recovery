@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "locomotion", "standard", "standard_stance")]
+    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -52,6 +52,8 @@ $Task = if ($Stage -eq "recovery") {
     "Isaac-Recovery-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "standard_stance") {
     "Isaac-Standard-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "robust") {
+    "Isaac-Robust-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "standard" -or $Stage -eq "standard_stance") {
     "Isaac-Velocity-Flat-Unitree-Go2-v0"
 } else {
