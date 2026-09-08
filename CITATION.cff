@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: Go2 RL Recovery and Locomotion
+version: 0.1.0
+date-released: 2026-09-08
+authors:
+  - family-names: Contributors
+license: MIT
+repository-code: https://github.com/YOUR_USERNAME/go2-rl-recovery
+keywords:
+  - quadruped
+  - Unitree Go2
+  - reinforcement learning
+  - Isaac Lab
