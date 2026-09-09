@@ -153,6 +153,17 @@
       "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
       "parameters": "low_height_support_penalty=-2.0; low_height_lift_velocity=1.5; CurriculumSteps=1",
       "note": "15-degree side/fore-aft: 16/20 and 15/20; 30-degree: 2/20 and 6/20; 45-degree: 0/20 and 1/20. Experimental only."
+    },
+    {
+      "run": "2026-09-09_22-50-33_recovery_lift30_from2300_20260909",
+      "parent_checkpoint": "model_2300.pt",
+      "selected_checkpoint": "model_2500.pt",
+      "additional_iterations": 300,
+      "num_envs": 512,
+      "additional_environment_steps": 3686400,
+      "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
+      "parameters": "FallAngleDeg=30; CurriculumSteps=1",
+      "note": "Rejected angle-specialized continuation: 30-degree side/fore-aft 4/20 and 6/20; 15-degree 5/20 and 12/20; 45-degree 1/20 and 6/20."
     }
   ],
   "evaluation": {

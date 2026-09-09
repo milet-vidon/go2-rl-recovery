@@ -109,6 +109,12 @@ fall recovery. The 15-degree single-environment video is a genuine success
 sample; the 30-degree videos intentionally show the diagnostic environment and
 must be read together with the 20-trial JSON report.
 
+A further 300-iteration continuation used a fixed 30-degree fall cap. Its best
+intermediate `model_2500.pt` scored 4/20 side and 6/20 fore-aft at 30 degrees,
+but the same checkpoint scored only 5/20 and 12/20 at 15 degrees and 1/20 and
+6/20 at 45 degrees. This is a documented regression from angle specialization,
+so it remains a negative control and is not copied into `models/recovery`.
+
 ## 实机前的必要步骤
 
 本任务的训练结果仅代表仿真。进入 Go2 实机前，应逐步加入并验证质量/质心、关节阻尼、执行器延迟与强度、地面摩擦、接触、观测噪声和命令延迟的 domain randomization；先使用安全吊挂、低幅度动作和硬件扭矩/速度限制。翻身时尤其要设置关节温度和机身碰撞安全边界。
