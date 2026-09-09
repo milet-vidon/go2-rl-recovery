@@ -25,7 +25,7 @@ $env:Path = 'E:\IsaacLab\env;E:\IsaacLab\env\Scripts;' + $env:Path
 $evalArgs = @((Join-Path $PSScriptRoot 'evaluate_go2_recovery.py'), '--task', $Task,
     '--checkpoint', $Checkpoint, '--output_dir', $OutputDir, '--trials', "$Trials",
     '--angle_deg', "$AngleDeg", '--seed', "$Seed", '--horizon_s', '8', '--hold_s', '3',
-    '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
+    '--min_contacts', '4', '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
 if ($Video) { $evalArgs += @('--video_pose', 'all') }
 $started = Get-Date
 & 'E:\IsaacLab\env\python.exe' @evalArgs

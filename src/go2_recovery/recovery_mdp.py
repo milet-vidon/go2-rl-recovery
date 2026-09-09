@@ -289,6 +289,33 @@ def low_height_lift_velocity(
     return (gravity_error < orientation_threshold) * supported * deficit * upward
 
 
+def conditional_stand_posture(
+    env: ManagerBasedRLEnv,
+    orientation_threshold: float = 0.25,
+    min_height: float = 0.28,
+    target_height: float = 0.31,
+    joint_std: float = 0.10,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Match the nominal Go2 stand only after the body is nearly upright.
+
+    Recovery policies need freedom to curl and roll while fallen.  Applying a
+    joint-posture target before the upright gate suppresses those motions and
+    creates a low crouch.  This conditional term follows the recovery-policy
+    pattern in AFR/FR-Net: once gravity and height indicate a real stand, it
+    pulls the joints toward the symmetric nominal pose.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    gravity_error = torch.sqrt(upright_error_squared(asset.data.projected_gravity_b))
+    height = asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+    near_upright = gravity_error < orientation_threshold
+    usable_height = torch.sigmoid((height - min_height) / 0.008)
+    target_error = torch.square(asset.data.joint_pos - asset.data.default_joint_pos).mean(dim=1)
+    posture = torch.exp(-target_error / joint_std)
+    height_match = torch.exp(-torch.square((height - target_height) / 0.04))
+    return near_upright * usable_height * posture * height_match
+
+
 class RecoveryPhaseReward(ManagerTermBase):
     """Phase-shaped recovery reward inspired by hierarchical recovery controllers.
 

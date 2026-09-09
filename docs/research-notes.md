@@ -113,7 +113,43 @@ A further 300-iteration continuation used a fixed 30-degree fall cap. Its best
 intermediate `model_2500.pt` scored 4/20 side and 6/20 fore-aft at 30 degrees,
 but the same checkpoint scored only 5/20 and 12/20 at 15 degrees and 1/20 and
 6/20 at 45 degrees. This is a documented regression from angle specialization,
-so it remains a negative control and is not copied into `models/recovery`.
+so it remains a negative control and is not copied into `models/recovery`. The
+final `model_2599.pt` did not improve that conclusion: 3/20 side and 4/20
+fore-aft at 30 degrees, then 0/20 and 6/20 at 45 degrees. Those reports are
+archived under `evaluations/recovery-lift30-angle{15,30,45}-model*`.
+
+The independently phased, height-gated run resumed from `model_2499.pt` for
+400 iterations with 512 environments (4,915,200 additional environment
+steps). It selected brace, lift, land, and stand rewards from body state and
+required a normal-height four-foot stand reward behind a 0.30 m height gate.
+The earlier `model_2700.pt` and `model_2800.pt` both scored 0/20 for side and
+fore-aft at 15 degrees. The final `model_2898.pt` improved only to 4/20 for
+each category at 15 degrees and 4/20 side, 1/20 fore-aft at 30 degrees. This
+is evidence that the height gate did not solve the low-base failure mode, not
+evidence of usable self-righting; the checkpoint is intentionally not copied
+to `models/recovery`.
+
+## Mixed-pose Recovery-Lift continuation (2026-09-10)
+
+To reduce angle specialization, a second continuation resumed the Stable
+`model_2200.pt` with the normal mixed-pose reset distribution for 500 PPO
+iterations (`2026-09-09_23-37-25_recovery_lift_mixed_from2200_20260910`). The
+best saved checkpoint, `model_2699.pt`, scored 15/20 side and 13/20 fore-aft
+at 15 degrees, 9/20 side and 8/20 fore-aft at 30 degrees, and 5/20 for both
+categories at 45 degrees. These are the strongest recovery-lift screens so
+far, but they remain below a usable self-righting target. Reports are archived under
+`evaluations/recovery-liftmixed-angle15-model2699/` and
+`evaluations/recovery-liftmixed-angle30-model{2300,2400,2500,2600,2699}/`.
+The checkpoint therefore remains an experimental artifact and is not copied
+into `models/recovery` or used in the locomotion demonstrations.
+
+## 条件站姿续训与严格验收（2026-09-10）
+
+论文与开源实现（Lee et al. 2019、DreamRiser、FR-Net、AFR）共同指出：翻身、抬升和站立目标存在冲突，且过大的足端接触奖励会产生低位 frog-squat。基于此，在 `Recovery-Lift` 中新增 `conditional_stand_posture`：只有重力误差小于 0.25 且基座高于 0.28 m 时，才奖励回到 Go2 默认对称关节姿态；翻滚阶段不施加该姿态约束。
+
+从混合姿态 `model_2699.pt` 接续 800 轮得到 `model_3498.pt`。正式评估器已改为至少四足接触（不再把两足支撑算作成功），并要求正常高度、直立、低速、连续保持 3 s。20 次结果为：15° 侧翻/前后翻 15/20、15/20；30° 为 11/20、11/20；45° 为 11/20、7/20。单环境严格视频保存在 `evaluations/recovery-condposture-strict-angle30-video-model3498/`。这仍是仿真研究候选，未达到任意跌倒恢复或参考视频完整复现标准，也未复制为推荐模型。
+
+该结果支持继续采用分层结构：self-right → settle/stand → locomotion，并在后续实现相对当前关节的 recovery action、站立阶段 nominal-pose action 和带迟滞的行为选择器，而不是无限增加单一 PPO 的训练轮数。
 
 ## 实机前的必要步骤
 

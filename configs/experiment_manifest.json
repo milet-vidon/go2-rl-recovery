@@ -20,7 +20,8 @@
     "robust_push_experimental": "models/locomotion/natural_robust_push_model3648.pt",
     "recovery_hard45_side_experimental": "models/recovery/recovery_hard45_side_from2200_model2699.pt",
     "recovery_fourfeet_experimental": "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt",
-    "recovery_lift_experimental": "models/recovery/recovery_lift_model2300.pt"
+    "recovery_lift_experimental": "models/recovery/recovery_lift_model2300.pt",
+    "recovery_condposture_experimental": "models/recovery/recovery_condposture_model3498.pt"
   },
   "recommended_task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
   "sha256": {
@@ -30,7 +31,8 @@
     "models/locomotion/natural_robust_push_model3648.pt": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
     "models/recovery/recovery_hard45_side_cur1_model3699.pt": "f31aa7ad513dc768728fb6ae97304935d059d0164c269fd00cd7d101c6ebaa04",
     "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt": "a5299bde3d530c97e2543d5ebc3a3164139b4038740d302578560b3585d420e1",
-    "models/recovery/recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e"
+    "models/recovery/recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e",
+    "models/recovery/recovery_condposture_model3498.pt": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb"
   },
   "training_lineage": [
     {
@@ -158,12 +160,46 @@
       "run": "2026-09-09_22-50-33_recovery_lift30_from2300_20260909",
       "parent_checkpoint": "model_2300.pt",
       "selected_checkpoint": "model_2500.pt",
+      "final_checkpoint": "model_2599.pt",
       "additional_iterations": 300,
       "num_envs": 512,
       "additional_environment_steps": 3686400,
       "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
       "parameters": "FallAngleDeg=30; CurriculumSteps=1",
-      "note": "Rejected angle-specialized continuation: 30-degree side/fore-aft 4/20 and 6/20; 15-degree 5/20 and 12/20; 45-degree 1/20 and 6/20."
+      "note": "Rejected angle-specialized continuation: selected model_2500: 30-degree side/fore-aft 4/20 and 6/20; 15-degree 5/20 and 12/20; 45-degree 1/20 and 6/20. Final model_2599: 30-degree 3/20 and 4/20; 45-degree 0/20 and 6/20."
+    },
+    {
+      "run": "2026-09-09_23-37-25_recovery_lift_mixed_from2200_20260910",
+      "parent_checkpoint": "model_2200.pt",
+      "selected_checkpoint": "model_2699.pt",
+      "additional_iterations": 500,
+      "num_envs": 1024,
+      "additional_environment_steps": 12288000,
+      "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
+      "parameters": "mixed reset distribution; Recovery-Lift low-height terms; CurriculumSteps=1",
+      "note": "Experimental mixed-pose continuation. model_2699 scored 15/20 side and 13/20 fore-aft at 15 degrees, 9/20 and 8/20 at 30 degrees, and 5/20 for both at 45 degrees. Not copied into models/recovery."
+    },
+    {
+      "run": "2026-09-09_19-23-26_phased30_heightgate_from2499",
+      "parent_checkpoint": "model_2499.pt",
+      "selected_checkpoint": "model_2898.pt",
+      "additional_iterations": 400,
+      "num_envs": 512,
+      "additional_environment_steps": 4915200,
+      "task": "Isaac-Recovery-Phased-Flat-Unitree-Go2-v0",
+      "parameters": "FallAngleDeg=30; CurriculumSteps=1; RecoveryPhaseReward; stable/static min_height=0.30; stable_stand min_contacts=4",
+      "note": "Rejected height-gated phase continuation: model_2700 and model_2800 each scored 0/20 side and 0/20 fore-aft at 15 degrees; model_2898 scored 4/20 and 4/20 at 15 degrees, then 4/20 and 1/20 at 30 degrees. Not copied into models/recovery."
+    },
+    {
+      "run": "2026-09-10_01-20-38_recovery_lift_condposture_from2699_20260910",
+      "parent_checkpoint": "model_2699.pt",
+      "selected_checkpoint": "model_3498.pt",
+      "additional_iterations": 800,
+      "num_envs": 512,
+      "additional_environment_steps": 9830400,
+      "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
+      "parameters": "conditional_stand_posture; mixed reset distribution; CurriculumSteps=250000",
+      "note": "Strict four-foot evaluator: 15 degrees side/fore-aft 15/20 and 15/20; 30 degrees 11/20 and 11/20; 45 degrees 11/20 and 7/20. Experimental only; not a complete arbitrary-fall recovery policy."
     }
   ],
   "evaluation": {
@@ -206,20 +242,41 @@
     "robust_push_normal_report": "evaluations/robust-push-3648-video/model_3648_stand_walk_stop.json",
     "robust_push_disturbance_report": "evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.json",
     "recovery_angle15_reports": [
-      "evaluations/recovery-stage30-2200-angle15/model_2200.pt_recovery_metrics.json"
+      "evaluations/recovery-stage30-2200-angle15/model_2200.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle15-model2500/model_2500.pt_recovery_metrics.json",
+      "evaluations/recovery-phased-heightgate-angle15-model2700/model_2700.pt_recovery_metrics.json",
+      "evaluations/recovery-phased-heightgate-angle15-model2800/model_2800.pt_recovery_metrics.json",
+      "evaluations/recovery-phased-heightgate-angle15-model2898/model_2898.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle15-model2699/model_2699.pt_recovery_metrics.json",
+      "evaluations/recovery-condposture-angle15-model3498/model_3498.pt_recovery_metrics.json"
     ],
     "recovery_angle30_reports": [
       "evaluations/recovery-stage30-2200-angle30/model_2200.pt_recovery_metrics.json",
       "evaluations/recovery-stable-2799-angle30/model_2799.pt_recovery_metrics.json",
       "evaluations/recovery-angle30-2699/model_2699.pt_recovery_metrics.json",
       "evaluations/recovery-hard45-cur1-angle30/recovery_hard45_side_cur1_model3699.pt_recovery_metrics.json",
-      "evaluations/recovery-fourfeet-angle30/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json"
+      "evaluations/recovery-fourfeet-angle30/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle30-model2400/model_2400.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle30-model2500/model_2500.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle30-model2599/model_2599.pt_recovery_metrics.json",
+      "evaluations/recovery-phased-heightgate-angle30/model_2898.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle30-model2300/model_2300.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle30-model2400/model_2400.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle30-model2500/model_2500.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle30-model2600/model_2600.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle30-model2699/model_2699.pt_recovery_metrics.json",
+      "evaluations/recovery-condposture-strict-angle30-model3498/model_3498.pt_recovery_metrics.json",
+      "evaluations/recovery-condposture-angle30-model3498/model_3498.pt_recovery_metrics.json"
     ],
     "recovery_angle45_reports": [
       "evaluations/recovery-stage30-2200-angle45/model_2200.pt_recovery_metrics.json",
       "evaluations/recovery-angle45-side-2699/model_2699.pt_recovery_metrics.json",
       "evaluations/recovery-hard45-cur1-angle45/recovery_hard45_side_cur1_model3699.pt_recovery_metrics.json",
-      "evaluations/recovery-fourfeet-angle45/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json"
+      "evaluations/recovery-fourfeet-angle45/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle45-model2500/model_2500.pt_recovery_metrics.json",
+      "evaluations/recovery-lift30-angle45-model2599/model_2599.pt_recovery_metrics.json",
+      "evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_recovery_metrics.json",
+      "evaluations/recovery-condposture-angle45-model3498/model_3498.pt_recovery_metrics.json"
     ],
     "recovery_hard45_side_checkpoint": "models/recovery/recovery_hard45_side_from2200_model2699.pt",
     "recovery_hard45_side_sha256": "6261776c6ae571a31069115b680bd7635d4faccce23f053fec024d3a5d0124f1",

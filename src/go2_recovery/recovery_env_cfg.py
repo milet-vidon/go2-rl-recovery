@@ -277,6 +277,19 @@ class UnitreeGo2RecoveryLiftEnvCfg(UnitreeGo2RecoveryStableEnvCfg):
                 "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot"),
             },
         )
+        # Do not constrain curled/rolling recovery.  Once upright and above
+        # the floor, bias the joints back toward the normal symmetric Go2
+        # stance so the policy cannot finish in a low crouch.
+        self.rewards.conditional_stand_posture = RewTerm(
+            func=recovery_mdp.conditional_stand_posture,
+            weight=2.5,
+            params={
+                "orientation_threshold": 0.25,
+                "min_height": 0.28,
+                "target_height": 0.31,
+                "joint_std": 0.10,
+            },
+        )
 
 
 @configclass

@@ -22,6 +22,7 @@ parser.add_argument("--output_dir", required=True, type=Path)
 parser.add_argument("--trials", type=int, default=100, help="Independent trials for each pose class.")
 parser.add_argument("--horizon_s", type=float, default=8.0)
 parser.add_argument("--hold_s", type=float, default=3.0, help="Continuous stable stand duration required for success.")
+parser.add_argument("--min_contacts", type=int, default=4, help="Required foot contacts for a valid final stand.")
 parser.add_argument("--seed", type=int, default=20260908)
 parser.add_argument("--video_pose", choices=(*POSE_CLASSES, "all"))
 parser.add_argument("--poses", nargs="+", choices=POSE_CLASSES, default=POSE_CLASSES)
@@ -111,7 +112,7 @@ def _set_pose_class(env, pose_class: str, generator: torch.Generator) -> None:
     env.episode_length_buf.zero_()
 
 
-def _stable_stand(env, foot_ids: list[int]) -> torch.Tensor:
+def _stable_stand(env, foot_ids: list[int], min_contacts: int) -> torch.Tensor:
     asset = env.scene["robot"]
     sensor = env.scene.sensors["contact_forces"]
     gravity_error = torch.sqrt(upright_error_squared(asset.data.projected_gravity_b))
@@ -119,7 +120,7 @@ def _stable_stand(env, foot_ids: list[int]) -> torch.Tensor:
     linear_speed = torch.linalg.norm(asset.data.root_lin_vel_w, dim=1)
     angular_speed = torch.linalg.norm(asset.data.root_ang_vel_w, dim=1)
     forces = sensor.data.net_forces_w_history[:, :, foot_ids].norm(dim=-1).amax(dim=1)
-    supported = (forces > 5.0).sum(dim=1) >= 2
+    supported = (forces > 5.0).sum(dim=1) >= min_contacts
     return (
         (gravity_error < 0.35)
         & (height > 0.30)
@@ -179,6 +180,8 @@ def main() -> None:
         raise FileNotFoundError(args_cli.checkpoint)
     if args_cli.trials < 1 or args_cli.horizon_s <= 0 or args_cli.hold_s <= 0:
         raise ValueError("Trials, horizon and hold time must be positive.")
+    if args_cli.min_contacts < 1 or args_cli.min_contacts > 4:
+        raise ValueError("min_contacts must be between 1 and 4.")
     if args_cli.video_fps not in (10, 25, 50):
         raise ValueError("Use 10, 25 or 50 fps so video timing exactly divides the 50 Hz control loop.")
     args_cli.output_dir.mkdir(parents=True, exist_ok=True)
@@ -230,7 +233,7 @@ def main() -> None:
                     obs, _, dones, _ = env.step(policy(obs))
                 if hasattr(policy_nn, "reset"):
                     policy_nn.reset(dones)
-                stable = _stable_stand(env.unwrapped, foot_ids)
+                stable = _stable_stand(env.unwrapped, foot_ids, args_cli.min_contacts)
                 stable_steps = torch.where(stable, stable_steps + 1, torch.zeros_like(stable_steps))
                 trace.append(_trace_row(env.unwrapped, foot_ids, pose_class, step, stable_steps))
                 if dones.any():
@@ -278,7 +281,7 @@ def main() -> None:
         "seed": args_cli.seed,
         "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
         "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
-        "criterion": "gravity error < 0.35, root height 0.30-0.55 m, linear speed < 0.50 m/s, angular speed < 1.00 rad/s, at least two foot contacts > 5 N, continuously held for hold_s",
+        "criterion": f"gravity error < 0.35, root height 0.30-0.55 m, linear speed < 0.50 m/s, angular speed < 1.00 rad/s, at least {args_cli.min_contacts} foot contacts > 5 N, continuously held for hold_s",
         "results": results,
         "diagnostic_trial": 0,
     }

@@ -11,7 +11,13 @@
 
 **最新恢复实验（2026-09-09）：** `recovery_lift_model2300.pt` 从已验证的 Stable `model_2200.pt` 续训，并加入低高度支撑惩罚和抬升速度奖励。20 次受控 drop 评估中，15° 侧翻为 16/20、前后翻为 15/20；30° 为 2/20、6/20；45° 为 0/20、1/20。它改善了低位趴伏局部最优，但仍不是任意跌倒恢复模型，故仅作为实验候选。
 
+**最新条件站姿续训（2026-09-10）：** 在混合姿态 `model_2699.pt` 上加入“接近直立且抬离地面后才匹配默认关节站姿”的条件奖励，训练得到 `model_3498.pt`。严格四足接触、正常高度、低速并连续保持 3 s 的 20 次测试中，30° 侧翻/前后翻均为 11/20；15° 为 15/20、15/20；45° 为 11/20、7/20。它是当前恢复实验候选，不是完整复现或实机可用模型。
+
 随后进行的 30°定向续训在中间 `model_2500.pt` 达到 30°侧翻/前后翻 4/20、6/20，但 15°下降至 5/20、12/20，45°为 1/20、6/20；该角度专化退化已作为负对照归档，没有替换实验候选。
+
+最新的混合姿态 `Recovery-Lift` 接续（从 Stable `model_2200.pt`、500 轮）在 `model_2699.pt` 达到 15°侧翻/前后翻 15/20、13/20，30°为 9/20、8/20，45°为 5/20、5/20；成功率仍不足以作为可靠自恢复策略。因此该权重仅保留为实验候选，未复制到 `models/recovery`，也不替换正常站立/行走推荐模型。
+
+分阶段高度门控的 `model_2898.pt` 也未能摆脱低机身局部最优：15°侧翻/前后翻均为 4/20，30°为 4/20、1/20；相同训练运行中的较早 `model_2700.pt`、`model_2800.pt` 在 15°筛查均为 0/20。它们保留为可复核负对照，不纳入候选模型或视频演示。
 
 ![站立、行走、停止的连续仿真关键帧](docs/images/stop1349_stance.jpg)
 
@@ -25,6 +31,8 @@
 | **Robust Push 3648：`0.75 m/s` 横向冲击** | [观看视频](evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.mp4) | [JSON](evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.json) · [关键帧](evaluations/robust-push-3648-video-push/model_3648_contact_sheet.jpg) |
 | Recovery Lift 2300：15° 侧翻成功单环境 | [观看视频](evaluations/recovery-lift-success15-model2300/model_2300.pt_side.mp4) | [JSON](evaluations/recovery-lift-success15-model2300/model_2300.pt_recovery_metrics.json) · [关键帧](evaluations/recovery-lift-success15-model2300/model_2300_side_contact_sheet.jpg) |
 | Recovery Lift 2300：30° 侧翻/前后翻混合诊断 | [侧翻视频](evaluations/recovery-lift-angle30-model2300/model_2300.pt_side.mp4) · [前后翻视频](evaluations/recovery-lift-angle30-model2300/model_2300.pt_fore_aft.mp4) | [JSON](evaluations/recovery-lift-angle30-model2300/model_2300.pt_recovery_metrics.json) · [关键帧](evaluations/recovery-lift-angle30-model2300/model_2300_side_contact_sheet.jpg) |
+| Recovery conditional-posture 3498：30° 严格四足恢复 | [侧翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_side.mp4) · [前后翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_fore_aft.mp4) | [JSON](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_recovery_metrics.json) |
+| Recovery Lift mixed 2699：15°/30°/45° 恢复筛查 | [30°视频](evaluations/recovery-liftmixed-angle30-video-model2699/model_2699.pt_side.mp4) · [45°视频](evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_side.mp4) | [15° JSON](evaluations/recovery-liftmixed-angle15-model2699/model_2699.pt_recovery_metrics.json) · [30° JSON](evaluations/recovery-liftmixed-angle30-model2699/model_2699.pt_recovery_metrics.json) · [45° JSON](evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_recovery_metrics.json) |
 | Natural Stop 1349：站立 4 s → 行走 8 s → 停止 6 s | [观看视频](videos/stop1349_stand_walk_stop.mp4) | [JSON](evaluations/natural-20260909/stop1349_video.json) · [逐帧 CSV](evaluations/natural-20260909/stop1349_video.csv) |
 | Natural Stop 1349：三阶段横向冲击 | [观看视频](videos/stop1349_lateral_impulses.mp4) | [JSON](evaluations/natural-20260909/stop1349_push.json) |
 | 此前 Natural 950：站走停对照 | [观看视频](videos/natural950_stand_walk_stop.mp4) | [JSON](evaluations/natural-20260909/natural950_seed09.json) |
@@ -114,8 +122,10 @@ docs/                  方法笔记、局限和测量图片
 
 ## 局限与后续方向
 
-目前验证平地、固定正向速度、连续转向、高速走停及有限横向冲击。恢复模型在 15° 受控侧翻/前后翻下有部分成功，但 30°/45° 成功率明显下降；`model_2699.pt` 的硬侧翻接续实验反而为 30°/45° 侧倾 0/20，因此不作为模型改进证据。这不等于任意跌倒恢复。尚未验证复杂地形和实机部署。轨迹仍不完全对称。后续重点是保留恢复能力的显式课程、扩大速度/扰动测试，以及验证 Go2 动作重定向后实现 AMP。
+目前验证平地、固定正向速度、连续转向、高速走停及有限横向冲击。恢复模型在 15° 受控侧翻/前后翻下有部分成功，但 30°/45° 成功率明显下降；`model_3498` 的严格四足验收在 30° 两类各 11/20，仍低于可用目标。这不等于任意跌倒恢复。尚未验证复杂地形和实机部署。轨迹仍不完全对称。后续重点是分离 self-right/stand 策略与选择器、扩大速度/扰动测试，以及验证 Go2 动作重定向后实现 AMP。
 两轮后续负对照也已归档：显式硬侧翻课程 `model_3699.pt` 在 30° 侧倾/前后倾均为 0/20，在 45° 为侧倾 0/20、前后倾 1/20；收紧为四足接触终端奖励的 `model_3199.pt` 在 30° 和 45° 均为 0/20。它们没有替换推荐模型。
+
+分阶段高度门控训练 `model_2898.pt` 和 30°定向续训的末尾 `model_2599.pt` 同样没有晋级：前者在 15°为侧倾/前后倾各 4/20、30°为 4/20、1/20；后者在 30°为 3/20、4/20，45°为 0/20、6/20。该结果进一步表明，阶段奖励和更长 PPO 接续本身不足以得到可靠翻身行为；后续应验证显式行为选择器与参考起身轨迹，而不是将这些模型用作正常站姿或自恢复演示。
 
 历史 `robust_model799.pt` 存在塌陷，`standard_stance_model950.pt` 是早期实验，均不是本页的新 Natural 950。旧视频保留用于比较，不作为成功演示。独立恢复模型曾在 30° 初始姿态测试中得到前后倾 17/20、侧倾 1/20；大侧翻和倒置恢复仍未解决，这些成绩不属于行走模型。
 
