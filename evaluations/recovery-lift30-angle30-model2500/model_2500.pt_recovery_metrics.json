@@ -1,0 +1,32 @@
+{
+  "angle_deg": 30.0,
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-09_22-50-33_recovery_lift30_from2300_20260909\\model_2500.pt",
+  "checkpoint_sha256": "e4c5ce6faf467929194de3a79c7b833af0b9a531b0a84435cebef0174e8c3b27",
+  "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260930,
+  "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
+  "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
+  "criterion": "gravity error < 0.35, root height 0.30-0.55 m, linear speed < 0.50 m/s, angular speed < 1.00 rad/s, at least two foot contacts > 5 N, continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 20,
+      "successes": 4,
+      "success_rate": 0.20000000298023224,
+      "median_recovery_s": 0.949999988079071,
+      "p90_recovery_s": 0.9879999935626984,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    },
+    "fore_aft": {
+      "trials": 20,
+      "successes": 6,
+      "success_rate": 0.30000001192092896,
+      "median_recovery_s": 0.9800000190734863,
+      "p90_recovery_s": 1.0299999713897705,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    }
+  },
+  "diagnostic_trial": 0,
+  "trace_csv": "model_2500.pt_recovery_trace.csv"
+}
