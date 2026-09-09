@@ -11,3 +11,4 @@ outputs/
 *.usda
 *.onnx
 *.ckpt
+evaluations/**/*.log
