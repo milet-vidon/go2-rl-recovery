@@ -7,7 +7,7 @@ from pathlib import Path
 import torch
 
 
-_MODULE_PATH = Path(__file__).parents[2] / "source/isaaclab_tasks/isaaclab_tasks/manager_based/locomotion/velocity/config/go2/recovery_math.py"
+_MODULE_PATH = Path(__file__).parents[1] / "src/go2_recovery/recovery_math.py"
 _SPEC = importlib.util.spec_from_file_location("go2_recovery_math", _MODULE_PATH)
 _MODULE = importlib.util.module_from_spec(_SPEC)
 assert _SPEC and _SPEC.loader

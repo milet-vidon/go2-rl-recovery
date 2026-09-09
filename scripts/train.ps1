@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -8,6 +8,7 @@ param(
     [string]$RunName = "",
     [string]$Device = "cuda:0",
     [double]$FallAngleDeg = 0,
+    [double]$CurriculumSteps = 0,
     [switch]$FocusSide,
     [switch]$Headless,
     [switch]$DryRun
@@ -42,14 +43,33 @@ if ($FallAngleDeg -gt 0) {
 } else {
     Remove-Item Env:ISAACLAB_RECOVERY_FALL_ANGLE_DEG -ErrorAction SilentlyContinue
 }
+if ($CurriculumSteps -gt 0) {
+    $env:ISAACLAB_RECOVERY_CURRICULUM_STEPS = "$CurriculumSteps"
+} else {
+    Remove-Item Env:ISAACLAB_RECOVERY_CURRICULUM_STEPS -ErrorAction SilentlyContinue
+}
 if ($FocusSide) { $env:ISAACLAB_RECOVERY_FOCUS_SIDE = "1" } else { Remove-Item Env:ISAACLAB_RECOVERY_FOCUS_SIDE -ErrorAction SilentlyContinue }
 
 if ($Stage -eq "locomotion" -and [string]::IsNullOrWhiteSpace($LoadRun)) {
     throw "Locomotion fine-tuning requires -LoadRun <recovery run folder> so it starts from a recovery checkpoint."
 }
 
-$Task = if ($Stage -eq "recovery") {
+$Task = if ($Stage -eq "natural_robust_push") {
+    "Isaac-Natural-Robust-Push-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "natural_robust") {
+    "Isaac-Natural-Robust-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_stable") {
+    "Isaac-Recovery-Stable-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_phased") {
+    "Isaac-Recovery-Phased-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_lift") {
+    "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery") {
     "Isaac-Recovery-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "natural_stop") {
+    "Isaac-Natural-Stop-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "natural") {
+    "Isaac-Natural-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "standard_stance") {
     "Isaac-Standard-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "robust") {
@@ -60,7 +80,7 @@ $Task = if ($Stage -eq "recovery") {
     "Isaac-Recovery-Locomotion-Flat-Unitree-Go2-v0"
 }
 if ($MaxIterations -le 0) {
-    $MaxIterations = if ($Stage -eq "recovery") { 3000 } elseif ($Stage -eq "standard" -or $Stage -eq "standard_stance") { 4000 } else { 4000 }
+    $MaxIterations = if ($Stage -eq "recovery" -or $Stage -eq "recovery_stable" -or $Stage -eq "recovery_phased" -or $Stage -eq "recovery_lift") { 3000 } elseif ($Stage -eq "standard" -or $Stage -eq "standard_stance") { 4000 } else { 4000 }
 }
 if ([string]::IsNullOrWhiteSpace($RunName)) {
     $RunName = $Stage

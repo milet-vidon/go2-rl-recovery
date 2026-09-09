@@ -67,6 +67,18 @@ E:\IsaacLab\artifacts\codex-2026-09-06-new-chat\outputs\isaaclab_go2_recovery_pl
 
 当前实现并非动作捕捉模仿。要复制特定动物的步态、起身轨迹或风格，需要相应的参考运动数据，并采用 motion imitation/AMP 等目标；不能仅凭一般的 gait reward 声称完成生物动作复现。
 
+## AMP 源码审计（2026-09-09）
+
+本轮还核对了 [AMP for Hardware](https://github.com/escontra/AMP_for_hardware) 的源码（commit `bfb0dbdcf32bdf83a916790bddf193fffc7e79b8`）。其判别器把当前状态和下一状态拼接后输入 ReLU MLP，专家样本使用梯度范数正则（lambda=10），判别器输出再按 `clamp(1 - 0.25 * (d - 1)^2, min=0)` 转成模仿奖励。当前 Go2 项目没有专家动作数据、判别器、专家数据加载或 AMP 奖励混合，因此仍是显式步态奖励 PPO；这里只记录方法依据，没有把 AMP 代码未经验证地混入训练。
+
+## 恢复课程审计（2026-09-09）
+
+早期恢复重训把 reset 课程进度固定在一百万仿真步。对 500 轮、1024 环境的短接续实验，进度只约为 0.012，且从 checkpoint 恢复时不保证沿用上次的环境计数，不能视作完成了渐进课程。为便于可复核的硬姿态微调，`recovery_mdp.reset_root_state_mixed` 现在读取 `ISAACLAB_RECOVERY_CURRICULUM_STEPS`；训练脚本通过 `-CurriculumSteps` 设置它，默认值仍是一百万步，正值为 1 可使目标分布从首个 reset 生效。该开关不会修改历史权重。
+
+从 `recovery_stage30_model2200.pt` 接续的 500 轮、45° 侧翻实验生成了 `model_2699.pt`，但同协议评估为 45° 侧倾 0/20、30° 侧倾 0/20，因此已拒绝作为候选。它说明在未显式控制课程和奖励遗忘时，单纯增加训练轮数可能退化；后续硬侧翻实验必须单独记录并与 2200 对照。
+
+后续两轮负对照也已完成。显式硬侧翻课程 `model_3699.pt` 在 30° 侧倾/前后倾均为 0/20，在 45° 为侧倾 0/20、前后倾 1/20。随后把 Stable Recovery 的终端支撑奖励收紧为四足接触并训练 `model_3199.pt`，30° 和 45° 两种姿态均为 0/20。报告归档在 `evaluations/recovery-hard45-cur1-angle30/`、`evaluations/recovery-hard45-cur1-angle45/`、`evaluations/recovery-fourfeet-angle30/` 和 `evaluations/recovery-fourfeet-angle45/`；两个 checkpoint 均未晋级。失败轨迹显示策略会停在约 0.26--0.29 m 的低三足姿态，说明还缺少明确的翻身动作阶段或参考动作目标，不能靠增加 PPO 轮数声称完成恢复。
+
 ## 本轮实际验证结果（2026-09-08）
 
 评估器位于 `E:\IsaacLab\repo\scripts\environments\evaluate_go2_recovery.py`，成功定义为：重力误差 < 0.35、根部高度 0.30–0.55 m、线速度 < 0.50 m/s、角速度 < 1.00 rad/s、至少两个足端接触力 > 5 N，并连续保持 3 s。每个姿态类别独立 100 次；视频中的姿态是受控 drop start，不是把机器人预先摆成“已恢复”的姿态。
@@ -80,6 +92,22 @@ E:\IsaacLab\artifacts\codex-2026-09-06-new-chat\outputs\isaaclab_go2_recovery_pl
 | `model_1799.pt` | 0/100 | 0/100 | 0/100 | 0/100 | 0/100 |
 
 因此当前代码和训练结果**尚不能声称已经完成四足机器人自恢复**。`model_1399.pt` 仅作为当前最佳可复现实验点；`model_1799.pt` 已发生退化，不用于演示。视频也明确分为成功的直立保持片段和失败的侧倒片段，不能把前者当作侧倒恢复证明。
+
+## Recovery Lift continuation (2026-09-09)
+
+The phased height-gated continuation (`model_2898.pt`) still converged to a
+low base pose and scored only 4/20 side and 1/20 fore-aft at 30 degrees. A
+gentler continuation was therefore branched from the previously validated
+Stable `model_2200.pt`. `Recovery-Lift` preserves the Stable reward scale and
+adds two terms that activate only for an upright, three-foot-supported body
+below 0.30 m: a bounded low-height penalty and a positive upward-velocity cue.
+The 100-iteration checkpoint `model_2300.pt` improved the 15-degree screen to
+16/20 side and 15/20 fore-aft, but reached only 2/20 and 6/20 at 30 degrees and
+0/20 and 1/20 at 45 degrees. It is archived as an experimental checkpoint,
+not a replacement for the locomotion recommendation or proof of arbitrary
+fall recovery. The 15-degree single-environment video is a genuine success
+sample; the 30-degree videos intentionally show the diagnostic environment and
+must be read together with the 20-trial JSON report.
 
 ## 实机前的必要步骤
 

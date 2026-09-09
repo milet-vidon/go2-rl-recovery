@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "locomotion", "standard", "standard_stance", "robust")]
+    [ValidateSet("recovery", "recovery_lift", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop")]
     [string]$Stage = "locomotion",
     [string]$Checkpoint = "",
     [int]$VideoLength = 600,
@@ -38,6 +38,12 @@ if ([string]::IsNullOrWhiteSpace($Checkpoint)) {
 }
 $Task = if ($Stage -eq "recovery") {
     "Isaac-Recovery-Flat-Unitree-Go2-Play-v0"
+} elseif ($Stage -eq "recovery_lift") {
+    "Isaac-Recovery-Lift-Flat-Unitree-Go2-Play-v0"
+} elseif ($Stage -eq "natural_stop") {
+    "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0"
+} elseif ($Stage -eq "natural") {
+    "Isaac-Natural-Flat-Unitree-Go2-Play-v0"
 } elseif ($Stage -eq "standard_stance") {
     "Isaac-Standard-Flat-Unitree-Go2-Play-v0"
 } elseif ($Stage -eq "robust") {
@@ -62,16 +68,26 @@ try {
         "env.viewer.lookat=[0.0,0.0,0.3]",
         "--kit_args=--/app/vulkan=false"
     )
-    if ($ForwardCommand -and $Stage -eq "locomotion") {
+    $IsLocomotionStage = $Stage -in @("locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop")
+    if ($ForwardCommand -and $Static) {
+        throw "-ForwardCommand and -Static are mutually exclusive."
+    }
+    if ($ForwardCommand -and $IsLocomotionStage) {
         $PlayArgs += @(
+            "env.commands.base_velocity.heading_command=False",
+            "env.commands.base_velocity.rel_heading_envs=0.0",
+            "env.commands.base_velocity.rel_standing_envs=0.0",
             "env.commands.base_velocity.ranges.lin_vel_x=[0.5,0.5]",
             "env.commands.base_velocity.ranges.lin_vel_y=[0.0,0.0]",
             "env.commands.base_velocity.ranges.ang_vel_z=[0.0,0.0]",
             "env.commands.base_velocity.ranges.heading=[0.0,0.0]"
         )
     }
-    if ($Static -and $Stage -eq "locomotion") {
+    if ($Static -and $IsLocomotionStage) {
         $PlayArgs += @(
+            "env.commands.base_velocity.heading_command=False",
+            "env.commands.base_velocity.rel_heading_envs=0.0",
+            "env.commands.base_velocity.rel_standing_envs=1.0",
             "env.commands.base_velocity.ranges.lin_vel_x=[0.0,0.0]",
             "env.commands.base_velocity.ranges.lin_vel_y=[0.0,0.0]",
             "env.commands.base_velocity.ranges.ang_vel_z=[0.0,0.0]",

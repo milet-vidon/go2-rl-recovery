@@ -142,6 +142,152 @@ class UnitreeGo2RecoveryEnvCfg_PLAY(UnitreeGo2RecoveryEnvCfg):
 
 
 @configclass
+class UnitreeGo2RecoveryStableEnvCfg(UnitreeGo2RecoveryEnvCfg):
+    """Recovery curriculum calibrated to the Go2's settled physical stance.
+
+    The historical task used a 0.40 m reward target, which is an initialization
+    height rather than the learned flat-ground base height (about 0.30 m). This
+    variant keeps the old task intact and trains side/fore-aft recovery against
+    the measured support height before exposing rare inverted starts.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.episode_length_s = 10.0
+        self.scene.num_envs = 1024
+        self.events.reset_base.params["pose_probabilities"] = (0.16, 0.38, 0.38, 0.03, 0.05)
+        self.events.reset_base.params["upright_height_range"] = (0.34, 0.38)
+
+        self.rewards.upright_and_height.params.update({
+            "target_height": 0.31,
+            "orientation_std": 0.75,
+            "height_std": 0.045,
+        })
+        self.rewards.recovery_success.params.update({
+            "target_height": 0.31,
+            "orientation_std": 0.60,
+            "height_std": 0.045,
+            "max_linear_speed": 0.30,
+            "max_angular_speed": 0.90,
+        })
+        self.rewards.stable_stand.params.update({
+            "target_height": 0.31,
+            "orientation_std": 0.28,
+            "height_std": 0.018,
+            "max_linear_speed": 0.30,
+            "max_angular_speed": 0.90,
+        })
+        self.rewards.static_stance.params.update({
+            "target_height": 0.31,
+            "orientation_std": 0.22,
+            "height_std": 0.016,
+        })
+        self.rewards.upright_and_height.weight = 3.5
+        self.rewards.recovery_success.weight = 5.0
+        # A valid terminal recovery must be a normal four-foot stand. The base
+        # task keeps its historical two-foot shaping; this stable variant uses
+        # the stricter support requirement to avoid rewarding low three-foot poses.
+        self.rewards.stable_stand.weight = 11.0
+        self.rewards.stable_stand.params["min_contacts"] = 4
+        self.rewards.static_stance.weight = 4.0
+
+
+@configclass
+class UnitreeGo2RecoveryStableEnvCfg_PLAY(UnitreeGo2RecoveryStableEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryPhasedEnvCfg(UnitreeGo2RecoveryStableEnvCfg):
+    """State-selected recovery phases with a hard normal-height landing target.
+
+    This is an experimental continuation task.  The earlier Stable task remains
+    unchanged so its negative controls stay reproducible.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.episode_length_s = 12.0
+        self.events.reset_base.params["pose_probabilities"] = (0.20, 0.34, 0.34, 0.06, 0.06)
+        self.rewards.recovery_phase = RewTerm(
+            func=recovery_mdp.RecoveryPhaseReward,
+            weight=4.0,
+            params={
+                "target_height": 0.31,
+                "min_height": 0.30,
+                "upright_threshold": 0.25,
+                "height_threshold": 0.30,
+                "contact_force_threshold": 5.0,
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot"),
+            },
+        )
+        # A four-foot, normal-height stand dominates the lower-height local
+        # optimum seen in the previous Stable Recovery continuations.
+        self.rewards.stable_stand.weight = 15.0
+        self.rewards.stable_stand.params["min_height"] = 0.30
+        self.rewards.static_stance.weight = 5.0
+        self.rewards.static_stance.params["min_height"] = 0.30
+        self.rewards.upright_and_height.weight = 2.5
+        self.rewards.orientation_progress.weight = 0.5
+
+
+@configclass
+class UnitreeGo2RecoveryPhasedEnvCfg_PLAY(UnitreeGo2RecoveryPhasedEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryLiftEnvCfg(UnitreeGo2RecoveryStableEnvCfg):
+    """Gentle continuation from the validated Stable checkpoint.
+
+    Unlike the experimental phased task, this keeps the Stable reward scale and
+    adds a narrow lift cue for the low-height, already-supported posture that
+    caused recent continuations to stall.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.episode_length_s = 10.0
+        self.events.reset_base.params["pose_probabilities"] = (0.18, 0.36, 0.36, 0.05, 0.05)
+        self.rewards.low_height_support = RewTerm(
+            func=recovery_mdp.low_height_support_penalty,
+            weight=-2.0,
+            params={
+                "min_height": 0.30,
+                "orientation_threshold": 0.35,
+                "contact_force_threshold": 5.0,
+                "min_contacts": 3,
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot"),
+            },
+        )
+        self.rewards.low_height_lift = RewTerm(
+            func=recovery_mdp.low_height_lift_velocity,
+            weight=1.5,
+            params={
+                "min_height": 0.30,
+                "orientation_threshold": 0.35,
+                "contact_force_threshold": 5.0,
+                "min_contacts": 3,
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_foot"),
+            },
+        )
+
+
+@configclass
+class UnitreeGo2RecoveryLiftEnvCfg_PLAY(UnitreeGo2RecoveryLiftEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
 class UnitreeGo2RecoveryLocomotionEnvCfg(UnitreeGo2RecoveryEnvCfg):
     """Fine-tune the recovered policy into a smooth, diagonal-trot velocity policy."""
 

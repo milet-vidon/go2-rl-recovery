@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import sys
@@ -129,6 +130,26 @@ def _stable_stand(env, foot_ids: list[int]) -> torch.Tensor:
     )
 
 
+def _trace_row(env, foot_ids, pose_class, step, stable_steps):
+    asset = env.scene["robot"]
+    sensor = env.scene.sensors["contact_forces"]
+    gravity = asset.data.projected_gravity_b[0]
+    base_id = sensor.find_bodies("base")[0]
+    return {
+        "pose": pose_class, "time_s": (step + 1) * env.step_dt, "trial": 0,
+        "height": float(asset.data.root_pos_w[0, 2] - env.scene.env_origins[0, 2]),
+        "roll_deg": float(torch.atan2(gravity[1], -gravity[2]) * 180 / torch.pi),
+        "pitch_deg": float(torch.atan2(gravity[0], -gravity[2]) * 180 / torch.pi),
+        "gravity_error": float(torch.sqrt(upright_error_squared(gravity))),
+        "speed": float(asset.data.root_lin_vel_w[0].norm()),
+        "angular_speed": float(asset.data.root_ang_vel_w[0].norm()),
+        "feet_contact": int((sensor.data.net_forces_w[0, foot_ids].norm(dim=-1) > 5).sum()),
+        "base_contact": bool((sensor.data.net_forces_w[0, base_id].norm(dim=-1) > 1).any()),
+        "joint_rms": float((asset.data.joint_pos[0] - asset.data.default_joint_pos[0]).square().mean().sqrt()),
+        "stable_hold_s": float(stable_steps[0]) * env.step_dt,
+    }
+
+
 def _open_video(path: Path, frame: np.ndarray, fps: int):
     height, width = frame.shape[:2]
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
@@ -190,6 +211,7 @@ def main() -> None:
     steps = round((args_cli.horizon_s + args_cli.hold_s) / env.unwrapped.step_dt)
     hold_steps = round(args_cli.hold_s / env.unwrapped.step_dt)
     results: dict[str, dict] = {}
+    trace = []
     checkpoint_name = args_cli.checkpoint.name
 
     try:
@@ -210,6 +232,7 @@ def main() -> None:
                     policy_nn.reset(dones)
                 stable = _stable_stand(env.unwrapped, foot_ids)
                 stable_steps = torch.where(stable, stable_steps + 1, torch.zeros_like(stable_steps))
+                trace.append(_trace_row(env.unwrapped, foot_ids, pose_class, step, stable_steps))
                 if dones.any():
                     raise RuntimeError("Unexpected auto-reset would invalidate trial measurements.")
                 newly_recovered = torch.isnan(recovered_at) & (stable_steps >= hold_steps)
@@ -248,6 +271,7 @@ def main() -> None:
         env.close()
 
     report = {
+        "angle_deg": args_cli.angle_deg,
         "checkpoint": str(args_cli.checkpoint.resolve()),
         "checkpoint_sha256": hashlib.sha256(args_cli.checkpoint.read_bytes()).hexdigest(),
         "task": eval_task,
@@ -256,7 +280,14 @@ def main() -> None:
         "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
         "criterion": "gravity error < 0.35, root height 0.30-0.55 m, linear speed < 0.50 m/s, angular speed < 1.00 rad/s, at least two foot contacts > 5 N, continuously held for hold_s",
         "results": results,
+        "diagnostic_trial": 0,
     }
+    trace_path = args_cli.output_dir / f"{checkpoint_name}_recovery_trace.csv"
+    with trace_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(trace[0]))
+        writer.writeheader()
+        writer.writerows(trace)
+    report["trace_csv"] = trace_path.name
     report_path = args_cli.output_dir / f"{checkpoint_name}_recovery_metrics.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"Wrote metrics: {report_path}")

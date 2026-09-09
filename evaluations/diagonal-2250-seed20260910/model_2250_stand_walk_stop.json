@@ -1,0 +1,169 @@
+{
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-09_03-42-13_natural_stop_diagonal_20260909\\model_2250.pt",
+  "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+  "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260910,
+  "geometry": {
+    "body_names": [
+      "base",
+      "FL_hip",
+      "FR_hip",
+      "Head_upper",
+      "RL_hip",
+      "RR_hip",
+      "FL_thigh",
+      "FR_thigh",
+      "Head_lower",
+      "RL_thigh",
+      "RR_thigh",
+      "FL_calf",
+      "FR_calf",
+      "RL_calf",
+      "RR_calf",
+      "FL_foot",
+      "FR_foot",
+      "RL_foot",
+      "RR_foot"
+    ],
+    "joint_names": [
+      "FL_hip_joint",
+      "FR_hip_joint",
+      "RL_hip_joint",
+      "RR_hip_joint",
+      "FL_thigh_joint",
+      "FR_thigh_joint",
+      "RL_thigh_joint",
+      "RR_thigh_joint",
+      "FL_calf_joint",
+      "FR_calf_joint",
+      "RL_calf_joint",
+      "RR_calf_joint"
+    ],
+    "default_joint_positions": [
+      0.10000000149011612,
+      -0.10000000149011612,
+      0.10000000149011612,
+      -0.10000000149011612,
+      0.800000011920929,
+      0.800000011920929,
+      1.0,
+      1.0,
+      -1.5,
+      -1.5,
+      -1.5,
+      -1.5
+    ],
+    "default_root_position": [
+      0.0,
+      0.0,
+      0.4000000059604645
+    ],
+    "ground_asset": "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd",
+    "robot_asset": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+    "ground_env_override": "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd"
+  },
+  "protocol": {
+    "stand_s": 4.0,
+    "walk_s": 8.0,
+    "stop_s": 6.0,
+    "walk_speed": 0.5,
+    "push_delta_vy": 0.0
+  },
+  "criteria": "diagnostic only: inspect stable height, tilt, foot support, command tracking, and no hidden resets",
+  "global": {
+    "min_height": 0.31351834535598755,
+    "max_abs_roll_deg": 4.629341709989148,
+    "max_abs_pitch_deg": 4.918378240191162,
+    "max_gravity_xy": 0.104059599339962,
+    "steps": 900
+  },
+  "phase_stats": {
+    "stand": {
+      "count": 200.0,
+      "mean_height": 0.31725675001740455,
+      "mean_contacts": 3.93,
+      "mean_speed": 0.00945600507522613
+    },
+    "walk": {
+      "count": 400.0,
+      "mean_height": 0.37251943595707415,
+      "mean_contacts": 2.0775,
+      "mean_speed": 0.5744379482418299
+    },
+    "stop": {
+      "count": 300.0,
+      "mean_height": 0.3243878940741221,
+      "mean_contacts": 3.8233333333333333,
+      "mean_speed": 0.03171759145992837
+    }
+  },
+  "settled_phase_stats": {
+    "stand": {
+      "height_mean": 0.31356467326482135,
+      "height_min": 0.31351834535598755,
+      "vx_mean": 0.0005708258133381606,
+      "vx_b_mean": 0.0005730761721012338,
+      "speed_p95": 0.004106541490182275,
+      "max_tilt_deg": 2.1674000236580513,
+      "four_feet_contact_fraction": 1.0,
+      "foot_height_p95": {
+        "FL_foot": 0.023636907152831555,
+        "FR_foot": 0.023307836800813674,
+        "RL_foot": 0.022774206846952437,
+        "RR_foot": 0.023050555586814882
+      },
+      "diagonal_support_fraction": 0.0,
+      "contact_slip_mean": 0.010504335748458592
+    },
+    "walk": {
+      "height_mean": 0.3750235044104712,
+      "height_min": 0.36770009994506836,
+      "vx_mean": 0.5587651313202722,
+      "vx_b_mean": 0.5777919505323682,
+      "speed_p95": 0.6581668704748154,
+      "max_tilt_deg": 4.918378240191162,
+      "four_feet_contact_fraction": 0.008571428571428572,
+      "foot_height_p95": {
+        "FL_foot": 0.08008672595024109,
+        "FR_foot": 0.12656973972916602,
+        "RL_foot": 0.1167194101959467,
+        "RR_foot": 0.05603995695710182
+      },
+      "diagonal_support_fraction": 0.94,
+      "contact_slip_mean": 0.06802507456377498
+    },
+    "stop": {
+      "height_mean": 0.3184510107040405,
+      "height_min": 0.3182764947414398,
+      "vx_mean": 0.00044954594617229305,
+      "vx_b_mean": 0.0014097265749787766,
+      "speed_p95": 0.01570110735483465,
+      "max_tilt_deg": 4.1527644068778615,
+      "four_feet_contact_fraction": 1.0,
+      "foot_height_p95": {
+        "FL_foot": 0.023574937507510184,
+        "FR_foot": 0.023381660133600234,
+        "RL_foot": 0.022724038735032082,
+        "RR_foot": 0.023110060766339303
+      },
+      "diagonal_support_fraction": 0.0,
+      "contact_slip_mean": 0.011390706066042184
+    }
+  },
+  "acceptance": {
+    "no_reset": true,
+    "no_base_contact": true,
+    "supported_height": true,
+    "level": true,
+    "walk_tracking": true,
+    "quiet_stand_stop": true,
+    "feet_lift_in_walk": true,
+    "limited_slip": true,
+    "four_feet_at_rest": true
+  },
+  "passed": true,
+  "artifacts": {
+    "video": null,
+    "csv": "E:\\IsaacLab\\evaluations\\diagonal-2250-seed20260910\\model_2250_stand_walk_stop.csv"
+  }
+}

@@ -1,12 +1,224 @@
 {
   "project": "go2-rl-recovery",
-  "simulator": "Isaac Sim 5.1 / Isaac Lab",
+  "simulator": "Isaac Sim 5.1.0.0 / Isaac Lab",
+  "isaaclab_commit": "37ddf626871758333d6ed89cf64ad702aef127d0",
+  "runtime": {
+    "torch": "2.7.0+cu128",
+    "rsl-rl-lib": "3.1.2",
+    "numpy": "1.26.0",
+    "opencv": "4.11.0"
+  },
   "robot": "Unitree Go2",
   "device": "cuda:0",
   "storage_root": "E:/IsaacLab",
+  "config_snapshots": ["configs/natural-robust-push-20260909", "configs/recovery-lift-20260909"],
   "checkpoints": {
     "recovery": "models/recovery/recovery_stage30_model2200.pt",
-    "standard_stance": "models/locomotion/standard_stance_model950.pt"
+    "standard_stance": "models/locomotion/standard_stance_model950.pt",
+    "natural_baseline": "models/locomotion/natural_model950.pt",
+    "recommended": "models/locomotion/natural_stop_diagonal_model2250.pt",
+    "robust_push_experimental": "models/locomotion/natural_robust_push_model3648.pt",
+    "recovery_hard45_side_experimental": "models/recovery/recovery_hard45_side_from2200_model2699.pt",
+    "recovery_fourfeet_experimental": "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt",
+    "recovery_lift_experimental": "models/recovery/recovery_lift_model2300.pt"
   },
-  "status": "research artifact; not hardware validated"
+  "recommended_task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "sha256": {
+    "models/locomotion/natural_model950.pt": "8f24061945e885ae435ce56ffc183d55037533fe150503f87d0f63e3bc71a040",
+    "models/locomotion/natural_stop_model1349.pt": "226e9a8df7e619a0430a17dbeef17f93ebbe7cc35fcc1f3be58305d790444403",
+    "models/locomotion/natural_stop_diagonal_model2250.pt": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+    "models/locomotion/natural_robust_push_model3648.pt": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+    "models/recovery/recovery_hard45_side_cur1_model3699.pt": "f31aa7ad513dc768728fb6ae97304935d059d0164c269fd00cd7d101c6ebaa04",
+    "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt": "a5299bde3d530c97e2543d5ebc3a3164139b4038740d302578560b3585d420e1",
+    "models/recovery/recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e"
+  },
+  "training_lineage": [
+    {
+      "run": "official_bootstrap",
+      "checkpoint": "checkpoint.pt",
+      "note": "Official flat Go2 warm start; not bundled in this portfolio"
+    },
+    {
+      "run": "2026-09-09_00-40-51_calibrated_standard_20260909",
+      "checkpoint": "model_598.pt",
+      "additional_iterations": 300,
+      "num_envs": 128,
+      "task": "Isaac-Standard-Flat-Unitree-Go2-v0",
+      "note": "Supported but dragging feet; not recommended"
+    },
+    {
+      "run": "2026-09-09_01-15-32_natural_gait_20260909",
+      "selected_checkpoint": "model_950.pt",
+      "final_checkpoint": "model_1597.pt",
+      "additional_iterations": 1000,
+      "num_envs": 512,
+      "additional_environment_steps": 12288000,
+      "task": "Isaac-Natural-Flat-Unitree-Go2-v0",
+      "parameters": "configs/natural-20260909",
+      "note": "Final checkpoint rejected: keeps trotting at zero command"
+    },
+    {
+      "run": "2026-09-09_01-37-53_natural_stop_20260909",
+      "parent_checkpoint": "natural_model950.pt",
+      "selected_checkpoint": "model_1349.pt",
+      "additional_iterations": 400,
+      "num_envs": 512,
+      "additional_environment_steps": 4915200,
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-v0",
+      "parameters": "configs/natural-stop-20260909"
+    },
+    {
+      "run": "2026-09-09_03-20-36_natural_stop_symmetry_20260909",
+      "parent_checkpoint": "model_1349.pt",
+      "selected_checkpoint": "model_1948.pt",
+      "additional_iterations": 600,
+      "num_envs": 512,
+      "additional_environment_steps": 7372800,
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-v0",
+      "parameters": "configs/natural-stop-20260909",
+      "note": "Initial symmetry screening; retained as an intermediate artifact"
+    },
+    {
+      "run": "2026-09-09_03-42-13_natural_stop_diagonal_20260909",
+      "parent_checkpoint": "model_1948.pt",
+      "selected_checkpoint": "model_2250.pt",
+      "final_checkpoint": "model_2347.pt",
+      "additional_iterations": 400,
+      "num_envs": 512,
+      "additional_environment_steps": 4915200,
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-v0",
+      "parameters": "configs/natural-stop-20260909",
+      "note": "Corrected diagonal pairing FL/RR and FR/RL; model_2250 selected by three-seed regression"
+    },
+    {
+      "run": "2026-09-09_04-01-24_natural_stop_diagonal_refine_20260909",
+      "parent_checkpoint": "model_2250.pt",
+      "selected_checkpoint": "model_2449.pt",
+      "additional_iterations": 200,
+      "num_envs": 512,
+      "additional_environment_steps": 2457600,
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-v0",
+      "parameters": "configs/natural-stop-20260909",
+      "note": "Controlled continuation; model_2449 passed one seed but was rejected because walk tilt increased to 6.48 degrees; report in evaluations/refine-2449"
+    },
+    {
+      "run": "2026-09-09_15-15-13_natural_robust_20260909",
+      "parent_checkpoint": "model_2250.pt",
+      "selected_checkpoint": "model_2849.pt",
+      "additional_iterations": 600,
+      "num_envs": 512,
+      "additional_environment_steps": 7372800,
+      "task": "Isaac-Natural-Robust-Flat-Unitree-Go2-v0",
+      "note": "Bounded velocity-impulse training; normal/turn/fast pass, strong push stop support still below threshold"
+    },
+    {
+      "run": "2026-09-09_15-50-37_natural_robust_push_20260909",
+      "parent_checkpoint": "model_2849.pt",
+      "selected_checkpoint": "model_3648.pt",
+      "additional_iterations": 800,
+      "num_envs": 512,
+      "additional_environment_steps": 9830400,
+      "task": "Isaac-Natural-Robust-Push-Flat-Unitree-Go2-v0",
+      "note": "Push-focused continuation; three-seed normal/turn/fast regression passes; PushSpeed 0.75 remains below four-foot rest threshold; experimental only"
+    },
+    {
+      "run": "2026-09-09_17-17-19_recovery_angle45_side_from2200",
+      "parent_checkpoint": "recovery_stage30_model2200.pt",
+      "selected_checkpoint": "model_2699.pt",
+      "additional_iterations": 500,
+      "num_envs": 1024,
+      "additional_environment_steps": 12288000,
+      "task": "Isaac-Recovery-Stable-Flat-Unitree-Go2-v0",
+      "parameters": "FallAngleDeg=45; FocusSide=true; default curriculum progress",
+      "note": "Rejected: 45-degree side 0/20 and 30-degree side/fore-aft 0/20 under the standard recovery evaluator; retained as a negative control"
+    },
+    {
+      "run": "2026-09-09_18-27-35_recovery_hard45_fourfeet_from2200",
+      "parent_checkpoint": "recovery_stage30_model2200.pt",
+      "selected_checkpoint": "model_3199.pt",
+      "additional_iterations": 1000,
+      "num_envs": 1024,
+      "additional_environment_steps": 24576000,
+      "task": "Isaac-Recovery-Stable-Flat-Unitree-Go2-v0",
+      "parameters": "FallAngleDeg=45; FocusSide=true; CurriculumSteps=1; stable_stand min_contacts=4",
+      "note": "Rejected: 30-degree and 45-degree side/fore-aft evaluations all 0/20; retained as a negative control"
+    },
+    {
+      "run": "2026-09-09_22-27-44_recovery_lift_from2200_20260909",
+      "parent_checkpoint": "recovery_stage30_model2200.pt",
+      "selected_checkpoint": "model_2300.pt",
+      "additional_iterations": 100,
+      "num_envs": 512,
+      "additional_environment_steps": 1228800,
+      "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
+      "parameters": "low_height_support_penalty=-2.0; low_height_lift_velocity=1.5; CurriculumSteps=1",
+      "note": "15-degree side/fore-aft: 16/20 and 15/20; 30-degree: 2/20 and 6/20; 45-degree: 0/20 and 1/20. Experimental only."
+    }
+  ],
+  "evaluation": {
+    "protocol": "4 s stand, 8 s forward at 0.5 m/s, 6 s stop; continuous rollout without fall reset",
+    "seeds": [
+      20260909,
+      20260910,
+      20260911
+    ],
+    "initial_pose": "Nominal upright, zero initial velocity; seeds affect startup mass/material randomization",
+    "metrics_settling_exclusion_s": 1.0,
+    "directory": "evaluations/diagonal-2250-video",
+    "normal_reports": [
+      "evaluations/diagonal-2250/model_2250_stand_walk_stop.json",
+      "evaluations/diagonal-2250-seed20260910/model_2250_stand_walk_stop.json",
+      "evaluations/diagonal-2250-seed20260911/model_2250_stand_walk_stop.json"
+    ],
+    "screening_passed": 3,
+    "screening_trials": 3,
+    "disturbance_report": "evaluations/diagonal-2250-push/model_2250_stand_walk_stop.json",
+    "disturbance_seed": 20260909,
+    "disturbance_delta_vy_m_s": [
+      0.5,
+      -0.5,
+      0.5
+    ],
+    "disturbance_times_s": [
+      2.0,
+      8.0,
+      15.0
+    ],
+    "disturbance_screening_passed": true,
+    "diagonal2250_normal_reports": [
+      "evaluations/diagonal-2250/model_2250_stand_walk_stop.json",
+      "evaluations/diagonal-2250-seed20260910/model_2250_stand_walk_stop.json",
+      "evaluations/diagonal-2250-seed20260911/model_2250_stand_walk_stop.json"
+    ],
+    "diagonal2250_video": "evaluations/diagonal-2250-video/model_2250_stand_walk_stop.mp4",
+    "robust_push_checkpoint": "models/locomotion/natural_robust_push_model3648.pt",
+    "robust_push_normal_report": "evaluations/robust-push-3648-video/model_3648_stand_walk_stop.json",
+    "robust_push_disturbance_report": "evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.json",
+    "recovery_angle15_reports": [
+      "evaluations/recovery-stage30-2200-angle15/model_2200.pt_recovery_metrics.json"
+    ],
+    "recovery_angle30_reports": [
+      "evaluations/recovery-stage30-2200-angle30/model_2200.pt_recovery_metrics.json",
+      "evaluations/recovery-stable-2799-angle30/model_2799.pt_recovery_metrics.json",
+      "evaluations/recovery-angle30-2699/model_2699.pt_recovery_metrics.json",
+      "evaluations/recovery-hard45-cur1-angle30/recovery_hard45_side_cur1_model3699.pt_recovery_metrics.json",
+      "evaluations/recovery-fourfeet-angle30/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json"
+    ],
+    "recovery_angle45_reports": [
+      "evaluations/recovery-stage30-2200-angle45/model_2200.pt_recovery_metrics.json",
+      "evaluations/recovery-angle45-side-2699/model_2699.pt_recovery_metrics.json",
+      "evaluations/recovery-hard45-cur1-angle45/recovery_hard45_side_cur1_model3699.pt_recovery_metrics.json",
+      "evaluations/recovery-fourfeet-angle45/recovery_fourfeet_hard45_from2200_model3199.pt_recovery_metrics.json"
+    ],
+    "recovery_hard45_side_checkpoint": "models/recovery/recovery_hard45_side_from2200_model2699.pt",
+    "recovery_hard45_side_sha256": "6261776c6ae571a31069115b680bd7635d4faccce23f053fec024d3a5d0124f1",
+    "recovery_hard45_cur1_checkpoint": "models/recovery/recovery_hard45_side_cur1_model3699.pt",
+    "recovery_fourfeet_checkpoint": "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt"
+  },
+  "historical_failures": {
+    "robust_model799.pt": "Collapsed stance",
+    "standard_stance_model950.pt": "Early intermediate artifact; distinct from Natural 950",
+    "natural_run_model1597.pt": "Failed quiet stand and stop"
+  },
+  "status": "Selected for bounded simulation stand/walk/stop tests; explicit gait-reward PPO, not AMP; no hardware or arbitrary-fall validation"
 }

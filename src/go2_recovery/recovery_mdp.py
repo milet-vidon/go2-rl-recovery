@@ -53,7 +53,16 @@ def reset_root_state_mixed(
     # Curriculum: learn stable standing and small disturbances first, then expose
     # progressively more severe falls. The final distribution is exactly the one
     # supplied by the task config; this only changes early exploration.
-    progress = min(float(getattr(env, "common_step_counter", 0)) / 1_000_000.0, 1.0)
+    curriculum_steps_text = os.getenv("ISAACLAB_RECOVERY_CURRICULUM_STEPS", "1000000")
+    try:
+        curriculum_steps = float(curriculum_steps_text)
+    except ValueError:
+        curriculum_steps = 1_000_000.0
+    # A small positive value is useful for bounded hard-fall fine-tuning runs;
+    # the default keeps the original million-step curriculum unchanged.
+    progress = 1.0 if curriculum_steps <= 0.0 else min(
+        float(getattr(env, "common_step_counter", 0)) / curriculum_steps, 1.0
+    )
     easy = torch.tensor((0.70, 0.15, 0.10, 0.03, 0.02), device=device, dtype=dtype)
     hard_values = pose_probabilities
     if os.getenv("ISAACLAB_RECOVERY_FOCUS_SIDE"):
@@ -186,6 +195,7 @@ def stable_stand_reward(
     contact_force_threshold: float,
     min_contacts: int,
     sensor_cfg: SceneEntityCfg,
+    min_height: float = 0.30,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
     """Dense terminal-like reward for a supported, quiet upright stand."""
@@ -201,7 +211,8 @@ def stable_stand_reward(
     quiet = torch.exp(
         -torch.square(linear_speed / max_linear_speed) - torch.square(angular_speed / max_angular_speed)
     )
-    return posture * quiet * supported
+    height_gate = torch.sigmoid((asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2] - min_height) / 0.008)
+    return posture * quiet * supported * height_gate
 
 
 def static_stance_reward(
@@ -212,6 +223,7 @@ def static_stance_reward(
     joint_std: float,
     max_linear_speed: float,
     max_angular_speed: float,
+    min_height: float = 0.30,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
     """Keep zero-command behavior close to the symmetric nominal Go2 stance."""
@@ -225,7 +237,133 @@ def static_stance_reward(
     posture = torch.exp(-orientation_error / orientation_std - height_error / height_std)
     nominal = torch.exp(-joint_error / joint_std)
     quiet = torch.exp(-torch.square(linear_speed / max_linear_speed) - torch.square(angular_speed / max_angular_speed))
-    return (command < 0.05) * posture * nominal * quiet
+    height_gate = torch.sigmoid((asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2] - min_height) / 0.008)
+    return (command < 0.05) * posture * nominal * quiet * height_gate
+
+
+def low_height_support_penalty(
+    env: ManagerBasedRLEnv,
+    min_height: float,
+    orientation_threshold: float,
+    contact_force_threshold: float,
+    min_contacts: int,
+    sensor_cfg: SceneEntityCfg,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Expose the low, supported upright local optimum to PPO.
+
+    A Go2 can settle on three or four feet while its base is still below the
+    normal standing height.  That state receives a shaped positive posture
+    reward, so a policy may stop there instead of extending the legs.  This
+    term is only active when the body is already upright and supported; fallen
+    states are left to the recovery shaping terms.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    sensor: ContactSensor = env.scene.sensors[sensor_cfg.name]
+    gravity_error = torch.sqrt(upright_error_squared(asset.data.projected_gravity_b))
+    height = asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+    forces = sensor.data.net_forces_w_history[:, :, sensor_cfg.body_ids].norm(dim=-1).amax(dim=1)
+    supported = (forces > contact_force_threshold).sum(dim=1) >= min_contacts
+    deficit = ((min_height - height) / 0.05).clamp(min=0.0, max=1.0)
+    return (gravity_error < orientation_threshold) * supported * deficit
+
+
+def low_height_lift_velocity(
+    env: ManagerBasedRLEnv,
+    min_height: float,
+    orientation_threshold: float,
+    contact_force_threshold: float,
+    min_contacts: int,
+    sensor_cfg: SceneEntityCfg,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Reward positive vertical motion while an upright low pose is supported."""
+    asset: Articulation = env.scene[asset_cfg.name]
+    sensor: ContactSensor = env.scene.sensors[sensor_cfg.name]
+    gravity_error = torch.sqrt(upright_error_squared(asset.data.projected_gravity_b))
+    height = asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+    forces = sensor.data.net_forces_w_history[:, :, sensor_cfg.body_ids].norm(dim=-1).amax(dim=1)
+    supported = (forces > contact_force_threshold).sum(dim=1) >= min_contacts
+    deficit = ((min_height - height) / 0.05).clamp(min=0.0, max=1.0)
+    upward = asset.data.root_lin_vel_w[:, 2].clamp(min=0.0, max=0.5)
+    return (gravity_error < orientation_threshold) * supported * deficit * upward
+
+
+class RecoveryPhaseReward(ManagerTermBase):
+    """Phase-shaped recovery reward inspired by hierarchical recovery controllers.
+
+    The phase is selected from measurable state, rather than an episode clock:
+    ``brace`` for a fallen body, ``lift`` while uprightness or height is still
+    incomplete, ``land`` while placing the fourth foot, and ``stand`` once the
+    normal-height four-foot posture is reached.  The terms are intentionally
+    dense, but the final phase has the largest weight so a low three-foot pose
+    cannot compete with a normal supported stand.
+    """
+
+    def __init__(self, cfg: RewardTermCfg, env: ManagerBasedRLEnv):
+        super().__init__(cfg, env)
+        self.contact_sensor: ContactSensor = env.scene.sensors[cfg.params["sensor_cfg"].name]
+        self.foot_ids = self.contact_sensor.find_bodies(
+            ("FL_foot", "FR_foot", "RL_foot", "RR_foot"), preserve_order=True
+        )[0]
+
+    def __call__(
+        self,
+        env: ManagerBasedRLEnv,
+        target_height: float,
+        min_height: float,
+        upright_threshold: float,
+        height_threshold: float,
+        contact_force_threshold: float,
+        sensor_cfg: SceneEntityCfg,
+        asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    ) -> torch.Tensor:
+        del sensor_cfg
+        asset: Articulation = env.scene[asset_cfg.name]
+        gravity_z = asset.data.projected_gravity_b[:, 2]
+        uprightness = ((-gravity_z - 0.15) / 0.75).clamp(0.0, 1.0)
+        height = asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+        # Keep a useful gradient below the acceptance height, while making the
+        # final 0.30 m threshold explicit instead of relying on a broad Gaussian.
+        height_progress = ((height - (min_height - 0.05)) / 0.05).clamp(0.0, 1.0)
+
+        forces = self.contact_sensor.data.net_forces_w_history[:, :, self.foot_ids].norm(dim=-1).amax(dim=1)
+        contact_count = (forces > contact_force_threshold).sum(dim=1)
+        two_feet = (contact_count >= 2).to(asset.data.root_pos_w.dtype)
+        four_feet = (contact_count >= 4).to(asset.data.root_pos_w.dtype)
+
+        # The selector is deliberately state-based: this prevents a fixed early
+        # episode bonus from teaching the policy to wait on the ground.
+        brace = uprightness < upright_threshold
+        lift = (~brace) & (height < height_threshold)
+        land = (~brace) & (~lift) & (contact_count < 4)
+        stand = (~brace) & (~lift) & (~land)
+
+        orientation_progress = (0.5 - 0.5 * gravity_z).clamp(0.0, 1.0)
+        height_floor = torch.sigmoid((height - min_height) / 0.008)
+        height_deficit = ((min_height - height) / 0.05).clamp(0.0, 1.0)
+        normal_height = torch.exp(-torch.square((height - target_height) / 0.020)) * height_floor
+        linear_speed = torch.linalg.norm(asset.data.root_lin_vel_w, dim=1)
+        angular_speed = torch.linalg.norm(asset.data.root_ang_vel_w, dim=1)
+        quiet = torch.exp(-torch.square(linear_speed / 0.30) - torch.square(angular_speed / 0.90))
+
+        reward = torch.zeros_like(height)
+        # Brace: use orientation progress and load-bearing contact to encourage
+        # an active push/roll instead of a passive low-body hold.
+        reward = torch.where(brace, 0.50 * orientation_progress + 0.25 * two_feet, reward)
+        # Lift: uprightness alone is insufficient; the base must clear the floor.
+        reward = torch.where(
+            lift,
+            0.65 * uprightness + 0.85 * height_progress + 0.25 * two_feet
+            - 2.50 * uprightness * height_deficit,
+            reward,
+        )
+        # Land: explicitly reward the missing fourth support foot at usable height.
+        reward = torch.where(land, 0.55 * height_floor + 1.20 * four_feet + 0.20 * two_feet, reward)
+        # Stand: this is the only phase with a strong terminal-like bonus, and it
+        # requires normal height, four contacts, and low residual motion.
+        reward = torch.where(stand, 2.75 * normal_height * quiet * four_feet, reward)
+        return reward
 
 
 def orientation_progress(env: ManagerBasedRLEnv) -> torch.Tensor:
@@ -286,6 +424,35 @@ def foot_clearance_reward(
     moving = torch.tanh(speed_scale * planar_speed)
     command = torch.linalg.norm(env.command_manager.get_command("base_velocity")[:, :2], dim=1)
     return locomotion_gate(env) * (command > 0.1) * (moving * torch.exp(-foot_height_error / std)).mean(dim=1)
+
+
+def foot_swing_symmetry_reward(
+    env: ManagerBasedRLEnv,
+    asset_cfg: SceneEntityCfg,
+    std: float,
+    speed_scale: float,
+    velocity_threshold: float,
+) -> torch.Tensor:
+    """Encourage matched swing heights inside each synchronized trot pair.
+
+    A trot moves FL/RR and FR/RL in phase. Comparing the diagonal pairs avoids
+    fighting the intended half-cycle offset between the left and right feet on
+    one axle. The moving-foot gate keeps the term neutral during a quiet stand.
+    ``preserve_order=True`` makes the four indices deterministic: FL, FR, RL, RR.
+    """
+    asset: Articulation = env.scene[asset_cfg.name]
+    foot_ids = asset_cfg.body_ids
+    if isinstance(foot_ids, slice) or len(foot_ids) != 4:
+        raise ValueError("foot_swing_symmetry_reward expects exactly four ordered foot bodies")
+    foot_z = asset.data.body_pos_w[:, foot_ids, 2]
+    foot_speed = torch.linalg.norm(asset.data.body_lin_vel_w[:, foot_ids, :2], dim=2)
+    first_diagonal_error = torch.square(foot_z[:, 0] - foot_z[:, 3])
+    second_diagonal_error = torch.square(foot_z[:, 1] - foot_z[:, 2])
+    error = first_diagonal_error + second_diagonal_error
+    moving = torch.tanh(speed_scale * foot_speed).mean(dim=1)
+    command = torch.linalg.norm(env.command_manager.get_command("base_velocity")[:, :2], dim=1)
+    active = locomotion_gate(env) & (command > velocity_threshold) & (moving > 0.05)
+    return torch.where(active, moving * torch.exp(-error / std), torch.zeros_like(moving))
 
 
 class TrotRewardWhenUpright(ManagerTermBase):

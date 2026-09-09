@@ -1,0 +1,36 @@
+diff --git a/source/isaaclab_assets/isaaclab_assets/robots/unitree.py b/source/isaaclab_assets/isaaclab_assets/robots/unitree.py
+--- a/source/isaaclab_assets/isaaclab_assets/robots/unitree.py
++++ b/source/isaaclab_assets/isaaclab_assets/robots/unitree.py
+@@ -20,11 +20,23 @@ The following configurations are available:
+ Reference: https://github.com/unitreerobotics/unitree_ros
+ """
+ 
++import os
++
+ import isaaclab.sim as sim_utils
+ from isaaclab.actuators import ActuatorNetMLPCfg, DCMotorCfg, ImplicitActuatorCfg
+ from isaaclab.assets.articulation import ArticulationCfg
+ from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR, ISAACLAB_NUCLEUS_DIR
+ 
++
++# Keep the official Nucleus URL as the default, while allowing offline training
++# from an explicitly staged asset cache on E:.
++_GO2_LOCAL_USD = os.environ.get("ISAACLAB_GO2_USD", "")
++_GO2_USD_PATH = (
++    _GO2_LOCAL_USD
++    if _GO2_LOCAL_USD and os.path.isfile(_GO2_LOCAL_USD)
++    else f"{ISAACLAB_NUCLEUS_DIR}/Robots/Unitree/Go2/go2.usd"
++)
++
+ ##
+ # Configuration - Actuators.
+ ##
+@@ -139,7 +151,7 @@ UNITREE_GO1_CFG = ArticulationCfg(
+ 
+ UNITREE_GO2_CFG = ArticulationCfg(
+     spawn=sim_utils.UsdFileCfg(
+-        usd_path=f"{ISAACLAB_NUCLEUS_DIR}/Robots/Unitree/Go2/go2.usd",
++        usd_path=_GO2_USD_PATH,
+         activate_contact_sensors=True,
+         rigid_props=sim_utils.RigidBodyPropertiesCfg(
+             disable_gravity=False,
