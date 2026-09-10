@@ -6,6 +6,7 @@ param(
     [double]$AngleDeg = 30,
     [int]$Seed = 20260909,
     [string[]]$Poses = @('side', 'fore_aft'),
+    [ValidateSet('oblique', 'front', 'side')][string]$View = 'oblique',
     [switch]$Video
 )
 $ErrorActionPreference = 'Stop'
@@ -26,7 +27,7 @@ $evalArgs = @((Join-Path $PSScriptRoot 'evaluate_go2_recovery.py'), '--task', $T
     '--checkpoint', $Checkpoint, '--output_dir', $OutputDir, '--trials', "$Trials",
     '--angle_deg', "$AngleDeg", '--seed', "$Seed", '--horizon_s', '8', '--hold_s', '3',
     '--min_contacts', '4', '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
-if ($Video) { $evalArgs += @('--video_pose', 'all') }
+if ($Video) { $evalArgs += @('--video_pose', 'all', '--view', $View) }
 $started = Get-Date
 & 'E:\IsaacLab\env\python.exe' @evalArgs
 if ($LASTEXITCODE -ne 0) { throw "Recovery evaluation exited with $LASTEXITCODE" }

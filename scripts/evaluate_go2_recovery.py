@@ -29,6 +29,7 @@ parser.add_argument("--poses", nargs="+", choices=POSE_CLASSES, default=POSE_CLA
 parser.add_argument("--video_fps", type=int, default=25)
 parser.add_argument("--video_resolution", type=int, nargs=2, default=(960, 540), metavar=("WIDTH", "HEIGHT"))
 parser.add_argument("--angle_deg", type=float, default=90.0, help="Roll/pitch angle used for side and fore-aft starts.")
+parser.add_argument("--view", choices=("oblique", "front", "side"), default="oblique")
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
 if args_cli.video_pose:
@@ -49,6 +50,7 @@ from isaaclab_rl.rsl_rl import RslRlVecEnvWrapper  # noqa: E402
 import isaaclab_tasks  # noqa: F401, E402
 from isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_math import (  # noqa: E402
     reset_clearance_height,
+    normal_stance_geometry,
     upright_error_squared,
 )
 from isaaclab_tasks.utils.parse_cfg import load_cfg_from_registry  # noqa: E402
@@ -131,12 +133,25 @@ def _stable_stand(env, foot_ids: list[int], min_contacts: int) -> torch.Tensor:
     )
 
 
+def _stance_geometry(env):
+    asset = env.scene["robot"]
+    feet = asset.find_bodies(("FL_foot", "FR_foot", "RL_foot", "RR_foot"), preserve_order=True)[0]
+    knees = asset.find_bodies(("FL_calf", "FR_calf", "RL_calf", "RR_calf"), preserve_order=True)[0]
+    q = asset.data.root_quat_w[:, None, :].expand(-1, 4, -1)
+    foot_b = math_utils.quat_apply_inverse(q, asset.data.body_pos_w[:, feet] - asset.data.root_pos_w[:, None])
+    knee_b = math_utils.quat_apply_inverse(q, asset.data.body_pos_w[:, knees] - asset.data.root_pos_w[:, None])
+    delta = asset.data.joint_pos - asset.data.default_joint_pos
+    valid = normal_stance_geometry(foot_b, knee_b, delta)
+    return valid, foot_b, knee_b, delta
+
+
 def _trace_row(env, foot_ids, pose_class, step, stable_steps):
     asset = env.scene["robot"]
     sensor = env.scene.sensors["contact_forces"]
     gravity = asset.data.projected_gravity_b[0]
     base_id = sensor.find_bodies("base")[0]
-    return {
+    geometry_ok, foot_b, knee_b, delta = _stance_geometry(env)
+    row = {
         "pose": pose_class, "time_s": (step + 1) * env.step_dt, "trial": 0,
         "height": float(asset.data.root_pos_w[0, 2] - env.scene.env_origins[0, 2]),
         "roll_deg": float(torch.atan2(gravity[1], -gravity[2]) * 180 / torch.pi),
@@ -144,11 +159,20 @@ def _trace_row(env, foot_ids, pose_class, step, stable_steps):
         "gravity_error": float(torch.sqrt(upright_error_squared(gravity))),
         "speed": float(asset.data.root_lin_vel_w[0].norm()),
         "angular_speed": float(asset.data.root_ang_vel_w[0].norm()),
-        "feet_contact": int((sensor.data.net_forces_w[0, foot_ids].norm(dim=-1) > 5).sum()),
+        "feet_contact": int((sensor.data.net_forces_w[0, foot_ids, 2] > 5).sum()),
         "base_contact": bool((sensor.data.net_forces_w[0, base_id].norm(dim=-1) > 1).any()),
         "joint_rms": float((asset.data.joint_pos[0] - asset.data.default_joint_pos[0]).square().mean().sqrt()),
         "stable_hold_s": float(stable_steps[0]) * env.step_dt,
+        "geometry_ok": bool(geometry_ok[0]),
     }
+    for i, name in enumerate(("FL", "FR", "RL", "RR")):
+        for j, axis in enumerate("xyz"):
+            row[f"{name}_foot_{axis}_b"] = float(foot_b[0, i, j])
+        row[f"{name}_knee_y_b"] = float(knee_b[0, i, 1])
+    for i, name in enumerate(asset.joint_names):
+        row[name] = float(asset.data.joint_pos[0, i])
+        row[name + "_offset"] = float(delta[0, i])
+    return row
 
 
 def _open_video(path: Path, frame: np.ndarray, fps: int):
@@ -159,20 +183,47 @@ def _open_video(path: Path, frame: np.ndarray, fps: int):
     return writer
 
 
-def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s: float, success: bool) -> np.ndarray:
+def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s: float, row: dict) -> np.ndarray:
     image = cv2.cvtColor(frame[..., :3], cv2.COLOR_RGB2BGR)
     labels = (
         f"Go2 self-recovery | pose: {pose_class}",
-        f"time: {step * dt:4.2f} s | stable hold: {stable_s:4.2f} s",
-        "SUCCESS: held stable stand" if success else "recovering",
+        f"time: {(step + 1) * dt:4.2f} s | valid stand hold: {stable_s:4.2f} s",
+        ("LEG GEOMETRY OK" if row["geometry_ok"] else "INVALID LEG GEOMETRY")
+        + (f" | valid stand held {args_cli.hold_s:g}s" if stable_s >= args_cli.hold_s else " | stand hold pending"),
         f"{args_cli.checkpoint.parent.name} / {args_cli.checkpoint.name}",
         "Simulation | controlled-drop starts | no hardware validation",
     )
-    for row, text in enumerate(labels):
-        color = (80, 220, 80) if row == 2 and success else (245, 245, 245)
-        font_scale = 0.48 if row >= 3 else 0.70
-        cv2.putText(image, text, (20, 38 + row * 32), cv2.FONT_HERSHEY_SIMPLEX, font_scale, color, 1 if row >= 3 else 2, cv2.LINE_AA)
+    for i, text in enumerate(labels):
+        color = ((80, 220, 80) if row['geometry_ok'] else (60, 80, 255)) if i == 2 else (245, 245, 245)
+        font_scale = 0.48 if i >= 3 else 0.70
+        cv2.putText(image, text, (20, 38 + i * 32), cv2.FONT_HERSHEY_SIMPLEX, font_scale, color, 1 if i >= 3 else 2, cv2.LINE_AA)
+    cv2.putText(image, f"Front feet body y (m): FL {row['FL_foot_y_b']:+.3f} / FR {row['FR_foot_y_b']:+.3f}",
+                (20, image.shape[0] - 20), cv2.FONT_HERSHEY_SIMPLEX, .60, (245, 245, 245), 2, cv2.LINE_AA)
     return image
+
+
+def _diagnostic_scene(env):
+    from isaaclab import sim as sim_utils
+    from pxr import UsdShade
+    stage = sim_utils.get_current_stage()
+    material = sim_utils.PreviewSurfaceCfg(diffuse_color=(0.18, 0.22, 0.27), roughness=0.9)
+    material.func('/World/RecoveryFloorMaterial', material)
+    UsdShade.MaterialBindingAPI.Apply(stage.GetPrimAtPath('/World/ground')).Bind(
+        UsdShade.Material(stage.GetPrimAtPath('/World/RecoveryFloorMaterial')),
+        bindingStrength=UsdShade.Tokens.strongerThanDescendants)
+    light = sim_utils.DistantLightCfg(intensity=1800.0)
+    light.func('/World/RecoverySun', light, orientation=(0.8805, 0.2798, 0.3647, 0.1159))
+
+
+def _camera(env):
+    a = env.scene["robot"].data
+    # Front and side are defined by the robot yaw, not by its randomized world yaw.
+    heading = math_utils.yaw_quat(a.root_quat_w[:1])
+    offset = {"front": (1.25, 0.0, 0.5), "side": (0.0, 1.45, 0.55), "oblique": (1.05, 1.05, 0.60)}[args_cli.view]
+    eye = a.root_pos_w[0] + math_utils.quat_apply(heading, a.root_pos_w.new_tensor([offset]))[0]
+    target = a.root_pos_w[0].clone()
+    target[2] -= 0.08
+    env.sim.set_camera_view(eye=eye.cpu().tolist(), target=target.cpu().tolist())
 
 
 def main() -> None:
@@ -204,6 +255,8 @@ def main() -> None:
     runner.load(str(args_cli.checkpoint))
     policy = runner.get_inference_policy(device=env.device)
     policy_nn = runner.alg.policy
+    if args_cli.video_pose:
+        _diagnostic_scene(env.unwrapped)
     foot_ids = env.unwrapped.scene.sensors["contact_forces"].find_bodies(
         ("FL_foot", "FR_foot", "RL_foot", "RR_foot"), preserve_order=True
     )[0]
@@ -222,8 +275,15 @@ def main() -> None:
             env.reset()
             _set_pose_class(env.unwrapped, pose_class, generator)
             obs = env.get_observations()
+            if args_cli.video_pose in (pose_class, "all"):
+                _camera(env.unwrapped)
+                for _ in range(4):
+                    # Initialize the RGB render product before recording time zero.
+                    env.unwrapped.render()
             stable_steps = torch.zeros(env.num_envs, device=env.device, dtype=torch.int32)
             recovered_at = torch.full((env.num_envs,), float("nan"), device=env.device)
+            legacy_steps = torch.zeros_like(stable_steps)
+            legacy_success = torch.zeros(env.num_envs, device=env.device, dtype=torch.bool)
             video_writer = None
             video_path = args_cli.output_dir / f"{checkpoint_name}_{pose_class}.mp4"
             for step in range(steps):
@@ -234,6 +294,14 @@ def main() -> None:
                 if hasattr(policy_nn, "reset"):
                     policy_nn.reset(dones)
                 stable = _stable_stand(env.unwrapped, foot_ids, args_cli.min_contacts)
+                legacy_steps = torch.where(stable, legacy_steps + 1, 0)
+                legacy_success |= legacy_steps >= hold_steps
+                geometry_ok, foot_b, knee_b, joint_delta = _stance_geometry(env.unwrapped)
+                base_ids = env.unwrapped.scene.sensors["contact_forces"].find_bodies("base")[0]
+                base_contact = (env.unwrapped.scene.sensors["contact_forces"].data.net_forces_w[:, base_ids].norm(dim=-1) > 1).any(1)
+                sensor_data = env.unwrapped.scene.sensors["contact_forces"].data
+                current_support = (sensor_data.net_forces_w[:, foot_ids, 2] > 5).sum(1) >= args_cli.min_contacts
+                stable &= geometry_ok & ~base_contact & current_support
                 stable_steps = torch.where(stable, stable_steps + 1, torch.zeros_like(stable_steps))
                 trace.append(_trace_row(env.unwrapped, foot_ids, pose_class, step, stable_steps))
                 if dones.any():
@@ -241,6 +309,7 @@ def main() -> None:
                 newly_recovered = torch.isnan(recovered_at) & (stable_steps >= hold_steps)
                 recovered_at[newly_recovered] = (step + 1 - hold_steps) * env.unwrapped.step_dt
                 if args_cli.video_pose in (pose_class, "all") and step % max(1, round(1.0 / (args_cli.video_fps * env.unwrapped.step_dt))) == 0:
+                    _camera(env.unwrapped)
                     frame = env.unwrapped.render()
                     if frame is None:
                         raise RuntimeError("No RGB frame returned. Run with --enable_cameras.")
@@ -253,7 +322,7 @@ def main() -> None:
                             step,
                             env.unwrapped.step_dt,
                             stable_steps[0].item() * env.unwrapped.step_dt,
-                            not torch.isnan(recovered_at[0]).item(),
+                            trace[-1],
                         )
                     )
             if video_writer is not None:
@@ -263,13 +332,33 @@ def main() -> None:
             results[pose_class] = {
                 "trials": int(env.num_envs),
                 "successes": int(success.sum().item()),
+                "legacy_contact_height_successes": int(legacy_success.sum().item()),
+                "final_valid_stands": int((stable_steps >= hold_steps).sum().item()),
+                "final_geometry_passes": int(geometry_ok.sum().item()),
+                "final_diagnostics": [
+                    {
+                        "trial": i,
+                        "geometry_ok": bool(geometry_ok[i]),
+                        "stable_hold_s": float(stable_steps[i]) * env.unwrapped.step_dt,
+                        "height_m": float(env.unwrapped.scene["robot"].data.root_pos_w[i, 2]
+                                          - env.unwrapped.scene.env_origins[i, 2]),
+                        "gravity_error": float(torch.sqrt(upright_error_squared(
+                            env.unwrapped.scene["robot"].data.projected_gravity_b[i]))),
+                        "vertical_foot_contacts": int((sensor_data.net_forces_w[i, foot_ids, 2] > 5).sum()),
+                        "feet_y_b": foot_b[i, :, 1].cpu().tolist(),
+                        "knees_y_b": knee_b[i, :, 1].cpu().tolist(),
+                        "max_joint_offset_rad": float(joint_delta[i].abs().max()),
+                    }
+                    for i in range(env.num_envs)
+                ],
                 "success_rate": float(success.float().mean().item()),
                 "median_recovery_s": float(np.median(successful_times)) if len(successful_times) else None,
                 "p90_recovery_s": float(np.percentile(successful_times, 90)) if len(successful_times) else None,
                 "stable_hold_s": args_cli.hold_s,
                 "horizon_s": args_cli.horizon_s,
             }
-            print(f"{pose_class}: {results[pose_class]}")
+            summary = {key: value for key, value in results[pose_class].items() if key != "final_diagnostics"}
+            print(f"{pose_class}: {summary}")
     finally:
         env.close()
 
@@ -281,7 +370,10 @@ def main() -> None:
         "seed": args_cli.seed,
         "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
         "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
-        "criterion": f"gravity error < 0.35, root height 0.30-0.55 m, linear speed < 0.50 m/s, angular speed < 1.00 rad/s, at least {args_cli.min_contacts} foot contacts > 5 N, continuously held for hold_s",
+        "protocol_version": "stance_geometry_v1",
+        "video_view": args_cli.view if args_cli.video_pose else None,
+        "self_collisions_enabled": env_cfg.scene.robot.spawn.articulation_props.enabled_self_collisions,
+        "criterion": f"gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, {args_cli.min_contacts} simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
         "results": results,
         "diagnostic_trial": 0,
     }

@@ -1,0 +1,87 @@
+{
+  "angle_deg": 30.0,
+  "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_aligned_model3448.pt",
+  "checkpoint_sha256": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+  "task": "Isaac-Recovery-Aligned-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260918,
+  "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
+  "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
+  "protocol_version": "stance_geometry_v1",
+  "video_view": "oblique",
+  "self_collisions_enabled": true,
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 1,
+      "successes": 1,
+      "legacy_contact_height_successes": 1,
+      "final_valid_stands": 1,
+      "final_geometry_passes": 1,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": true,
+          "stable_hold_s": 10.26,
+          "height_m": 0.3187960088253021,
+          "gravity_error": 0.020143410190939903,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.18589812517166138,
+            -0.13411247730255127,
+            0.17114022374153137,
+            -0.15470696985721588
+          ],
+          "knees_y_b": [
+            0.16288207471370697,
+            -0.13818757236003876,
+            0.15399691462516785,
+            -0.1481972485780716
+          ],
+          "max_joint_offset_rad": 0.18079125881195068
+        }
+      ],
+      "success_rate": 1.0,
+      "median_recovery_s": 0.7400000095367432,
+      "p90_recovery_s": 0.7400000095367432,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    },
+    "fore_aft": {
+      "trials": 1,
+      "successes": 1,
+      "legacy_contact_height_successes": 1,
+      "final_valid_stands": 1,
+      "final_geometry_passes": 1,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": true,
+          "stable_hold_s": 10.38,
+          "height_m": 0.3146631717681885,
+          "gravity_error": 0.04280818626284599,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.20919835567474365,
+            -0.15558122098445892,
+            0.19261036813259125,
+            -0.15370793640613556
+          ],
+          "knees_y_b": [
+            0.18437737226486206,
+            -0.1494481861591339,
+            0.16126027703285217,
+            -0.1463037133216858
+          ],
+          "max_joint_offset_rad": 0.4117119312286377
+        }
+      ],
+      "success_rate": 1.0,
+      "median_recovery_s": 0.6200000047683716,
+      "p90_recovery_s": 0.6200000047683716,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    }
+  },
+  "diagnostic_trial": 0,
+  "trace_csv": "recovery_aligned_model3448.pt_recovery_trace.csv"
+}

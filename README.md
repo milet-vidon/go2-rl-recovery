@@ -9,15 +9,9 @@
 
 **当前成果：平地静止支撑、0.5 m/s 指令下对角小跑、停止后回到四足站立，并通过横向速度冲击测试。** 当前推荐模型是 `natural_stop_diagonal_model2250.pt`：它在三组随机种子下通过固定走停测试，并在 `0.5 m/s` 横向速度冲击下无摔倒、无机身触地。另有推扰强化模型 `model_3648.pt`，在三组种子下通过无扰、左右转向和高速走停回归；`0.75 m/s` 推扰后仍会短时卸载足端，因此只作为实验候选，不替代推荐模型。此前 Natural Stop 1349 和 Natural 950 的结果也完整保留。仍有轻微倾斜和足端轨迹差异；没有完成参考视频全部行为、AMP 复现或实机验证。
 
-**最新恢复实验（2026-09-09）：** `recovery_lift_model2300.pt` 从已验证的 Stable `model_2200.pt` 续训，并加入低高度支撑惩罚和抬升速度奖励。20 次受控 drop 评估中，15° 侧翻为 16/20、前后翻为 15/20；30° 为 2/20、6/20；45° 为 0/20、1/20。它改善了低位趴伏局部最优，但仍不是任意跌倒恢复模型，故仅作为实验候选。
+**恢复站姿改进（2026-09-10）：** 新权重 `recovery_aligned_model3448.pt` 在两个随机种子、每类合计40次受控起步中，直立保持40/40、30°侧倾恢复39/40、30°前后倾恢复40/40，通过 `stance_geometry_v1` 且片尾保持有效。正面和斜侧面均已查看关键帧：恢复后前腿不再交叉，过度外展改善，仍有轻微左右差异。一次侧倾试验翻至背部朝下后未恢复；这些仿真结果尚不能代表任意跌倒恢复，也不替换行走推荐模型。[诊断、完整验收与复测方法](docs/recovery-stance-20260910.md)。
 
-**最新条件站姿续训（2026-09-10）：** 在混合姿态 `model_2699.pt` 上加入“接近直立且抬离地面后才匹配默认关节站姿”的条件奖励，训练得到 `model_3498.pt`。严格四足接触、正常高度、低速并连续保持 3 s 的 20 次测试中，30° 侧翻/前后翻均为 11/20；15° 为 15/20、15/20；45° 为 11/20、7/20。它是当前恢复实验候选，不是完整复现或实机可用模型。
-
-随后进行的 30°定向续训在中间 `model_2500.pt` 达到 30°侧翻/前后翻 4/20、6/20，但 15°下降至 5/20、12/20，45°为 1/20、6/20；该角度专化退化已作为负对照归档，没有替换实验候选。
-
-最新的混合姿态 `Recovery-Lift` 接续（从 Stable `model_2200.pt`、500 轮）在 `model_2699.pt` 达到 15°侧翻/前后翻 15/20、13/20，30°为 9/20、8/20，45°为 5/20、5/20；成功率仍不足以作为可靠自恢复策略。因此该权重仅保留为实验候选，未复制到 `models/recovery`，也不替换正常站立/行走推荐模型。
-
-分阶段高度门控的 `model_2898.pt` 也未能摆脱低机身局部最优：15°侧翻/前后翻均为 4/20，30°为 4/20、1/20；相同训练运行中的较早 `model_2700.pt`、`model_2800.pt` 在 15°筛查均为 0/20。它们保留为可复核负对照，不纳入候选模型或视频演示。
+此前 `recovery_condposture_model3498.pt` 的两段视频虽显示旧 SUCCESS，实际前腿交叉，已撤销正常恢复资格。新验收要求连续3秒同时满足四足垂直支撑、无机身触地、左右足端和膝部位置及逐关节约束。本次经过 Uncrossed 与 Aligned 两轮续训，共1200轮、14,745,600新增环境步。旧 Recovery-Lift、角度专化和高度门控结果作为历史筛查及失败对照保留，不能据其接触/高度计数声称正常恢复。[历史研究记录](docs/research-notes.md)。
 
 ![站立、行走、停止的连续仿真关键帧](docs/images/stop1349_stance.jpg)
 
@@ -25,14 +19,15 @@
 
 | 场景 | 完整视频 | 原始报告 |
 | --- | --- | --- |
+| **Aligned 3448：30°恢复，左正面 / 右斜侧面并排** | [侧倾视频](videos/recovery-aligned3448/recovery_aligned_model3448_side_front_oblique.mp4) · [前后倾视频](videos/recovery-aligned3448/recovery_aligned_model3448_fore_aft_front_oblique.mp4) | [原始视频来源](videos/recovery-aligned3448/paired_views.json) · [seed18评估](evaluations/aligned3448-30/model_3448.pt_recovery_metrics.json) · [seed19评估](evaluations/aligned3448-30-seed20260919/recovery_aligned_model3448.pt_recovery_metrics.json) |
 | **Diagonal 2250：站立 4 s → 对角行走 8 s → 停止 6 s** | [观看视频](evaluations/diagonal-2250-video/model_2250_stand_walk_stop.mp4) | [JSON](evaluations/diagonal-2250-video/model_2250_stand_walk_stop.json) · [逐帧 CSV](evaluations/diagonal-2250-video/model_2250_stand_walk_stop.csv) |
 | **Diagonal 2250：横向 `0.5 m/s` 冲击** | — | [JSON](evaluations/diagonal-2250-push/model_2250_stand_walk_stop.json) |
 | **Robust Push 3648：无扰走停** | [观看视频](evaluations/robust-push-3648-video/model_3648_stand_walk_stop.mp4) | [JSON](evaluations/robust-push-3648-video/model_3648_stand_walk_stop.json) · [关键帧](evaluations/robust-push-3648-video/model_3648_contact_sheet.jpg) |
 | **Robust Push 3648：`0.75 m/s` 横向冲击** | [观看视频](evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.mp4) | [JSON](evaluations/robust-push-3648-video-push/model_3648_stand_walk_stop.json) · [关键帧](evaluations/robust-push-3648-video-push/model_3648_contact_sheet.jpg) |
-| Recovery Lift 2300：15° 侧翻成功单环境 | [观看视频](evaluations/recovery-lift-success15-model2300/model_2300.pt_side.mp4) | [JSON](evaluations/recovery-lift-success15-model2300/model_2300.pt_recovery_metrics.json) · [关键帧](evaluations/recovery-lift-success15-model2300/model_2300_side_contact_sheet.jpg) |
+| 历史 Recovery Lift 2300：15°旧接触/高度筛查，未复核站姿几何 | [观看视频](evaluations/recovery-lift-success15-model2300/model_2300.pt_side.mp4) | [JSON](evaluations/recovery-lift-success15-model2300/model_2300.pt_recovery_metrics.json) · [关键帧](evaluations/recovery-lift-success15-model2300/model_2300_side_contact_sheet.jpg) |
 | Recovery Lift 2300：30° 侧翻/前后翻混合诊断 | [侧翻视频](evaluations/recovery-lift-angle30-model2300/model_2300.pt_side.mp4) · [前后翻视频](evaluations/recovery-lift-angle30-model2300/model_2300.pt_fore_aft.mp4) | [JSON](evaluations/recovery-lift-angle30-model2300/model_2300.pt_recovery_metrics.json) · [关键帧](evaluations/recovery-lift-angle30-model2300/model_2300_side_contact_sheet.jpg) |
-| Recovery conditional-posture 3498：30° 严格四足恢复 | [侧翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_side.mp4) · [前后翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_fore_aft.mp4) | [JSON](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_recovery_metrics.json) |
-| Recovery Lift mixed 2699：15°/30°/45° 恢复筛查 | [30°视频](evaluations/recovery-liftmixed-angle30-video-model2699/model_2699.pt_side.mp4) · [45°视频](evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_side.mp4) | [15° JSON](evaluations/recovery-liftmixed-angle15-model2699/model_2699.pt_recovery_metrics.json) · [30° JSON](evaluations/recovery-liftmixed-angle30-model2699/model_2699.pt_recovery_metrics.json) · [45° JSON](evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_recovery_metrics.json) |
+| 3498 失败对照：前腿交叉（旧视频 SUCCESS 标记已撤销） | [侧翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_side.mp4) · [前后翻视频](evaluations/recovery-condposture-strict-angle30-video-model3498/model_3498.pt_fore_aft.mp4) | [更正报告](evaluations/crossed-stance-audit3498/recovery_condposture_model3498.pt_recovery_metrics.json) |
+| Recovery Lift mixed 2699：旧接触/高度筛查，未检查交叉站姿 | [30°视频](evaluations/recovery-liftmixed-angle30-video-model2699/model_2699.pt_side.mp4) | [15° JSON](evaluations/recovery-liftmixed-angle15-model2699/model_2699.pt_recovery_metrics.json) · [30° JSON](evaluations/recovery-liftmixed-angle30-model2699/model_2699.pt_recovery_metrics.json) · [45° JSON](evaluations/recovery-liftmixed-angle45-model2699/model_2699.pt_recovery_metrics.json) |
 | Natural Stop 1349：站立 4 s → 行走 8 s → 停止 6 s | [观看视频](videos/stop1349_stand_walk_stop.mp4) | [JSON](evaluations/natural-20260909/stop1349_video.json) · [逐帧 CSV](evaluations/natural-20260909/stop1349_video.csv) |
 | Natural Stop 1349：三阶段横向冲击 | [观看视频](videos/stop1349_lateral_impulses.mp4) | [JSON](evaluations/natural-20260909/stop1349_push.json) |
 | 此前 Natural 950：站走停对照 | [观看视频](videos/natural950_stand_walk_stop.mp4) | [JSON](evaluations/natural-20260909/natural950_seed09.json) |
@@ -82,6 +77,13 @@
 # 安装任务和评估脚本；旧文件先备份到 E 盘
 & E:\IsaacLab\go2-rl-open-source\scripts\install.ps1
 
+# 恢复站姿复测：每类20次，四足支撑与腿部几何连续保持3秒
+& E:\IsaacLab\go2-rl-open-source\scripts\evaluate_recovery.ps1 `
+  -Task Isaac-Recovery-Aligned-Flat-Unitree-Go2-Play-v0 `
+  -Checkpoint E:\IsaacLab\go2-rl-open-source\models\recovery\recovery_aligned_model3448.pt `
+  -OutputDir E:\IsaacLab\evaluations\my-aligned3448-30 `
+  -Trials 20 -AngleDeg 30 -Seed 20260918 -Poses upright,side,fore_aft
+
 # 连续站走停测试：输出 JSON、CSV、MP4
 & E:\IsaacLab\go2-rl-open-source\scripts\evaluate_stand_walk_stop.ps1 `
   -Task Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0 `
@@ -89,7 +91,7 @@
   -OutputDir E:\IsaacLab\evaluations\my-go2-test
 ```
 
-在评估命令后加 `-PushSpeed 0.5` 即可加入横向冲击，建议改用另一个输出目录。GUI 单独观察可运行 `scripts/play.ps1 -Stage natural_stop -Static` 或 `-ForwardCommand`，并传入上述完整 checkpoint 路径。正式验收使用固定评估脚本，避免随机命令与自动重置影响判断。
+恢复视频可按[诊断文档](docs/recovery-stance-20260910.md#在本机复测)使用 `-Trials 1 -Video -View front` 单独录制。在走停评估命令后加 `-PushSpeed 0.5` 可加入横向冲击，建议改用另一个输出目录。GUI 单独观察走停可运行 `scripts/play.ps1 -Stage natural_stop -Static` 或 `-ForwardCommand`，并传入行走模型的完整 checkpoint 路径。正式验收使用固定评估脚本，避免随机命令与自动重置影响判断。
 
 脚本将临时文件、Isaac Sim 用户数据及 pip 缓存指向 E 盘。可选资产路径为 `E:\IsaacLab\userdata\assets\Robots\Unitree\Go2\go2.usd` 和 `Environments\Grid\default_environment.usd`；安装脚本加入缓存路径支持，缺少缓存时使用 NVIDIA 官方资源地址。
 
@@ -114,7 +116,7 @@ scripts/               安装、训练、播放、评估和媒体生成
 patches/               E 盘资产缓存支持
 configs/               模型清单、参数和来源
 models/locomotion/      行走模型及历史模型（当前推荐 `natural_stop_diagonal_model2250.pt`）
-models/recovery/        独立的历史恢复模型
+models/recovery/        当前恢复模型 `recovery_aligned_model3448.pt` 与历史失败对照
 evaluations/           验收报告、逐帧数据和失败记录
 videos/                完整演示与历史调试视频
 docs/                  方法笔记、局限和测量图片
@@ -122,7 +124,7 @@ docs/                  方法笔记、局限和测量图片
 
 ## 局限与后续方向
 
-目前验证平地、固定正向速度、连续转向、高速走停及有限横向冲击。恢复模型在 15° 受控侧翻/前后翻下有部分成功，但 30°/45° 成功率明显下降；`model_3498` 的严格四足验收在 30° 两类各 11/20，仍低于可用目标。这不等于任意跌倒恢复。尚未验证复杂地形和实机部署。轨迹仍不完全对称。后续重点是分离 self-right/stand 策略与选择器、扩大速度/扰动测试，以及验证 Go2 动作重定向后实现 AMP。
+目前验证平地、固定正向速度、连续转向、高速走停及有限横向冲击。Aligned 3448在单种子的 upright 与30°受控侧倾/前后倾中各通过20/20，正面视频中前腿不交叉；仍有轻微左右差异，尚未证明更大倾角、预先静止倒地、倒置和任意初始姿态的可靠恢复。恢复与走停使用独立模型，尚未完成行为切换或参考视频全部行为。复杂地形、AMP与实机部署也未完成。历史恢复报告缺少逐腿几何检查，不能作为正常站姿证明；3498保留为交叉腿失败对照。
 两轮后续负对照也已归档：显式硬侧翻课程 `model_3699.pt` 在 30° 侧倾/前后倾均为 0/20，在 45° 为侧倾 0/20、前后倾 1/20；收紧为四足接触终端奖励的 `model_3199.pt` 在 30° 和 45° 均为 0/20。它们没有替换推荐模型。
 
 分阶段高度门控训练 `model_2898.pt` 和 30°定向续训的末尾 `model_2599.pt` 同样没有晋级：前者在 15°为侧倾/前后倾各 4/20、30°为 4/20、1/20；后者在 30°为 3/20、4/20，45°为 0/20、6/20。该结果进一步表明，阶段奖励和更长 PPO 接续本身不足以得到可靠翻身行为；后续应验证显式行为选择器与参考起身轨迹，而不是将这些模型用作正常站姿或自恢复演示。

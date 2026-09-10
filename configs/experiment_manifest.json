@@ -11,7 +11,7 @@
   "robot": "Unitree Go2",
   "device": "cuda:0",
   "storage_root": "E:/IsaacLab",
-  "config_snapshots": ["configs/natural-robust-push-20260909", "configs/recovery-lift-20260909"],
+  "config_snapshots": ["configs/natural-robust-push-20260909", "configs/recovery-lift-20260909", "configs/recovery-uncrossed-20260910", "configs/recovery-aligned-20260910"],
   "checkpoints": {
     "recovery": "models/recovery/recovery_stage30_model2200.pt",
     "standard_stance": "models/locomotion/standard_stance_model950.pt",
@@ -21,7 +21,9 @@
     "recovery_hard45_side_experimental": "models/recovery/recovery_hard45_side_from2200_model2699.pt",
     "recovery_fourfeet_experimental": "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt",
     "recovery_lift_experimental": "models/recovery/recovery_lift_model2300.pt",
-    "recovery_condposture_experimental": "models/recovery/recovery_condposture_model3498.pt"
+    "recovery_condposture_rejected_crossed_legs": "models/recovery/recovery_condposture_model3498.pt",
+    "recovery_uncrossed_intermediate": "models/recovery/recovery_uncrossed_intermediate_model2849.pt",
+    "recovery_aligned_30deg_experimental": "models/recovery/recovery_aligned_model3448.pt"
   },
   "recommended_task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
   "sha256": {
@@ -32,7 +34,9 @@
     "models/recovery/recovery_hard45_side_cur1_model3699.pt": "f31aa7ad513dc768728fb6ae97304935d059d0164c269fd00cd7d101c6ebaa04",
     "models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt": "a5299bde3d530c97e2543d5ebc3a3164139b4038740d302578560b3585d420e1",
     "models/recovery/recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e",
-    "models/recovery/recovery_condposture_model3498.pt": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb"
+    "models/recovery/recovery_condposture_model3498.pt": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb",
+    "models/recovery/recovery_uncrossed_intermediate_model2849.pt": "849abe1b0a6810d42433a86c284bc015c884a5f76497f2cfab87f691860703fe",
+    "models/recovery/recovery_aligned_model3448.pt": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2"
   },
   "training_lineage": [
     {
@@ -173,8 +177,8 @@
       "parent_checkpoint": "model_2200.pt",
       "selected_checkpoint": "model_2699.pt",
       "additional_iterations": 500,
-      "num_envs": 1024,
-      "additional_environment_steps": 12288000,
+      "num_envs": 512,
+      "additional_environment_steps": 6144000,
       "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
       "parameters": "mixed reset distribution; Recovery-Lift low-height terms; CurriculumSteps=1",
       "note": "Experimental mixed-pose continuation. model_2699 scored 15/20 side and 13/20 fore-aft at 15 degrees, 9/20 and 8/20 at 30 degrees, and 5/20 for both at 45 degrees. Not copied into models/recovery."
@@ -199,10 +203,67 @@
       "additional_environment_steps": 9830400,
       "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0",
       "parameters": "conditional_stand_posture; mixed reset distribution; CurriculumSteps=250000",
-      "note": "Strict four-foot evaluator: 15 degrees side/fore-aft 15/20 and 15/20; 30 degrees 11/20 and 11/20; 45 degrees 11/20 and 7/20. Experimental only; not a complete arbitrary-fall recovery policy."
+      "note": "REJECTED: crossed front legs in both videos. Replay seed20260918/trials1 passes legacy contact-height but fails stance_geometry_v1 (both 0/1). Earlier 15/45-degree counts actually used two contacts; only strict-angle30 used four, and neither checked crossed legs. Retained only as a negative control."
+    },
+    {
+      "run": "2026-09-10_16-50-41_uncrossed_from_locomotion2250",
+      "parent_checkpoint": "models/locomotion/natural_stop_diagonal_model2250.pt",
+      "parent_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "final_checkpoint": "model_2849.pt",
+      "additional_iterations": 600,
+      "num_envs": 512,
+      "additional_environment_steps": 7372800,
+      "training_seed": 42,
+      "task": "Isaac-Recovery-Uncrossed-Flat-Unitree-Go2-v0",
+      "parameters": "configs/recovery-uncrossed-20260910",
+      "reset_overrides": {"FallAngleDeg": 30, "CurriculumSteps": 4800, "FocusSide": false},
+      "note": "Intermediate only: stance_geometry_v1 upright/side/fore_aft = 18/20,14/20,14/20. Original seed single-trial fore-aft video remains over-wide and invalid (0/1); used to initialize a separate alignment refinement."
+    },
+    {
+      "run": "2026-09-10_17-15-48_aligned_from_uncrossed2849",
+      "parent_checkpoint": "models/recovery/recovery_uncrossed_intermediate_model2849.pt",
+      "parent_sha256": "849abe1b0a6810d42433a86c284bc015c884a5f76497f2cfab87f691860703fe",
+      "selected_checkpoint": "model_3448.pt",
+      "final_checkpoint": "model_3448.pt",
+      "additional_iterations": 600,
+      "num_envs": 512,
+      "additional_environment_steps": 7372800,
+      "training_seed": 42,
+      "task": "Isaac-Recovery-Aligned-Flat-Unitree-Go2-v0",
+      "parameters": "configs/recovery-aligned-20260910",
+      "reset_overrides": {"FallAngleDeg": 30, "CurriculumSteps": 1, "FocusSide": false},
+      "note": "Adds foot-width and mirror-position penalties near upright, with a 0.33 m terminal height target. Seed20260918 stance_geometry_v1 upright/side/fore_aft = 20/20 each, also 20/20 final valid holds. Controlled drops only; no arbitrary-fall, locomotion-switching or hardware claim."
     }
   ],
   "evaluation": {
+    "recovery_legacy_reports_warning": "Recovery reports predating stance_geometry_v1 do not rule out crossed legs. Do not interpret them as normal-stance success rates.",
+    "recovery_stance_geometry": {
+      "protocol_version": "stance_geometry_v1",
+      "documentation": "docs/recovery-stance-20260910.md",
+      "rejected_3498_audit": "evaluations/crossed-stance-audit3498/recovery_condposture_model3498.pt_recovery_metrics.json",
+      "task": "Isaac-Recovery-Uncrossed-Flat-Unitree-Go2-Play-v0",
+      "self_collisions_enabled": true,
+      "seed": 20260918,
+      "trials_per_pose": 20,
+      "angle_deg": 30,
+      "reports": [
+        "evaluations/uncrossed-baseline2250-30/natural_stop_diagonal_model2250.pt_recovery_metrics.json",
+        "evaluations/uncrossed2600-30/model_2600.pt_recovery_metrics.json",
+        "evaluations/uncrossed2800-30/model_2800.pt_recovery_metrics.json",
+        "evaluations/uncrossed2849-30/model_2849.pt_recovery_metrics.json"
+      ],
+      "intermediate_video_report": "evaluations/uncrossed2849-video-front/model_2849.pt_recovery_metrics.json",
+      "aligned_task": "Isaac-Recovery-Aligned-Flat-Unitree-Go2-Play-v0",
+      "aligned_reports": [
+        "evaluations/aligned3200-30/model_3200.pt_recovery_metrics.json",
+        "evaluations/aligned3448-30/model_3448.pt_recovery_metrics.json",
+        "evaluations/aligned3448-30-seed20260919/recovery_aligned_model3448.pt_recovery_metrics.json"
+      ],
+      "aligned_front_video_report": "evaluations/aligned3448-video-front/recovery_aligned_model3448.pt_recovery_metrics.json",
+      "aligned_oblique_video_report": "evaluations/aligned3448-video-oblique/recovery_aligned_model3448.pt_recovery_metrics.json",
+      "aligned_paired_video_metadata": "videos/recovery-aligned3448/paired_views.json",
+      "aligned_two_seed_results": {"seeds": [20260918, 20260919], "trials_per_pose": 40, "upright": 40, "side": 39, "fore_aft": 40, "final_valid_stands_equal_successes": true}
+    },
     "protocol": "4 s stand, 8 s forward at 0.5 m/s, 6 s stop; continuous rollout without fall reset",
     "seeds": [
       20260909,

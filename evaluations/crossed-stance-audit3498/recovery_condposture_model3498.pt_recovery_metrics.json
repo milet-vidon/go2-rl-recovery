@@ -1,0 +1,35 @@
+{
+  "angle_deg": 30.0,
+  "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_condposture_model3498.pt",
+  "checkpoint_sha256": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb",
+  "task": "Isaac-Recovery-Lift-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260918,
+  "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
+  "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
+  "protocol_version": "stance_geometry_v1",
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 foot contacts > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 1,
+      "successes": 0,
+      "legacy_contact_height_successes": 1,
+      "success_rate": 0.0,
+      "median_recovery_s": null,
+      "p90_recovery_s": null,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    },
+    "fore_aft": {
+      "trials": 1,
+      "successes": 0,
+      "legacy_contact_height_successes": 1,
+      "success_rate": 0.0,
+      "median_recovery_s": null,
+      "p90_recovery_s": null,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    }
+  },
+  "diagnostic_trial": 0,
+  "trace_csv": "recovery_condposture_model3498.pt_recovery_trace.csv"
+}

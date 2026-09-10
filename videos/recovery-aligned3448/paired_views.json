@@ -1,0 +1,20 @@
+{
+  "note": "Left: front; right: oblique. Independent same-seed replays, full duration without time cropping.",
+  "checkpoint_sha256": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+  "source_reports": [
+    "../../evaluations/aligned3448-video-front/recovery_aligned_model3448.pt_recovery_metrics.json",
+    "../../evaluations/aligned3448-video-oblique/recovery_aligned_model3448.pt_recovery_metrics.json"
+  ],
+  "artifacts": {
+    "side": {
+      "video": "recovery_aligned_model3448_side_front_oblique.mp4",
+      "frames": 275.0,
+      "fps": 25.0
+    },
+    "fore_aft": {
+      "video": "recovery_aligned_model3448_fore_aft_front_oblique.mp4",
+      "frames": 275.0,
+      "fps": 25.0
+    }
+  }
+}

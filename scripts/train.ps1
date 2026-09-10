@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -62,6 +62,10 @@ $Task = if ($Stage -eq "natural_robust_push") {
     "Isaac-Recovery-Stable-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_phased") {
     "Isaac-Recovery-Phased-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_uncrossed") {
+    "Isaac-Recovery-Uncrossed-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_aligned") {
+    "Isaac-Recovery-Aligned-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_lift") {
     "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery") {

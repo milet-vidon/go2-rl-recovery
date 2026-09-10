@@ -18,7 +18,56 @@ from isaaclab.managers import ManagerTermBase, SceneEntityCfg
 from isaaclab.sensors import ContactSensor
 from isaaclab.utils import math as math_utils
 
-from .recovery_math import reset_clearance_height, upright_error_squared
+from .recovery_math import reset_clearance_height, upright_error_squared, normal_stance_geometry, stance_alignment_penalty
+
+
+class UncrossedStanceReward(ManagerTermBase):
+    """Reward anatomical stance and penalize cross-body feet/knees after righting.
+
+    Disabled while rolling. The stand bonus requires every joint/foot/knee to
+    pass geometric bounds, not just a four-contact count. The dense penalty
+    remains nonzero far from nominal, where Gaussian joint rewards underflow.
+    """
+
+    def __init__(self, cfg, env):
+        super().__init__(cfg, env)
+        self.robot = env.scene["robot"]
+        self.sensor = env.scene.sensors["contact_forces"]
+        names = ("FL_foot", "FR_foot", "RL_foot", "RR_foot")
+        self.feet = self.robot.find_bodies(names, preserve_order=True)[0]
+        self.knees = self.robot.find_bodies(("FL_calf", "FR_calf", "RL_calf", "RR_calf"), preserve_order=True)[0]
+        self.contact_feet = self.sensor.find_bodies(names, preserve_order=True)[0]
+        self.base = self.sensor.find_bodies("base")[0]
+
+    def __call__(self, env, mode: str, target_height: float = 0.32):
+        a = self.robot.data
+        q = a.root_quat_w[:, None, :].expand(-1, 4, -1)
+        feet = math_utils.quat_apply_inverse(q, a.body_pos_w[:, self.feet] - a.root_pos_w[:, None])
+        knees = math_utils.quat_apply_inverse(q, a.body_pos_w[:, self.knees] - a.root_pos_w[:, None])
+        delta = a.joint_pos - a.default_joint_pos
+        error = upright_error_squared(a.projected_gravity_b)
+        # Only after rolling approaches upright; no nominal-pose pressure upside down.
+        gate = ((-a.projected_gravity_b[:, 2] - 0.5) / 0.4).clamp(0, 1)
+        side = feet.new_tensor([1., -1., 1., -1.])
+        fore = feet.new_tensor([1., 1., -1., -1.])
+        if mode in ("penalty", "aligned_penalty"):
+            crossing = ((0.09 - feet[:, :, 1] * side).clamp(min=0) / 0.1).mean(1)
+            crossing += ((0.05 - knees[:, :, 1] * side).clamp(min=0) / 0.1).mean(1)
+            crossing += ((0.10 - feet[:, :, 0] * fore).clamp(min=0) / 0.2).mean(1)
+            if mode == "aligned_penalty":
+                crossing += stance_alignment_penalty(feet)
+            # Linear joint deviation cannot vanish for twisted postures.
+            return gate * (crossing + delta.abs().mean(1))
+        if mode != "stand":
+            raise ValueError(mode)
+        height = a.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+        contact = (self.sensor.data.net_forces_w[:, self.contact_feet, 2] > 5).all(1)
+        body_clear = (self.sensor.data.net_forces_w[:, self.base].norm(dim=-1) < 1).all(1)
+        geometry = normal_stance_geometry(feet, knees, delta)
+        posture = torch.exp(-error / 0.12 - ((height - target_height) / 0.04).square())
+        quiet = torch.exp(-(a.root_lin_vel_w.norm(dim=-1) / 0.3).square()
+                          -(a.root_ang_vel_w.norm(dim=-1) / 0.9).square())
+        return contact * body_clear * geometry * posture * quiet * (height > 0.30)
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedEnv, ManagerBasedRLEnv

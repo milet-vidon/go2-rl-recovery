@@ -301,6 +301,50 @@ class UnitreeGo2RecoveryLiftEnvCfg_PLAY(UnitreeGo2RecoveryLiftEnvCfg):
 
 
 @configclass
+class UnitreeGo2RecoveryUncrossedEnvCfg(UnitreeGo2RecoveryLiftEnvCfg):
+    """Separate experiment: ordinary stand geometry, with self-collisions enabled."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.robot.spawn.articulation_props.enabled_self_collisions = True
+        self.rewards.stable_stand = None
+        self.rewards.static_stance = None
+        self.rewards.conditional_stand_posture = None
+        self.rewards.recovery_success = None
+        self.rewards.upright_and_height.weight = 2.0
+        self.rewards.uncrossed_stand = RewTerm(func=recovery_mdp.UncrossedStanceReward, weight=12.0, params={"mode": "stand"})
+        self.rewards.crossed_limbs = RewTerm(func=recovery_mdp.UncrossedStanceReward, weight=-4.0, params={"mode": "penalty"})
+        self.rewards.dof_pos_limits.weight = -1.0
+
+
+@configclass
+class UnitreeGo2RecoveryUncrossedEnvCfg_PLAY(UnitreeGo2RecoveryUncrossedEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryAlignedEnvCfg(UnitreeGo2RecoveryUncrossedEnvCfg):
+    """Refine the over-wide, asymmetric non-crossed intermediate stance."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.rewards.crossed_limbs.params["mode"] = "aligned_penalty"
+        self.rewards.uncrossed_stand.params["target_height"] = 0.33
+        self.rewards.upright_and_height.params["target_height"] = 0.32
+
+
+@configclass
+class UnitreeGo2RecoveryAlignedEnvCfg_PLAY(UnitreeGo2RecoveryAlignedEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
 class UnitreeGo2RecoveryLocomotionEnvCfg(UnitreeGo2RecoveryEnvCfg):
     """Fine-tune the recovered policy into a smooth, diagonal-trot velocity policy."""
 

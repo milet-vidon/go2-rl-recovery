@@ -81,9 +81,9 @@ E:\IsaacLab\artifacts\codex-2026-09-06-new-chat\outputs\isaaclab_go2_recovery_pl
 
 ## 本轮实际验证结果（2026-09-08）
 
-评估器位于 `E:\IsaacLab\repo\scripts\environments\evaluate_go2_recovery.py`，成功定义为：重力误差 < 0.35、根部高度 0.30–0.55 m、线速度 < 0.50 m/s、角速度 < 1.00 rad/s、至少两个足端接触力 > 5 N，并连续保持 3 s。每个姿态类别独立 100 次；视频中的姿态是受控 drop start，不是把机器人预先摆成“已恢复”的姿态。
+以下是 2026-09-08 的历史两足协议，不含站姿几何检查。彼时评估器位于 `E:\IsaacLab\repo\scripts\environments\evaluate_go2_recovery.py`，成功定义为：重力误差 < 0.35、根部高度 0.30–0.55 m、线速度 < 0.50 m/s、角速度 < 1.00 rad/s、至少两个足端接触力 > 5 N，并连续保持 3 s。每个姿态类别独立 100 次；视频中的姿态是受控 drop start。当前正常站姿验收采用下文的 `stance_geometry_v1`，这些历史计数不能解释为通过新协议。
 
-严格结果：
+历史两足协议结果：
 
 | checkpoint | upright | side | fore-aft | upside-down | random |
 |---|---:|---:|---:|---:|---:|
@@ -105,8 +105,9 @@ The 100-iteration checkpoint `model_2300.pt` improved the 15-degree screen to
 16/20 side and 15/20 fore-aft, but reached only 2/20 and 6/20 at 30 degrees and
 0/20 and 1/20 at 45 degrees. It is archived as an experimental checkpoint,
 not a replacement for the locomotion recommendation or proof of arbitrary
-fall recovery. The 15-degree single-environment video is a genuine success
-sample; the 30-degree videos intentionally show the diagnostic environment and
+fall recovery. The 15-degree single-environment video passed the historical
+contact/height criterion; its leg geometry has not been revalidated. The
+30-degree videos intentionally show the diagnostic environment and
 must be read together with the 20-trial JSON report.
 
 A further 300-iteration continuation used a fixed 30-degree fall cap. Its best
@@ -147,10 +148,16 @@ into `models/recovery` or used in the locomotion demonstrations.
 
 论文与开源实现（Lee et al. 2019、DreamRiser、FR-Net、AFR）共同指出：翻身、抬升和站立目标存在冲突，且过大的足端接触奖励会产生低位 frog-squat。基于此，在 `Recovery-Lift` 中新增 `conditional_stand_posture`：只有重力误差小于 0.25 且基座高于 0.28 m 时，才奖励回到 Go2 默认对称关节姿态；翻滚阶段不施加该姿态约束。
 
-从混合姿态 `model_2699.pt` 接续 800 轮得到 `model_3498.pt`。正式评估器已改为至少四足接触（不再把两足支撑算作成功），并要求正常高度、直立、低速、连续保持 3 s。20 次结果为：15° 侧翻/前后翻 15/20、15/20；30° 为 11/20、11/20；45° 为 11/20、7/20。单环境严格视频保存在 `evaluations/recovery-condposture-strict-angle30-video-model3498/`。这仍是仿真研究候选，未达到任意跌倒恢复或参考视频完整复现标准，也未复制为推荐模型。
+从混合姿态 `model_2699.pt` 接续 800 轮得到 `model_3498.pt`。**后续视觉审计已撤销该模型的正常站姿资格：两段视频中前腿交叉。** 原文把 15°/45° 的两足计数误写成四足结果；实际仅 `strict-angle30` 的 11/20、11/20 使用四足协议，而该协议也没有检查跨腿。原报告作为失败对照保留，不得继续将这些计数解释为正常恢复成功率。
+
+同一 seed20260918、trials1 复测精确复现旧片段：前后倾案例最终 FL 足端 body-y=-0.1774 m、FR=+0.0715 m，FL 膝 body-y=-0.0865 m；FL 髋相对默认偏移 -1.1479 rad。四脚触地但前脚分居错误侧，绝非透视错觉。新增协议 `stance_geometry_v1` 将两段均判为失败，旧协议均判为成功。新协议在接触/高度/速度之外要求每条腿的足端与膝位于对应机身侧、足端位于正确前后区、各关节偏差<0.65 rad、无机身接触，并连续保持3秒。足接触使用当帧垂直力，不把历史几帧各足先后接触当作同时支撑。
+
+新增独立任务 `Isaac-Recovery-Uncrossed-Flat-Unitree-Go2-v0`，开启自身碰撞，使用接近直立时的连续跨腿/关节偏差惩罚，几何不合格的站姿不再获得终端奖励。移除该任务中仍可奖励跨腿的旧 static/stable/conditional 项；历史任务保持原配置。新训练从正常站姿的 locomotion2250 初始化。600 PPO轮，512环境，30°倾斜课程，4800个公共控制步（200轮）达到目标姿态分布。保留倒置和随机姿态分布，不能把30°参数解释为所有reset的最大倾角。训练没有脚本强制摆正足端，也未修改旧权重。
 
 该结果支持继续采用分层结构：self-right → settle/stand → locomotion，并在后续实现相对当前关节的 recovery action、站立阶段 nominal-pose action 和带迟滞的行为选择器，而不是无限增加单一 PPO 的训练轮数。
 
 ## 实机前的必要步骤
+
+后续 Uncrossed→Aligned 两轮共1200轮、14,745,600环境步已完成：最终3448在两个随机种子下，直立40/40、30°侧倾39/40、30°前后倾40/40通过完整几何和连续站立验收。两类原视频起始条件均已录制正面与斜侧面并查看关键帧，未再见交叉前腿；一次侧倾翻至背部朝下仍未恢复。完整改动、失败记录与视频见[本轮站姿审计](recovery-stance-20260910.md)。这仍是受控起步验证，不是任意跌倒或参考视频全部行为的复现。
 
 本任务的训练结果仅代表仿真。进入 Go2 实机前，应逐步加入并验证质量/质心、关节阻尼、执行器延迟与强度、地面摩擦、接触、观测噪声和命令延迟的 domain randomization；先使用安全吊挂、低幅度动作和硬件扭矩/速度限制。翻身时尤其要设置关节温度和机身碰撞安全边界。
