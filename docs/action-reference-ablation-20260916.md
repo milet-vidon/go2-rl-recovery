@@ -1,6 +1,13 @@
 # Fresh action-reference comparison
 
-Status updated17:13: the512-environment run crashed near iteration584 with PhysX CUDA out-of-memory; only the intact500 checkpoint was evaluated (side0/20,back0/20). CurrentTarget512 never started. The replacement128-environment NominalTarget arm completed2000 iterations/6,144,000 environment steps, final1999, SHA256 `58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2`. It FAILED every strict20-trial pose screen: heldout side/back, controlled30degree upright/side/fore-aft, and45degree upright/side/fore-aft/back; zero final valid stands in every group. CurrentTarget128 started17:00 and is still training. Both actual saved YAMLs match except intended reference/run identifiers; installed source hashes matched. This negative fresh-policy result must not overwrite the older working locomotion2250 or limited-domain recovery3448. Active log `E:/IsaacLab/artifacts/recovery-20260916/target128x2000-orchestrator.log`; [live handoff status and pending video delivery](training-status-20260916.md).
+Status 2026-09-16: BOTH replacement 128-environment arms completed 2000 iterations and 6,144,000 environment steps each, with final checkpoint 1999. Each arm FAILED all nine strict 20-trial pose groups: heldout side/back; controlled 30-degree upright/side/fore-aft; controlled 45-degree upright/side/fore-aft/back. In every group, successes, final valid stands and final geometry passes are all 0/20. Neither candidate is promoted or extended unchanged. These completed results supersede the earlier 17:13 status saying CurrentTarget128 was still training.
+
+- NominalTarget checkpoint SHA256: `58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2`.
+- CurrentTarget checkpoint SHA256: `5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710`.
+- Both hashes were verified against the actual checkpoint files. Both actual saved YAMLs match except intended reference/run identifiers; installed source hashes matched.
+- The earlier 512-environment attempt is retained as an INTERRUPTED historical run: native PhysX CUDA out-of-memory near iteration 584, intact 500 checkpoint side 0/20 and back 0/20; CurrentTarget512 never started. It is not part of the completed 128-environment pair.
+
+These negative fresh-policy results must not overwrite working locomotion2250 or limited-domain recovery3448. Latest front/oblique recordings and actual visual inspection are complete: the118.16-second full scenario review preserves all frames, failures and separate locomotion/recovery model identities. Normal2250 passes; disturbed2250 and all six new recovery chapters fail. This is not a continuous closed loop. [Latest video review and delivery status](video-review-20260916.md) · [live handoff status](training-status-20260916.md). Completed launcher log: `E:/IsaacLab/artifacts/recovery-20260916/target128x2000-orchestrator.log`.
 
 ## Why this experiment
 
@@ -8,7 +15,7 @@ BackExplore100's deterministic policy failed every settled side/back trial. Its 
 
 Source: `evaluations/20260916-back-explore100-stochastic-diagnostic/model_4998.pt_recovery_metrics.json`; `acceptance_eligible=false`.
 
-The next hypothesis is action reference, inspired by the current-joint-angle righting target in [Lee et al. (2019), section II-D2](https://arxiv.org/html/1901.07517). This is an isolated Go2 experiment, not a reproduction of ANYmal results.
+This experiment tested action reference, inspired by the current-joint-angle righting target in [Lee et al. (2019), section II-D2](https://arxiv.org/html/1901.07517). This is an isolated Go2 experiment, not a reproduction of ANYmal results.
 
 ## Matched pair
 
@@ -28,6 +35,28 @@ Eight CPU tests cover the reference difference away from clamps, substep sample/
 
 The evaluator uses the appropriate action task. Bank handover commands the SAME default joint targets directly for at least1 second for both arms; it does not assume a zero action is nominal under CurrentTarget. History is reset afterward without changing the physical pose. Reports explicitly record action reference, scaling, clamp and sample/hold period. Historical evaluator paths retain their original action processing. Both two-trial side/back evaluation smokes completed. Side starts were bitwise identical. One back start had small contact-solver differences after the preceding different rollout (joint-position difference below0.00005 rad, height difference below0.000001 m); classifications and source IDs were identical. Matched protocol does not imply bitwise identical PhysX contact dynamics across policy trajectories.
 
-Original plan was serial512-environment,1000-iteration arms; this was interrupted by native CUDA OOM before a complete pair existed. The active replacement is128 environments and2000 iterations per arm (6,144,000 environment steps each), then strict20-trial side/back bank, upright/30-degree and upright/45-degree evaluations. The finite launcher `scripts/run_recovery_action_ablation.ps1` checks exact bootstrap/bank hashes, refuses duplicate outputs and invalid physics logs, and does not automatically promote or extend either model. Controlled-drop angle tests use matched fixed Bank physics, NOT the randomized historical Aligned task; do not compare their counts as if identical. [Audited paper/source differences and the decision if this pair still fails](reproduction-audit-20260916.md).
+Original plan was serial 512-environment, 1000-iteration arms; this was interrupted by native CUDA OOM before a complete pair existed. The replacement 128-environment pair and all six evaluation suites are now complete: 2000 iterations per arm (6,144,000 environment steps each), followed by strict 20-trial side/back bank, upright/30-degree and upright/45-degree evaluations. The finite launcher `scripts/run_recovery_action_ablation.ps1` checks exact bootstrap/bank hashes, refuses duplicate outputs and invalid physics logs, and does not automatically promote or extend either model. Controlled-drop angle tests use matched fixed Bank physics, NOT the randomized historical Aligned task; do not compare their counts as if identical. [Audited paper/source differences and the next bounded design change](reproduction-audit-20260916.md).
+
+## Completed pair results
+
+Every row below has 20 trials per arm. Entries are successes / final valid stands / final geometry passes.
+
+| Start protocol | Pose | NominalTarget | CurrentTarget | Eligible settled-fallen starts per arm |
+| --- | --- | --- | --- | --- |
+| Heldout bank | Side | 0 / 0 / 0 | 0 / 0 / 0 | 20 (16 unique source states) |
+| Heldout bank | Back | 0 / 0 / 0 | 0 / 0 / 0 | 20 (14 unique source states) |
+| Controlled 30-degree drop | Upright | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 30-degree drop | Side | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 30-degree drop | Fore/aft | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 45-degree drop | Upright | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 45-degree drop | Side | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 45-degree drop | Fore/aft | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+| Controlled 45-degree drop | Back | 0 / 0 / 0 | 0 / 0 / 0 | 0 |
+
+The bank/30-degree seed is 20260918; the 45-degree seed is 20260916. Within each corresponding suite, criterion, protocol, source-ID order and all recorded policy-start root poses, root velocities and joint positions match exactly. Both bank arms use the same heldout bank SHA256 `71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a` (verified against the file) and 1-second direct nominal-position PD handover, NOT zero torque. All 40 bank starts per arm were settled-fallen and none already standing; controlled-drop starts were unsettled and are not counted as settled-fallen recovery.
+
+CurrentTarget did change the back-start outcome: mean final tilt 155.10° → 64.75° and height 0.0714 m → 0.1512 m, but ended with only two supporting feet and invalid geometry. Its maximum final joint offset in bank trials was approximately 3.27 rad versus NominalTarget 1.69 rad. Side-start mean final tilt stayed approximately 64° for both. Thus there is evidence of leaving the inverted posture, but no normal recovery or standing retention; unchanged extension is not justified.
+
+Raw reports: [Nominal bank](../evaluations/20260916-target128x2000-nominal-heldout/model_1999.pt_recovery_metrics.json), [30°](../evaluations/20260916-target128x2000-nominal-angle30/model_1999.pt_recovery_metrics.json), [45°](../evaluations/20260916-target128x2000-nominal-angle45/model_1999.pt_recovery_metrics.json); [Current bank](../evaluations/20260916-target128x2000-current-heldout/model_1999.pt_recovery_metrics.json), [30°](../evaluations/20260916-target128x2000-current-angle30/model_1999.pt_recovery_metrics.json), [45°](../evaluations/20260916-target128x2000-current-angle45/model_1999.pt_recovery_metrics.json).
 
 The repeatedly used30 heldout source states are development validation, not a fresh final test. Any promising candidate requires new unseen starts/seeds, normal standing/stop regressions, and actually viewed front/oblique videos before promotion. All previously recommended models remain untouched.

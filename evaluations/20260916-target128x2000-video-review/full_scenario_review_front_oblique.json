@@ -1,0 +1,789 @@
+{
+  "schema_version": "go2_full_scenario_review_v1",
+  "chapters": [
+    {
+      "id": "retained_locomotion2250_normal",
+      "kind": "locomotion",
+      "scenario": "normal",
+      "title": "Retained baseline 2250: stand / walk / stop (normal)",
+      "protocol_duration_s": 18,
+      "outcome": {
+        "passed": true,
+        "acceptance": {
+          "no_reset": true,
+          "no_base_contact": true,
+          "supported_height": true,
+          "level": true,
+          "walk_tracking": true,
+          "quiet_stand_stop": true,
+          "feet_lift_in_walk": true,
+          "limited_slip": true,
+          "four_feet_at_rest": true,
+          "normal_stance_geometry_at_rest": true,
+          "four_vertical_contacts_at_rest": true,
+          "no_current_base_contact_at_rest": true,
+          "geometry_and_support_at_rest": true
+        }
+      },
+      "display_passed": true,
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stand_walk_stop_stance_geometry_v2",
+      "checkpoints": [
+        {
+          "path": "../../models/locomotion/natural_stop_diagonal_model2250.pt",
+          "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+          "bytes": 983925
+        },
+        {
+          "path": "../../models/locomotion/natural_stop_diagonal_model2250.pt",
+          "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "retained_locomotion2250_normal_front/natural_stop_diagonal_model2250_stand_walk_stop.json",
+            "sha256": "70c9041f382256a8067fd2757f58c137b26646ae11126cf5fe74875b865db85f",
+            "bytes": 8319
+          },
+          "video": {
+            "path": "retained_locomotion2250_normal_front/natural_stop_diagonal_model2250_stand_walk_stop.mp4",
+            "sha256": "b970c1098d3ba28a5f93dbaabdc4da1786df7f77136967e2833c476d7dacd365",
+            "bytes": 33399275,
+            "frames": 450,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 450,
+            "duration_s": 18.0,
+            "protocol_frames": 450,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "retained_locomotion2250_normal_oblique/natural_stop_diagonal_model2250_stand_walk_stop.json",
+            "sha256": "eedc021a2091eea0633a8f5903a7253fda37ea0af6e107a9e96d8bc9f53c514f",
+            "bytes": 8325
+          },
+          "video": {
+            "path": "retained_locomotion2250_normal_oblique/natural_stop_diagonal_model2250_stand_walk_stop.mp4",
+            "sha256": "b89a858a449f0a1eecb4670e5f1f573d801a2fbe2ea38c56bdc493170c286ab4",
+            "bytes": 34202701,
+            "frames": 450,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 450,
+            "duration_s": 18.0,
+            "protocol_frames": 450,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        }
+      ],
+      "frames": 450,
+      "duration_s": 18.0,
+      "timeline": {
+        "card_start_frame": 0,
+        "card_start_s": 0.0,
+        "footage_start_frame": 50,
+        "footage_start_s": 2.0,
+        "end_frame_exclusive": 500,
+        "end_s": 20.0
+      }
+    },
+    {
+      "id": "retained_locomotion2250_push",
+      "kind": "locomotion",
+      "scenario": "push",
+      "title": "Retained baseline 2250: stand / walk / stop (push)",
+      "protocol_duration_s": 18,
+      "outcome": {
+        "passed": false,
+        "acceptance": {
+          "no_reset": true,
+          "no_base_contact": false,
+          "supported_height": false,
+          "level": false,
+          "walk_tracking": false,
+          "quiet_stand_stop": false,
+          "feet_lift_in_walk": true,
+          "limited_slip": false,
+          "four_feet_at_rest": false,
+          "normal_stance_geometry_at_rest": false,
+          "four_vertical_contacts_at_rest": false,
+          "no_current_base_contact_at_rest": false,
+          "geometry_and_support_at_rest": false
+        }
+      },
+      "display_passed": false,
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stand_walk_stop_stance_geometry_v2",
+      "checkpoints": [
+        {
+          "path": "../../models/locomotion/natural_stop_diagonal_model2250.pt",
+          "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+          "bytes": 983925
+        },
+        {
+          "path": "../../models/locomotion/natural_stop_diagonal_model2250.pt",
+          "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "retained_locomotion2250_push_front/natural_stop_diagonal_model2250_stand_walk_stop.json",
+            "sha256": "8d97bc4636d5f5dd29cea7a6fc6d969132a744e488733e2d2081c0251244c1ae",
+            "bytes": 8225
+          },
+          "video": {
+            "path": "retained_locomotion2250_push_front/natural_stop_diagonal_model2250_stand_walk_stop.mp4",
+            "sha256": "5314087d6e807cab69aebad8f707fd8a7b29daa084f138a878aa5add7c73594e",
+            "bytes": 44066294,
+            "frames": 450,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 450,
+            "duration_s": 18.0,
+            "protocol_frames": 450,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "retained_locomotion2250_push_oblique/natural_stop_diagonal_model2250_stand_walk_stop.json",
+            "sha256": "f0139cae6d814888c7749705d1923a011beec345ed5da16eccd730064fb7a127",
+            "bytes": 8231
+          },
+          "video": {
+            "path": "retained_locomotion2250_push_oblique/natural_stop_diagonal_model2250_stand_walk_stop.mp4",
+            "sha256": "d4ef65ff349c96d192f46a8253c75ff9d6d77ef13673a467129c4251e3c09e1b",
+            "bytes": 48249007,
+            "frames": 450,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 450,
+            "duration_s": 18.0,
+            "protocol_frames": 450,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        }
+      ],
+      "frames": 450,
+      "duration_s": 18.0,
+      "timeline": {
+        "card_start_frame": 500,
+        "card_start_s": 20.0,
+        "footage_start_frame": 550,
+        "footage_start_s": 22.0,
+        "end_frame_exclusive": 1000,
+        "end_s": 40.0
+      }
+    },
+    {
+      "id": "nominal_upright",
+      "kind": "recovery",
+      "arm": "nominal",
+      "pose": "upright",
+      "title": "New nominal model 1999: upright",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0
+      },
+      "display_passed": false,
+      "checkpoint_sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+      "task": "Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "nominal-upright-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "b92950abb08e0e00b4be1cceac50539fb4c5328d9be7e7b7b006eb6f25af294b",
+            "bytes": 7866
+          },
+          "video": {
+            "path": "nominal-upright-front/model_1999.pt_upright.mp4",
+            "sha256": "01ea7f433cdf52276b35aaa40f6db5bd691724b6603af6f4fc4d043747d4aeaa",
+            "bytes": 1056149,
+            "frames": 275,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 275,
+            "duration_s": 11.0,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "nominal-upright-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "e2cb5e5940ed5b7fa9aeddf09f2b0c4e8e98a99f7deadbd1098e8acdc8eb85eb",
+            "bytes": 7868
+          },
+          "video": {
+            "path": "nominal-upright-oblique/model_1999.pt_upright.mp4",
+            "sha256": "e7e2b9f129430b1f63ed0bbadc0ebddc7dd6aff43525a35d87b44b45e62ef52e",
+            "bytes": 1144506,
+            "frames": 275,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 275,
+            "duration_s": 11.0,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        }
+      ],
+      "frames": 275,
+      "duration_s": 11.0,
+      "timeline": {
+        "card_start_frame": 1000,
+        "card_start_s": 40.0,
+        "footage_start_frame": 1050,
+        "footage_start_s": 42.0,
+        "end_frame_exclusive": 1325,
+        "end_s": 53.0
+      }
+    },
+    {
+      "id": "nominal_side",
+      "kind": "recovery",
+      "arm": "nominal",
+      "pose": "side",
+      "title": "New nominal model 1999: side",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0,
+        "settled_fallen_trials": 1,
+        "settled_fallen_recovery_successes": 0,
+        "settled_fallen_final_valid_stands": 0
+      },
+      "display_passed": false,
+      "bank_state_id": 132,
+      "handover": {
+        "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+        "settle_actual_s": 1.0,
+        "settle_control_steps": 50,
+        "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+        "included_in_video": false
+      },
+      "checkpoint_sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+      "task": "Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "nominal-heldout-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "168dae7bc9584eb099017cac73cafe17e4718cf4e377a41eac21421cd9dabd87",
+            "bytes": 17421
+          },
+          "video": {
+            "path": "nominal-heldout-front/model_1999.pt_side.mp4",
+            "sha256": "712d9105052220c67b7c48f0a97498bfcae43d97660174f1020ed881b0ef181e",
+            "bytes": 1155155,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "nominal-heldout-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "58d1e4674f8f08a8dc535435ec518c01d6395940b5ac46e7d6a83cd4123828db",
+            "bytes": 17423
+          },
+          "video": {
+            "path": "nominal-heldout-oblique/model_1999.pt_side.mp4",
+            "sha256": "88854910347f00e6c79d9836c0e05dad86e42b3ab496bb6fcb767614ef2528bc",
+            "bytes": 1097705,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        }
+      ],
+      "frames": 276,
+      "duration_s": 11.04,
+      "timeline": {
+        "card_start_frame": 1325,
+        "card_start_s": 53.0,
+        "footage_start_frame": 1375,
+        "footage_start_s": 55.0,
+        "end_frame_exclusive": 1651,
+        "end_s": 66.04
+      }
+    },
+    {
+      "id": "nominal_upside_down",
+      "kind": "recovery",
+      "arm": "nominal",
+      "pose": "upside_down",
+      "title": "New nominal model 1999: upside_down",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0,
+        "settled_fallen_trials": 1,
+        "settled_fallen_recovery_successes": 0,
+        "settled_fallen_final_valid_stands": 0
+      },
+      "display_passed": false,
+      "bank_state_id": 155,
+      "handover": {
+        "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+        "settle_actual_s": 1.0,
+        "settle_control_steps": 50,
+        "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+        "included_in_video": false
+      },
+      "checkpoint_sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+      "task": "Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_16-14-17_20260916-target128x2000_nominal/model_1999.pt",
+          "sha256": "58f3231a1959a3d5fa82142e9dcfb2aee2b7cc86f1575e3cee25e36c9efc6ca2",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "nominal-heldout-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "168dae7bc9584eb099017cac73cafe17e4718cf4e377a41eac21421cd9dabd87",
+            "bytes": 17421
+          },
+          "video": {
+            "path": "nominal-heldout-front/model_1999.pt_upside_down.mp4",
+            "sha256": "4bf29ef5fe5a810546b46dd415f8a9ed238b5d4ba41cfd3650bc169ee9045290",
+            "bytes": 1074200,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "nominal-heldout-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "58d1e4674f8f08a8dc535435ec518c01d6395940b5ac46e7d6a83cd4123828db",
+            "bytes": 17423
+          },
+          "video": {
+            "path": "nominal-heldout-oblique/model_1999.pt_upside_down.mp4",
+            "sha256": "a795a104b4784e96458c5a1de298b227121e5972662e934a78397a94101319ee",
+            "bytes": 1039972,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        }
+      ],
+      "frames": 276,
+      "duration_s": 11.04,
+      "timeline": {
+        "card_start_frame": 1651,
+        "card_start_s": 66.04,
+        "footage_start_frame": 1701,
+        "footage_start_s": 68.04,
+        "end_frame_exclusive": 1977,
+        "end_s": 79.08
+      }
+    },
+    {
+      "id": "current_upright",
+      "kind": "recovery",
+      "arm": "current",
+      "pose": "upright",
+      "title": "New current model 1999: upright",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0
+      },
+      "display_passed": false,
+      "checkpoint_sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+      "task": "Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "current-upright-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "cc653eaef7bbf3384352485478525451d424ed6c40dc8383a76399ae0886bea5",
+            "bytes": 7866
+          },
+          "video": {
+            "path": "current-upright-front/model_1999.pt_upright.mp4",
+            "sha256": "851346730b3a6411b005c7ffbc5760ed406a158ea9b59e865c5d403053ffd287",
+            "bytes": 987858,
+            "frames": 275,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 275,
+            "duration_s": 11.0,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "current-upright-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "6f1965d136d09d77178b0ed74e0c1b8182c74c29c5000a684f3740c5e419a46b",
+            "bytes": 7868
+          },
+          "video": {
+            "path": "current-upright-oblique/model_1999.pt_upright.mp4",
+            "sha256": "5a8d42f340380bc6bf2f777b0762a9067eaa8941a4c3ee585e6fd3754f79200a",
+            "bytes": 1017248,
+            "frames": 275,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 275,
+            "duration_s": 11.0,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 0,
+            "initial_frame_note": "No separately recorded initial frame."
+          }
+        }
+      ],
+      "frames": 275,
+      "duration_s": 11.0,
+      "timeline": {
+        "card_start_frame": 1977,
+        "card_start_s": 79.08,
+        "footage_start_frame": 2027,
+        "footage_start_s": 81.08,
+        "end_frame_exclusive": 2302,
+        "end_s": 92.08
+      }
+    },
+    {
+      "id": "current_side",
+      "kind": "recovery",
+      "arm": "current",
+      "pose": "side",
+      "title": "New current model 1999: side",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0,
+        "settled_fallen_trials": 1,
+        "settled_fallen_recovery_successes": 0,
+        "settled_fallen_final_valid_stands": 0
+      },
+      "display_passed": false,
+      "bank_state_id": 132,
+      "handover": {
+        "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+        "settle_actual_s": 1.0,
+        "settle_control_steps": 50,
+        "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+        "included_in_video": false
+      },
+      "checkpoint_sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+      "task": "Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "current-heldout-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "279a023c49219da260cb32515976795cc84bafc7d1c880487e28251c5854a588",
+            "bytes": 17425
+          },
+          "video": {
+            "path": "current-heldout-front/model_1999.pt_side.mp4",
+            "sha256": "b3957b67f8fea728e4b5678453a6213fb426b18e0687c6745ad4b035f3a20d0c",
+            "bytes": 1158609,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "current-heldout-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "6f2a39d0760da907084d6a2f46684a1fccee6d03bd6ab389425e30d0ad7cb139",
+            "bytes": 17427
+          },
+          "video": {
+            "path": "current-heldout-oblique/model_1999.pt_side.mp4",
+            "sha256": "6e9c79f99df6114d6115ae746d6a5f57beafbc2ee1e736e47fcb83a58a51f935",
+            "bytes": 1099044,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        }
+      ],
+      "frames": 276,
+      "duration_s": 11.04,
+      "timeline": {
+        "card_start_frame": 2302,
+        "card_start_s": 92.08,
+        "footage_start_frame": 2352,
+        "footage_start_s": 94.08,
+        "end_frame_exclusive": 2628,
+        "end_s": 105.12
+      }
+    },
+    {
+      "id": "current_upside_down",
+      "kind": "recovery",
+      "arm": "current",
+      "pose": "upside_down",
+      "title": "New current model 1999: upside_down",
+      "protocol_duration_s": 11,
+      "outcome": {
+        "trials": 1,
+        "successes": 0,
+        "final_valid_stands": 0,
+        "stable_hold_s": 3.0,
+        "horizon_s": 8.0,
+        "settled_fallen_trials": 1,
+        "settled_fallen_recovery_successes": 0,
+        "settled_fallen_final_valid_stands": 0
+      },
+      "display_passed": false,
+      "bank_state_id": 155,
+      "handover": {
+        "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+        "settle_actual_s": 1.0,
+        "settle_control_steps": 50,
+        "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+        "included_in_video": false
+      },
+      "checkpoint_sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+      "task": "Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0",
+      "seed": 20260918,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+      "checkpoints": [
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        },
+        {
+          "path": "../../../repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_17-00-18_20260916-target128x2000_current/model_1999.pt",
+          "sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+          "bytes": 983925
+        }
+      ],
+      "sources": [
+        {
+          "view": "front",
+          "report": {
+            "path": "current-heldout-front/model_1999.pt_recovery_metrics.json",
+            "sha256": "279a023c49219da260cb32515976795cc84bafc7d1c880487e28251c5854a588",
+            "bytes": 17425
+          },
+          "video": {
+            "path": "current-heldout-front/model_1999.pt_upside_down.mp4",
+            "sha256": "6fbbc7f80874feb3cf522a31af041ba6d0d006311e0e15660318a2d87bc78ac9",
+            "bytes": 1138060,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        },
+        {
+          "view": "oblique",
+          "report": {
+            "path": "current-heldout-oblique/model_1999.pt_recovery_metrics.json",
+            "sha256": "6f2a39d0760da907084d6a2f46684a1fccee6d03bd6ab389425e30d0ad7cb139",
+            "bytes": 17427
+          },
+          "video": {
+            "path": "current-heldout-oblique/model_1999.pt_upside_down.mp4",
+            "sha256": "8a23e715a7b94c8fb1332563e4cc0d2658b392523a82ee5e69756f87613e6b94",
+            "bytes": 1065186,
+            "frames": 276,
+            "fps": 25.0,
+            "width": 960,
+            "height": 540,
+            "decoded_frames": 276,
+            "duration_s": 11.04,
+            "protocol_frames": 275,
+            "recorded_initial_frames": 1,
+            "initial_frame_note": "Recorder writes one pre-policy state before its complete policy loop; retained without trimming."
+          }
+        }
+      ],
+      "frames": 276,
+      "duration_s": 11.04,
+      "timeline": {
+        "card_start_frame": 2628,
+        "card_start_s": 105.12,
+        "footage_start_frame": 2678,
+        "footage_start_s": 107.12,
+        "end_frame_exclusive": 2954,
+        "end_s": 118.16
+      }
+    }
+  ],
+  "note": "Independent matched-condition front/oblique replays, NOT synchronized cameras. Different policies shown in separate scenarios, NOT a continuous closed loop. All source frames retained at native resolution and frame rate, no trimming. Separately recorded recovery initial frames are retained; encoded duration may exceed the policy protocol duration by one frame. Recovery nominal-PD handover is not in the footage. Failed outcomes are retained. A one-trial video is not the multi-trial acceptance result. Simulation only.",
+  "output": {
+    "path": "full_scenario_review_front_oblique.mp4",
+    "sha256": "3eeb61cd7194643565f86f70408c2e928a95b3d33c60b6cf73742ccc197b20e2",
+    "bytes": 91536884,
+    "width": 1920,
+    "height": 700,
+    "frames": 2954,
+    "fps": 25,
+    "duration_s": 118.16,
+    "codec": "H.264",
+    "pixel_format": "yuv420p",
+    "audio": false,
+    "added_caption_height": 160,
+    "chapter_card_seconds": 2
+  }
+}

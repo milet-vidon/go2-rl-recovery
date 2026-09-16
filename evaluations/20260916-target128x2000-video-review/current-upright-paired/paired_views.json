@@ -1,0 +1,15 @@
+{
+  "note": "Left: front; right: oblique. Independent matched-condition replays, NOT synchronized cameras; full duration without time cropping. Conditions, source order, start eligibility and discrete outcomes checked; physical trajectories need not be bitwise identical.",
+  "checkpoint_sha256": "5479e23fd0617026a2d913eb509356cc5c8d2324a2601dd0e26b4556e9cb8710",
+  "source_reports": [
+    "../current-upright-front/model_1999.pt_recovery_metrics.json",
+    "../current-upright-oblique/model_1999.pt_recovery_metrics.json"
+  ],
+  "artifacts": {
+    "upright": {
+      "video": "model_1999_upright_front_oblique.mp4",
+      "frames": 275.0,
+      "fps": 25.0
+    }
+  }
+}
