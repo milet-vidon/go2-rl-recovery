@@ -1,6 +1,6 @@
 # Smith-inspired reward-only Go2 pilot
 
-Status19:04local: formal128-environment/2000-iteration training is ACTIVE after successful training and evaluator smokes. Run `E:/IsaacLab/repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_19-02-40_20260916-smithnominal128x2000`, orchestrator26126, PID119728. Actual saved formal YAMLs also pass the reward-only comparison. This is a method-level reward adaptation, not full paper reproduction and not a successful recovery claim.
+Status20:18local: COMPLETED. Run `E:/IsaacLab/repo/logs/rsl_rl/unitree_go2_recovery/2026-09-16_19-02-40_20260916-smithnominal128x2000` finished2000iterations/6,144,000steps; final1999 SHA `71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c`. All9strict20-trial groups remain0ever-valid/0final-valid/0geometry. Body righting improves, but height and support remain abnormal. [New visually verified failure clips and measurements](smith-video-review-20260916.md). No promotion. The separate [stand-weight continuation pair](smith-standweight-pair-20260916.md) is now active. This remains a method-level adaptation, not a full paper reproduction.
 
 ## Exact change
 
@@ -35,7 +35,7 @@ Smoke training run: `E:/IsaacLab/repo/logs/rsl_rl/unitree_go2_recovery/2026-09-1
 
 Installation backup: `E:/IsaacLab/artifacts/install-backup-20260916-185317`. CPU reward math11tests, adapter8tests, full-schema config guard19tests and action control9tests pass, along with historical posture math regressions. Real evaluator smokes completed: heldout side/back0/2each, controlled30degree upright/side/fore-aft0/2each; every bank start was eligible. This is interface validation, not a claim that a2-iteration model recovers.
 
-Formal finite command ALREADY RUNNING (do not execute again):
+Historical completed command (do not execute again over its outputs):
 
 ```powershell
 ./scripts/run_recovery_smith_pilot.ps1 -RunTag 20260916-smithnominal128x2000 -Iterations 2000 -NumEnvs 128
@@ -43,7 +43,9 @@ Formal finite command ALREADY RUNNING (do not execute again):
 
 This runs6,144,000 environment steps, then sequential20-trial heldout side/back, controlled30degree and45degree suites under the new matching action task. No automatic promotion or extra training. It rejects duplicate outputs, records and rechecks source hashes, checks saved configs, and rejects invalid physics logs. Keep a single simulator running and every output on E:. See the [live status](training-status-20260916.md) before resuming; do not rerun the whole launcher over an existing run.
 
-## Video follow-up (prepared, not started)
+## Video follow-up (completed; historical preparation notes below)
+
+Recorded20:04–20:12: all six raw and three paired videos are complete; main viewed both angles for upright/side/back and fully decoded all files. See the [actual results](smith-video-review-20260916.md). The output directory already exists; the recorder correctly refuses rerunning over it. The following describes its original pre-recording readiness check, not the current status.
 
 `scripts/record_smith_recovery_review.ps1 -PreflightOnly` checks that training and all three batch evaluations are complete and no other simulator is active. The current preflight correctly returns NOT READY with three missing reports and active PID119728, creates no output and starts no simulator. Once READY, omit `-PreflightOnly` to record the new candidate; never run it over an existing output directory.
 

@@ -10,12 +10,17 @@ param(
     [string]$Device = "cuda:0",
     [double]$FallAngleDeg = 0,
     [double]$CurriculumSteps = 0,
+    # Isolated Smith stand-weight experiment; omitted means no Hydra override.
+    [ValidateSet(10, 30)][double]$SmithStandWeight,
     [switch]$FocusSide,
     [switch]$Headless,
     [switch]$DryRun
 )
 
 $ErrorActionPreference = "Stop"
+if ($PSBoundParameters.ContainsKey('SmithStandWeight') -and $Stage -ne 'recovery_bank_smith_nominal') {
+    throw '-SmithStandWeight is only supported by recovery_bank_smith_nominal for the stand-weight-only experiment.'
+}
 if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "recovery_bank_smith_nominal")) {
     if ($FallAngleDeg -gt 0 -or $FocusSide -or $CurriculumSteps -gt 0) {
         throw "$Stage uses its configured validated-state mixture; old angle/focus/mixture overrides are not supported."
@@ -154,6 +159,11 @@ try {
             "env.viewer.eye=[3.0,3.0,1.8]",
             "env.viewer.lookat=[0.0,0.0,0.3]"
         )
+    }
+
+    if ($PSBoundParameters.ContainsKey('SmithStandWeight')) {
+        # Change only the stand reward. Roll, PPO, bank, and actions stay unchanged.
+        $TrainingArgs += 'env.rewards.smith_stand.weight=' + $SmithStandWeight.ToString('F1', [Globalization.CultureInfo]::InvariantCulture)
     }
 
     Write-Host "Starting $Stage training: task=$Task, envs=$NumEnvs, iterations=$MaxIterations, device=$Device"

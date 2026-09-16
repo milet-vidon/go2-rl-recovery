@@ -1,0 +1,20 @@
+{
+  "note": "Left: front; right: oblique. Independent matched-condition replays, NOT synchronized cameras; full duration without time cropping. Conditions, source order, start eligibility and discrete outcomes checked; physical trajectories need not be bitwise identical.",
+  "checkpoint_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+  "source_reports": [
+    "../smith-heldout-front/model_1999.pt_recovery_metrics.json",
+    "../smith-heldout-oblique/model_1999.pt_recovery_metrics.json"
+  ],
+  "artifacts": {
+    "side": {
+      "video": "model_1999_side_front_oblique.mp4",
+      "frames": 276.0,
+      "fps": 25.0
+    },
+    "upside_down": {
+      "video": "model_1999_upside_down_front_oblique.mp4",
+      "frames": 276.0,
+      "fps": 25.0
+    }
+  }
+}
