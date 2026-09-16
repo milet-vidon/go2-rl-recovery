@@ -417,7 +417,7 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
     labels = (
         f"Go2 self-recovery | pose: {pose_class}",
         f"time: {(step + 1) * dt:4.2f} s | valid stand hold: {stable_s:4.2f} s",
-        ("LEG GEOMETRY OK" if row["geometry_ok"] else "INVALID LEG GEOMETRY")
+        ("LEG SHAPE ONLY: OK" if row["geometry_ok"] else "INVALID LEG GEOMETRY")
         + (f" | valid stand held {args_cli.hold_s:g}s" if stable_s >= args_cli.hold_s else " | stand hold pending"),
         f"{args_cli.checkpoint.parent.name} / {args_cli.checkpoint.name}",
         ("Simulation | pre-settled nominal-pose PD (NOT zero torque)" if args_cli.settle_s > 0
@@ -428,7 +428,11 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
     if start_classification is not None:
         labels += (f"Actual policy start: {start_classification}",)
     for i, text in enumerate(labels):
-        color = ((80, 220, 80) if row['geometry_ok'] else (60, 80, 255)) if i == 2 else (245, 245, 245)
+        # Leg shape in body coordinates can pass while upside down. Green is
+        # reserved for a CURRENT completed, continuous valid-standing hold.
+        status_color = ((80, 220, 80) if stable_s >= args_cli.hold_s
+                        else ((0, 190, 255) if row['geometry_ok'] else (60, 80, 255)))
+        color = status_color if i == 2 else (245, 245, 245)
         font_scale = 0.48 if i >= 3 else 0.70
         cv2.putText(image, text, (20, 38 + i * 32), cv2.FONT_HERSHEY_SIMPLEX, font_scale, color, 1 if i >= 3 else 2, cv2.LINE_AA)
     cv2.putText(image, f"Front feet body y (m): FL {row['FL_foot_y_b']:+.3f} / FR {row['FR_foot_y_b']:+.3f}",
@@ -483,7 +487,9 @@ def main() -> None:
     env_cfg.episode_length_s = args_cli.settle_s + args_cli.horizon_s + args_cli.hold_s + 1.0
     env_cfg.sim.device = args_cli.device
     env_cfg.seed = args_cli.seed
-    env_cfg.viewer.origin_type = "asset_root"
+    # _camera owns yaw-relative framing each recorded frame. asset_root's
+    # post-render callback would overwrite it with the default wide view.
+    env_cfg.viewer.origin_type = "world"
     env_cfg.viewer.asset_name = "robot"
     env_cfg.viewer.eye = (2.3, 2.3, 1.35)
     env_cfg.viewer.lookat = (0.0, 0.0, 0.30)

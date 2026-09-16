@@ -214,6 +214,19 @@ for _suffix, _cfg in (("", "UnitreeGo2RecoveryBankEnvCfg"), ("-Play", "UnitreeGo
         },
     )
 
+for _variant in ("Control", "Release"):
+    for _suffix, _cfg in (("", f"UnitreeGo2RecoveryBank{_variant}EnvCfg"),
+                          ("-Play", f"UnitreeGo2RecoveryBank{_variant}EnvCfg_PLAY")):
+        gym.register(
+            id=f"Isaac-Recovery-Bank-{_variant}-Flat-Unitree-Go2{_suffix}-v0",
+            entry_point="isaaclab.envs:ManagerBasedRLEnv",
+            disable_env_checker=True,
+            kwargs={
+                "env_cfg_entry_point": f"{__name__}.recovery_env_cfg:{_cfg}",
+                "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:UnitreeGo2RecoveryPPORunnerCfg",
+            },
+        )
+
 for _suffix, _cfg in (("", "UnitreeGo2RecoveryRehearsalEnvCfg"), ("-Play", "UnitreeGo2RecoveryRehearsalEnvCfg_PLAY")):
     gym.register(
         id=f"Isaac-Recovery-Rehearsal-Flat-Unitree-Go2{_suffix}-v0",

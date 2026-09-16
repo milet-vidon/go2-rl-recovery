@@ -23,7 +23,9 @@
     "recovery_lift_experimental": "models/recovery/recovery_lift_model2300.pt",
     "recovery_condposture_rejected_crossed_legs": "models/recovery/recovery_condposture_model3498.pt",
     "recovery_uncrossed_intermediate": "models/recovery/recovery_uncrossed_intermediate_model2849.pt",
-    "recovery_aligned_30deg_experimental": "models/recovery/recovery_aligned_model3448.pt"
+    "recovery_aligned_30deg_experimental": "models/recovery/recovery_aligned_model3448.pt",
+    "recovery_rehearsal_intermediate_not_promoted": "models/recovery/recovery_rehearsal_model3900.pt",
+    "recovery_bank_rejected_grounded_failures": "models/recovery/recovery_bank_rejected_model4899.pt"
   },
   "recommended_task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
   "sha256": {
@@ -36,9 +38,25 @@
     "models/recovery/recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e",
     "models/recovery/recovery_condposture_model3498.pt": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb",
     "models/recovery/recovery_uncrossed_intermediate_model2849.pt": "849abe1b0a6810d42433a86c284bc015c884a5f76497f2cfab87f691860703fe",
-    "models/recovery/recovery_aligned_model3448.pt": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2"
+    "models/recovery/recovery_aligned_model3448.pt": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+    "models/recovery/recovery_rehearsal_model3900.pt": "70f1429040ebe3db1f8bdcbe246bff0c791f50c9739a46568932332e1ffe81aa",
+    "models/recovery/recovery_bank_rejected_model4899.pt": "a021ba7a25d5a9803f7f905b4a242df8582a4d2730de5843303e76beaa26b4e2"
   },
   "training_lineage": [
+    {
+      "run": "2026-09-16_13-16-04_bank_nominalpd_from3900_20260916",
+      "task": "Isaac-Recovery-Bank-Flat-Unitree-Go2-v0",
+      "parent_checkpoint": "bootstrap_bank3900_std060/model_3900.pt",
+      "parent_sha256": "ca445aa39bdca62fe18e04924e967feda2c2af496f7263238a4c2bf22947a3fa",
+      "final_checkpoint": "models/recovery/recovery_bank_rejected_model4899.pt",
+      "additional_iterations": 1000,
+      "num_envs": 512,
+      "additional_environment_steps": 12288000,
+      "parameters": "configs/recovery-bank-pilot-20260916",
+      "status": "rejected",
+      "report": "evaluations/20260916-bank4899-heldout/model_4899.pt_recovery_metrics.json",
+      "note": "244 validated starting states,214 train and30 heldout. Pilot bootstrap preserved3900 actor/critic but reset sampling std0.6 and Adam moments. Final4899: settled side0/20 from16 unique states,back0/20 from14.30/45degree regressions worsened. Not a recommended controller."
+    },
     {
       "run": "official_bootstrap",
       "checkpoint": "checkpoint.pt",

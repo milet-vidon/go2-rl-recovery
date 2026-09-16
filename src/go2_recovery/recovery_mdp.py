@@ -18,7 +18,7 @@ from isaaclab.managers import ManagerTermBase, SceneEntityCfg
 from isaaclab.sensors import ContactSensor
 from isaaclab.utils import math as math_utils
 
-from .recovery_math import reset_clearance_height, upright_error_squared, normal_stance_geometry, stance_alignment_penalty, rehearsal_tilt_degrees
+from .recovery_math import reset_clearance_height, upright_error_squared, normal_stance_geometry, stance_alignment_penalty, rehearsal_tilt_degrees, stance_penalty_gate
 
 
 class UncrossedStanceReward(ManagerTermBase):
@@ -40,6 +40,8 @@ class UncrossedStanceReward(ManagerTermBase):
         self.base = self.sensor.find_bodies("base")[0]
 
     def __call__(self, env, mode: str, target_height: float = 0.32):
+        if mode not in ("penalty", "aligned_penalty", "aligned_release_penalty", "stand"):
+            raise ValueError(f"Unknown UncrossedStanceReward mode: {mode!r}")
         a = self.robot.data
         q = a.root_quat_w[:, None, :].expand(-1, 4, -1)
         feet = math_utils.quat_apply_inverse(q, a.body_pos_w[:, self.feet] - a.root_pos_w[:, None])
@@ -47,15 +49,21 @@ class UncrossedStanceReward(ManagerTermBase):
         delta = a.joint_pos - a.default_joint_pos
         error = upright_error_squared(a.projected_gravity_b)
         # Only after rolling approaches upright; no nominal-pose pressure upside down.
-        gate = ((-a.projected_gravity_b[:, 2] - 0.5) / 0.4).clamp(0, 1)
+        gate = stance_penalty_gate(-a.projected_gravity_b[:, 2], mode="legacy")
         side = feet.new_tensor([1., -1., 1., -1.])
         fore = feet.new_tensor([1., 1., -1., -1.])
-        if mode in ("penalty", "aligned_penalty"):
+        if mode in ("penalty", "aligned_penalty", "aligned_release_penalty"):
             crossing = ((0.09 - feet[:, :, 1] * side).clamp(min=0) / 0.1).mean(1)
             crossing += ((0.05 - knees[:, :, 1] * side).clamp(min=0) / 0.1).mean(1)
             crossing += ((0.10 - feet[:, :, 0] * fore).clamp(min=0) / 0.2).mean(1)
-            if mode == "aligned_penalty":
+            if mode in ("aligned_penalty", "aligned_release_penalty"):
                 crossing += stance_alignment_penalty(feet)
+            if mode == "aligned_release_penalty":
+                height = a.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+                gate = stance_penalty_gate(
+                    -a.projected_gravity_b[:, 2], height,
+                    self.sensor.data.net_forces_w[:, self.contact_feet, 2], mode="release",
+                )
             # Linear joint deviation cannot vanish for twisted postures.
             return gate * (crossing + delta.abs().mean(1))
         if mode != "stand":

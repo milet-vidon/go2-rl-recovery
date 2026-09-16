@@ -381,6 +381,45 @@ class UnitreeGo2RecoveryBankEnvCfg_PLAY(UnitreeGo2RecoveryBankEnvCfg):
 
 
 @configclass
+class UnitreeGo2RecoveryBankControlEnvCfg(UnitreeGo2RecoveryBankEnvCfg):
+    """Gate-ablation control: fixed 60% bank sampling, historical aligned penalty."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.events.reset_base.params.update({"bank_fraction_start": 0.60, "bank_fraction_end": 0.60})
+
+
+@configclass
+class UnitreeGo2RecoveryBankControlEnvCfg_PLAY(UnitreeGo2RecoveryBankControlEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankReleaseEnvCfg(UnitreeGo2RecoveryBankControlEnvCfg):
+    """Single-variable ablation: defer the aligned penalty until supported/upright.
+
+    Identical to Control except for the penalty gate. A policy can still avoid
+    the gate by staying low/tilted or lifting feet; unchanged strict stand rewards
+    and external evaluation must reject such failed recoveries.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.rewards.crossed_limbs.params["mode"] = "aligned_release_penalty"
+
+
+@configclass
+class UnitreeGo2RecoveryBankReleaseEnvCfg_PLAY(UnitreeGo2RecoveryBankReleaseEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
 class UnitreeGo2RecoveryRehearsalEnvCfg(UnitreeGo2RecoveryAlignedEnvCfg):
     """Harder recovery with familiar upright/tilt rehearsal, isolated from old tasks."""
 

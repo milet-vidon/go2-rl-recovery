@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "recovery_bank_control", "recovery_bank_release", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -16,19 +16,22 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-if ($Stage -eq "recovery_bank") {
+if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release")) {
     if ($FallAngleDeg -gt 0 -or $FocusSide -or $CurriculumSteps -gt 0) {
-        throw "recovery_bank uses its own validated states and 12000-step mixture curriculum; old angle/focus/mixture overrides are not supported."
+        throw "$Stage uses its configured validated-state mixture; old angle/focus/mixture overrides are not supported."
     }
     if ([string]::IsNullOrWhiteSpace($BankPath) -or -not (Test-Path -LiteralPath $BankPath)) {
-        throw "recovery_bank requires -BankPath <validated E-drive bank directory or states.npz>."
+        throw "$Stage requires -BankPath <validated E-drive bank directory or states.npz>."
     }
     $resolvedBankPath = (Resolve-Path -LiteralPath $BankPath).Path
     if ([IO.Path]::GetPathRoot($resolvedBankPath) -ne 'E:\') { throw 'Recovery state banks must stay on E:.' }
     $env:ISAACLAB_RECOVERY_BANK_PATH = $resolvedBankPath
     Remove-Item Env:ISAACLAB_RECOVERY_BANK_COLLECTION -ErrorAction SilentlyContinue
 } elseif (-not [string]::IsNullOrWhiteSpace($BankPath)) {
-    throw '-BankPath is only supported by the recovery_bank stage.'
+    throw '-BankPath is only supported by recovery_bank, recovery_bank_control, or recovery_bank_release.'
+}
+if ($Stage -in @("recovery_bank_control", "recovery_bank_release") -and [string]::IsNullOrWhiteSpace($LoadRun)) {
+    throw "$Stage requires -LoadRun and the parent checkpoint so policy noise and optimizer state are resumed normally."
 }
 if ($Stage -eq "recovery_rehearsal" -and $FallAngleDeg -gt 0) {
     throw "recovery_rehearsal uses its configured 20-60 degree angle curriculum; -FallAngleDeg would be ignored. Omit it or choose a historical recovery stage."
@@ -91,6 +94,10 @@ $Task = if ($Stage -eq "natural_robust_push") {
     "Isaac-Recovery-Rehearsal-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_bank") {
     "Isaac-Recovery-Bank-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_control") {
+    "Isaac-Recovery-Bank-Control-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_release") {
+    "Isaac-Recovery-Bank-Release-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_lift") {
     "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery") {

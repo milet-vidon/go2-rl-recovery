@@ -3,6 +3,29 @@
 import torch
 
 
+def stance_penalty_gate(cos_up, height=None, vertical_foot_forces=None, *, mode="legacy"):
+    """Gate the anatomical stance penalty without changing its magnitude.
+
+    Legacy reproduces the historical orientation-only gate exactly. Release is
+    an isolated experiment: upright cosine ramps from .85 to .95, height ramps
+    from .24 to .28 m, and >=2 CURRENT vertical foot forces must exceed 5 N.
+    The posture/height ramps are continuous and bounded; the support indicator
+    is intentionally discrete. This is shaping, never a recovery success test.
+    """
+    if mode == "legacy":
+        return ((cos_up - 0.5) / 0.4).clamp(0, 1)
+    if mode != "release":
+        raise ValueError(f"Unknown stance penalty gate mode: {mode!r}")
+    if height is None or vertical_foot_forces is None:
+        raise ValueError("Release gate requires height and current vertical foot forces")
+    if height.shape != cos_up.shape or vertical_foot_forces.shape != (*cos_up.shape, 4):
+        raise ValueError("Expected matching cosine/height shapes and four foot forces per sample")
+    orientation_gate = ((cos_up - 0.85) / 0.10).clamp(0, 1)
+    height_gate = ((height - 0.24) / 0.04).clamp(0, 1)
+    support = (vertical_foot_forces > 5.0).sum(dim=-1) >= 2
+    return orientation_gate * height_gate * support
+
+
 def rehearsal_tilt_degrees(unit_sample, rehearsal_sample, progress, angle_range=(20.0, 60.0), rehearsal_fraction=0.35):
     """Widen tilt distribution while retaining familiar <=30 degree rehearsal.
 

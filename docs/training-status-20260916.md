@@ -2,13 +2,24 @@
 
 Status: **in progress; user expectations are NOT yet met**. Simulation only. No claim of full reference-video reproduction or real-robot safety. All new code, models, reports and runtime data stay on E:.
 
-## ACTIVE JOB — grounded-state-bank pilot
+## CURRENT FOLLOW-UP — penalty-gate controlled experiment
 
-Started2026-09-16 13:16 local and confirmed actively training; **do not start a duplicate**.
+Updated2026-09-16 14:22 local. The grounded-bank pilot below has FINISHED; do not restart it. Final4899 is rejected, not a recommended model. Front/oblique failure diagnostics completed and were visually inspected. A new paired100+100 iteration experiment is ACTIVE (session58543),started14:19; do not duplicate. Script `scripts/run_recovery_gate_ablation.ps1 -RunTag 20260916-gate100 -Iterations 100` serially trainsControl,evaluatesheldout/30/45,then trainsRelease and runs the same evaluation. Log `E:/IsaacLab/artifacts/recovery-20260916/gate100-orchestrator.log`; per-arm logs shareprefix20260916-gate100. Exact plan/provenance: [gate ablation](recovery-gate-ablation-20260916.md).
+
+- Completed4899 evaluation: heldout side0/20,back0/20;16 and14 unique states respectively, exactly the same bank/hash/IDs/order as3900. All starts eligible, no valid final stands.
+- Aligned30degree seed20260918: upright20/20,side10/20,fore/aft18/20. Aligned45degree seed20260916: upright20/20,side0/20,fore/aft10/20,inversion0/20. Do not overwrite recommended3448 or locomotion2250.
+- Side stops at61.26–71.00degrees(mean65.72),height0.1503m,one supporting foot. Back remains180degrees,height0.057m,zero feet. Raw aggregate reward concealed these failures.
+- Hypothesis, NOT established cause: old posture-penalty gate begins at60degrees, immediately requiring narrow/symmetric/nominal stance while still rolling. All20 side finals sit just outside this gate. A conservative partial raw-penalty estimate is1.61; at50degrees this can add at least2.30 weighted penalty versus about0.3 orientation/height shaping gain if leg geometry has not changed. Back has gate0 already, so this change is not expected to directly solve inversion.
+- Planned paired control/release: same4899 checkpoint and optimizer/std, same seed42, fixed60% bank mix (do not restart the20→60% curriculum), same214 train states, physics and PPO. Control retains old penalty. Release only delays it using continuous cos(up)0.85→0.95 and height0.24→0.28 ramps, with >=2 CURRENT vertical-foot forces>5N. All stand-success rewards and final geometry/four-contact/height/quietness criteria remain unchanged.
+- ActiveControl run `2026-09-16_14-19-08_20260916-gate100_control`,confirmediterating from4899 withstd0.13,fixed60% bank andoriginal aligned penalty;13 new gate tests and19 bank-data tests passed before installation/launch. Begin with100 iterations per arm; maximum400 per arm only after trajectory/heldout evidence justifies continuation. Stop an unproductive branch instead of indefinitely adding iterations. No noisy/global-std reset is part of this ablation. Branch outcomes are not yet available.
+
+## COMPLETED JOB — grounded-state-bank pilot (historical launch record)
+
+Started2026-09-16 13:16 local; completed13:40:11,1,000 iterations,12,288,000 environment steps, final4899. **Do not start a duplicate.** Details below retain the historical launch plan, superseded by measured outcomes above.
 
 - Run: `E:\IsaacLab\repo\logs\rsl_rl\unitree_go2_recovery\2026-09-16_13-16-04_bank_nominalpd_from3900_20260916`
 - Log: `E:\IsaacLab\artifacts\recovery-20260916\train-bank-pilot.log`; current-turn session71234.
-- Stage `recovery_bank`,512 environments,1,000 additional PPO iterations requested,expected last checkpoint `model_4899.pt` and12,288,000 additional environment steps if completed. Latest observed progress:2,015,232 steps; no runtime error. This is not yet a completed or accepted model.
+- Stage `recovery_bank`,512 environments,1,000 additional PPO iterations completed, final `model_4899.pt`,12,288,000 additional environment steps. No training runtime error, but the checkpoint FAILED acceptance as recorded above.
 - Loaded `bootstrap_bank3900_std060/model_3900.pt`; deterministic actor/critic equal original3900, sampling std0.6 and fresh Adam moments for this exploration pilot. Original parent and accepted models are untouched.
 - Actual saved configs and bootstrap lineage: `configs/recovery-bank-pilot-20260916/`.
 - Bank: `datasets/recovery_states/nominal_pd_v1_20260916/`,SHA256 `71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a`;214 training states,30 heldout states. Nominal-PD-prepared and cold-replay-validated; not passive zero-torque falls.
@@ -16,7 +27,7 @@ Started2026-09-16 13:16 local and confirmed actively training; **do not start a 
 - Parent3900 heldout baseline: side0/20 trials from16 unique states; back0/20 from14 unique states. Every trial was confirmed settled-fallen. These40 rollouts cover only30 independent source states. Report `evaluations/20260916-bank3900-heldout/model_3900.pt_recovery_metrics.json`.
 - Visually inspected front and oblique side/back diagnostics: real ground-supported initial bodies, old policy remains/ends back-down, no recovery. Framed videos are in `evaluations/20260916-bank3900-framed-front/` and `...-oblique/`; these are FAILURE evidence, not result demos. First frame still uses the wide initial render view; later tracking keeps all feet in frame. For final deliverables, initialize the offscreen render camera before setting the first tracked view and verify it again.
 
-Next follow-up: let this finite pilot finish, then evaluate candidate checkpoints against3900 using the exact same Bank Play task,bank hash,heldout split,IDs/order,seed20260918,20 trials and1s nominal-PD handover. Also run Aligned Play upright/30degree seed20260918 and45degree seed20260916 geometry regression; preserve the separate locomotion2250 baseline. If settled recovery remains absent, analyze trajectories/rewards before another run, rather than simply adding iterations. A successful bank test alone does not establish arbitrary-fall robustness or an integrated standing/walking/stopping/recovery controller.
+Completed follow-up:4899 was evaluated against3900 with the same Bank Play task,hash,heldout split,IDs/order,seed20260918,20 trials and1s nominal-PD handover; Aligned upright/30/45degree regressions also completed. Reports are in `evaluations/20260916-bank4899-{heldout,angle30,angle45}/`. The limited-domain and locomotion baselines are preserved. Even a future successful bank test will not establish arbitrary-fall robustness or an integrated standing/walking/stopping/recovery controller.
 
 ## Acceptance priorities
 
@@ -114,4 +125,4 @@ If sandbox execution fails with `helper_sandbox_lock_failed` / `SetNamedSecurity
 ## Research context
 
 - [Robust Recovery Controller for a Quadrupedal Robot using Deep Reinforcement Learning (2019)](https://arxiv.org/abs/1901.07517).
-- [Learning to Recover for Quadrupedal Wheel-Legged Robots (2025)](https://arxiv.org/html/2506.05516v1) motivates physically settled fallen initial states and checking final posture separately from exploration. Its wheeled platform and reported results are not reproduced here and cannot be claimed for this Go2.
+- [Learning to Recover: Dynamic Reward Shaping with Wheel-Leg Coordination for Fallen Robots (2025)](https://arxiv.org/html/2506.05516v1) motivates physically settled fallen initial states and checking final posture separately from exploration. Its wheeled platform and reported results are not reproduced here and cannot be claimed for this Go2. The [gate ablation notes](recovery-gate-ablation-20260916.md) distinguish its episode-time formula from our state-based gate and document the2019 paper's alternative current-joint-relative action representation for a future separate test.
