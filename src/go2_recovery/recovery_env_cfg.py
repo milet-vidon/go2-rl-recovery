@@ -345,6 +345,29 @@ class UnitreeGo2RecoveryAlignedEnvCfg_PLAY(UnitreeGo2RecoveryAlignedEnvCfg):
 
 
 @configclass
+class UnitreeGo2RecoveryRehearsalEnvCfg(UnitreeGo2RecoveryAlignedEnvCfg):
+    """Harder recovery with familiar upright/tilt rehearsal, isolated from old tasks."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.events.reset_base.params.update({
+            "pose_probabilities": (0.25, 0.35, 0.30, 0.05, 0.05),
+            "rehearsal_angle_range_deg": (20.0, 60.0),
+            "rehearsal_fraction": 0.35,
+            "angle_curriculum_steps": 12000,
+            "full_inversion": True,
+        })
+
+
+@configclass
+class UnitreeGo2RecoveryRehearsalEnvCfg_PLAY(UnitreeGo2RecoveryRehearsalEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
 class UnitreeGo2RecoveryLocomotionEnvCfg(UnitreeGo2RecoveryEnvCfg):
     """Fine-tune the recovered policy into a smooth, diagonal-trot velocity policy."""
 

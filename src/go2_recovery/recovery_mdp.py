@@ -18,7 +18,7 @@ from isaaclab.managers import ManagerTermBase, SceneEntityCfg
 from isaaclab.sensors import ContactSensor
 from isaaclab.utils import math as math_utils
 
-from .recovery_math import reset_clearance_height, upright_error_squared, normal_stance_geometry, stance_alignment_penalty
+from .recovery_math import reset_clearance_height, upright_error_squared, normal_stance_geometry, stance_alignment_penalty, rehearsal_tilt_degrees
 
 
 class UncrossedStanceReward(ManagerTermBase):
@@ -83,6 +83,10 @@ def reset_root_state_mixed(
     upright_height_range: tuple[float, float],
     fallen_height_range: tuple[float, float],
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    rehearsal_angle_range_deg: tuple[float, float] | None = None,
+    rehearsal_fraction: float = 0.35,
+    angle_curriculum_steps: int = 12000,
+    full_inversion: bool = False,
 ):
     """Reset Go2 from a controlled mix of upright and fallen poses.
 
@@ -159,13 +163,24 @@ def reset_root_state_mixed(
     else:
         fall_angle = 0.35 + progress * (math.pi / 2.0 - 0.35)
     fall_angle = max(0.35, min(fall_angle, math.pi / 2.0))
+    if rehearsal_angle_range_deg is not None:
+        angle_progress = float(getattr(env, "common_step_counter", 0)) / max(1, angle_curriculum_steps)
+        fall_angle = torch.deg2rad(rehearsal_tilt_degrees(
+            uniform(0, 1), uniform(0, 1), angle_progress,
+            rehearsal_angle_range_deg, rehearsal_fraction,
+        ))
     roll[side] = (side_sign * fall_angle + uniform(-0.20, 0.20))[side]
     pitch[side] = uniform(-0.20, 0.20)[side]
     roll[fore_aft] = uniform(-0.20, 0.20)[fore_aft]
     pitch[fore_aft] = (fore_aft_sign * fall_angle + uniform(-0.20, 0.20))[fore_aft]
 
     # A roll near pi produces a back-down orientation without privileging one side.
-    upside_angle = min(math.pi, 2.0 * fall_angle)
+    if full_inversion:
+        upside_angle = math.pi
+    elif isinstance(fall_angle, torch.Tensor):
+        upside_angle = (2.0 * fall_angle).clamp(max=math.pi)
+    else:
+        upside_angle = min(math.pi, 2.0 * fall_angle)
     roll[upside_down] = (side_sign * upside_angle + uniform(-0.20, 0.20))[upside_down]
     pitch[upside_down] = uniform(-0.20, 0.20)[upside_down]
 

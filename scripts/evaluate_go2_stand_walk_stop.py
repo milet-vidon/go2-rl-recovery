@@ -58,6 +58,7 @@ from isaaclab_tasks.utils.parse_cfg import load_cfg_from_registry  # noqa: E402
 
 import isaaclab_tasks  # noqa: F401, E402
 from isaaclab_tasks.manager_based.locomotion.velocity import mdp
+from isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_math import normal_stance_geometry
 from isaaclab.utils.math import quat_apply_inverse
 from isaaclab.sim.spawners.from_files.from_files_cfg import GroundPlaneCfg
 import isaaclab.sim as sim_utils
@@ -130,6 +131,42 @@ def _open_video(path: Path):
     return writer
 
 
+def _stance_summary(samples):
+    """Read-only per-phase diagnostics; contact/geometry acceptance is rest-only."""
+    if not samples:
+        raise ValueError("Each phase must contain samples after its 1 s settling window.")
+    count = len(samples)
+    geometry_count = sum(bool(row["stance_geometry_ok"]) for row in samples)
+    support_count = sum(row["current_vertical_foot_contacts"] == 4 for row in samples)
+    clear_count = sum(not row["current_base_contact"] for row in samples)
+    valid_count = sum(
+        bool(row["stance_geometry_ok"])
+        and row["current_vertical_foot_contacts"] == 4
+        and not row["current_base_contact"]
+        for row in samples
+    )
+    return {
+        "stance_geometry_fraction": geometry_count / count,
+        "stance_geometry_invalid_samples": count - geometry_count,
+        "four_feet_vertical_contact_fraction": support_count / count,
+        "current_base_clear_fraction": clear_count / count,
+        "stance_geometry_and_support_fraction": valid_count / count,
+        "max_joint_offset_rad": max(row["max_joint_offset_rad"] for row in samples),
+        "sample_count": count,
+    }
+
+
+def _rest_stance_acceptance(settled):
+    """Do not require a walking quadruped to keep all four feet on the ground."""
+    resting = [settled[phase] for phase in ("stand", "stop")]
+    return {
+        "normal_stance_geometry_at_rest": all(s["stance_geometry_invalid_samples"] == 0 for s in resting),
+        "four_vertical_contacts_at_rest": all(s["four_feet_vertical_contact_fraction"] > 0.95 for s in resting),
+        "no_current_base_contact_at_rest": all(s["current_base_clear_fraction"] == 1.0 for s in resting),
+        "geometry_and_support_at_rest": all(s["stance_geometry_and_support_fraction"] > 0.95 for s in resting),
+    }
+
+
 def _diagnostic_floor():
     """A visible grid and shadows; no colliders or physical parameters changed."""
     from pxr import UsdShade
@@ -160,9 +197,13 @@ def _annotate(frame: np.ndarray, phase: str, t: float, row: dict[str, float]) ->
         f"height={row['height']:.3f}m roll={row['roll_deg']:+.1f} pitch={row['pitch_deg']:+.1f}",
         f"speed={row['speed']:.2f}m/s contacts={int(row['foot_contacts'])} base_contact={int(row['base_contact'])}",
         f"lateral delta-v={args_cli.push_speed:.2f} m/s | automatic fall reset OFF",
+        f"rest geometry={int(row['stance_geometry_ok'])} current vertical contacts={int(row['current_vertical_foot_contacts'])}/4",
     )
     for i, line in enumerate(lines):
-        color = (80, 220, 80) if i == 0 and phase == "stop" else (245, 245, 245)
+        invalid_rest = phase in ("stand", "stop") and (
+            not row['stance_geometry_ok'] or row['current_vertical_foot_contacts'] != 4 or row['current_base_contact']
+        )
+        color = (80, 80, 240) if i == 5 and invalid_rest else (245, 245, 245)
         cv2.putText(image, line, (18, 34 + 27 * i), cv2.FONT_HERSHEY_SIMPLEX, 0.58, color, 2, cv2.LINE_AA)
     return image
 
@@ -197,8 +238,10 @@ def main() -> None:
     base_ids = contact_sensor.find_bodies(("base",), preserve_order=True)[0]
     foot_names = ("FL_foot", "FR_foot", "RL_foot", "RR_foot")
     foot_body_ids = asset.find_bodies(foot_names, preserve_order=True)[0]
-    if len(foot_ids) != 4 or len(base_ids) != 1:
-        raise RuntimeError(f"Unexpected sensor bodies: feet={foot_ids}, base={base_ids}")
+    knee_names = ("FL_calf", "FR_calf", "RL_calf", "RR_calf")
+    knee_body_ids = asset.find_bodies(knee_names, preserve_order=True)[0]
+    if len(foot_ids) != 4 or len(base_ids) != 1 or len(foot_body_ids) != 4 or len(knee_body_ids) != 4:
+        raise RuntimeError(f"Unexpected robot/sensor bodies: feet={foot_ids}, base={base_ids}, knees={knee_body_ids}")
 
     env.reset()
     _set_command(term, (0.0, 0.0, 0.0))
@@ -215,8 +258,12 @@ def main() -> None:
         "step", "time_s", "phase", "cmd_x", "cmd_y", "cmd_yaw", "height", "x", "y",
         "speed", "yaw_speed", "roll_deg", "pitch_deg", "foot_contacts", "base_contact", "done",
         "vx", "vy", "vx_b", "vy_b", "wz", "push_delta_vy", "joint_rms_deviation",
+        "stance_geometry_ok", "current_vertical_foot_contacts", "current_base_contact",
+        "current_base_force_n", "max_joint_offset_rad",
     ]
-    fields += [f"{name}_{quantity}" for name in foot_names for quantity in ("x_b", "y_b", "z_w", "fz", "contact", "speed_xy")]
+    fields += [f"{name}_{quantity}" for name in foot_names for quantity in ("x_b", "y_b", "z_w", "fz", "contact", "vertical_contact", "speed_xy")]
+    fields += [f"{name.removesuffix('_calf')}_knee_y_b" for name in knee_names]
+    fields += [f"{name}_offset_rad" for name in asset.joint_names]
     push_steps = {round(t / dt): sign * args_cli.push_speed for t, sign in (
         (args_cli.stand_s / 2, 1), (args_cli.stand_s + args_cli.walk_s / 2, -1),
         (args_cli.stand_s + args_cli.walk_s + args_cli.stop_s / 2, 1))}
@@ -224,7 +271,9 @@ def main() -> None:
                 "default_joint_positions": asset.data.default_joint_pos[0].tolist(),
                 "default_root_position": asset.data.default_root_state[0, :3].tolist(),
                 "ground_asset": GroundPlaneCfg().usd_path, "robot_asset": env_cfg.scene.robot.spawn.usd_path,
-                "ground_env_override": os.getenv("ISAACLAB_GROUND_USD")}
+                "ground_env_override": os.getenv("ISAACLAB_GROUND_USD"),
+                "stance_body_order": list(foot_names), "stance_knee_bodies": list(knee_names),
+                "body_frame": "+x front, +y left; positions relative to root, metres"}
     rows: list[dict[str, object]] = []
     max_roll = max_pitch = max_tilt = 0.0
     min_height = float("inf")
@@ -276,12 +325,30 @@ def main() -> None:
             }
             feet_world = asset.data.body_pos_w[0, foot_body_ids]
             feet_body = quat_apply_inverse(asset.data.root_quat_w[0].expand(4, -1), feet_world - asset.data.root_pos_w[0])
+            knees_world = asset.data.body_pos_w[0, knee_body_ids]
+            knees_body = quat_apply_inverse(asset.data.root_quat_w[0].expand(4, -1), knees_world - asset.data.root_pos_w[0])
+            joint_delta = asset.data.joint_pos[0] - asset.data.default_joint_pos[0]
+            geometry_ok = normal_stance_geometry(feet_body[None], knees_body[None], joint_delta[None])
+            current_vertical_forces = contact_sensor.data.net_forces_w[0, foot_ids, 2]
+            current_base_force = float(contact_sensor.data.net_forces_w[0, base_ids].norm(dim=-1).amax())
+            row.update({
+                "stance_geometry_ok": int(geometry_ok[0]),
+                "current_vertical_foot_contacts": int((current_vertical_forces > 5.0).sum()),
+                "current_base_contact": int(current_base_force > 1.0),
+                "current_base_force_n": current_base_force,
+                "max_joint_offset_rad": float(joint_delta.abs().amax()),
+            })
             for i, name in enumerate(foot_names):
                 row.update({f"{name}_x_b": float(feet_body[i, 0]), f"{name}_y_b": float(feet_body[i, 1]),
                             f"{name}_z_w": float(feet_world[i, 2]),
                             f"{name}_fz": float(contact_sensor.data.net_forces_w[0, foot_ids[i], 2]),
+                            f"{name}_vertical_contact": int(current_vertical_forces[i] > 5.0),
                             f"{name}_speed_xy": float(asset.data.body_lin_vel_w[0, foot_body_ids[i], :2].norm()),
                             f"{name}_contact": int(contact_sensor.data.net_forces_w[0, foot_ids[i]].norm() > 5.0)})
+            for i, name in enumerate(knee_names):
+                row[f"{name.removesuffix('_calf')}_knee_y_b"] = float(knees_body[i, 1])
+            for i, name in enumerate(asset.joint_names):
+                row[f"{name}_offset_rad"] = float(joint_delta[i])
             rows.append(row)
             max_roll = max(max_roll, abs(roll)); max_pitch = max(max_pitch, abs(pitch)); max_tilt = max(max_tilt, tilt)
             min_height = min(min_height, row["height"])
@@ -325,6 +392,7 @@ def main() -> None:
                              r['FL_foot_contact'] == r['RR_foot_contact'] and r['FR_foot_contact'] == r['RL_foot_contact']
                              and r['FL_foot_contact'] != r['FR_foot_contact'] for r in samples])),
                          "contact_slip_mean": float(np.mean([r[f'{n}_speed_xy'] for r in samples for n in foot_names if r[f'{n}_contact']]))}
+        settled[name].update(_stance_summary(samples))
     acceptance = {
         "no_reset": sum(r['done'] for r in rows) == 0,
         "no_base_contact": sum(r['base_contact'] for r in rows) == 0,
@@ -342,14 +410,24 @@ def main() -> None:
         acceptance['lateral_tracking'] = abs(settled['walk']['vy_b_mean'] - args_cli.lateral_speed) < 0.12
         acceptance['yaw_tracking'] = abs(settled['walk']['yaw_rate_mean'] - args_cli.yaw_rate) < 0.15
         acceptance['quiet_yaw'] = all(settled[p]['yaw_speed_p95'] < 0.15 for p in ('stand', 'stop'))
+    legacy_acceptance = dict(acceptance)
+    acceptance.update(_rest_stance_acceptance(settled))
     report = {
         "checkpoint": None if args_cli.checkpoint is None else str(args_cli.checkpoint.resolve()),
         "checkpoint_sha256": None if args_cli.checkpoint is None else hashlib.sha256(args_cli.checkpoint.read_bytes()).hexdigest(),
         "task": args_cli.task, "seed": args_cli.seed, "geometry": geometry,
+        "protocol_version": "stand_walk_stop_stance_geometry_v2",
+        "rest_geometry_protocol": "stance_geometry_v1",
         "protocol": {"stand_s": args_cli.stand_s, "walk_s": args_cli.walk_s, "stop_s": args_cli.stop_s, "walk_speed": args_cli.walk_speed, "lateral_speed": args_cli.lateral_speed, "yaw_rate": args_cli.yaw_rate, "push_delta_vy": args_cli.push_speed},
-        "criteria": "diagnostic only: inspect stable height, tilt, foot support, command tracking, and no hidden resets",
+        "criteria": "Diagnostic simulation screen, not hardware validation. Historical tracking/height/tilt checks plus every settled stand/stop sample passing stance_geometry_v1, no current base force > 1 N, and >95% of settled samples with all four current vertical foot forces > 5 N. No four-foot or normal-stance geometry requirement during walk.",
+        "rest_stance_criterion": {"settling_exclusion_s": 1.0,
+            "geometry": "Each foot signed lateral >0.06 m and abs lateral <0.30 m; knee signed lateral >0.04 m; foot signed fore/hind >0.08 m; each abs joint offset <0.65 rad",
+            "geometry_required_fraction": 1.0, "vertical_support_required_fraction_exclusive": 0.95,
+            "vertical_force_threshold_n_exclusive": 5.0, "base_contact_force_threshold_n_exclusive": 1.0,
+            "phases": ["stand", "stop"]},
         "global": {"min_height": min_height, "max_abs_roll_deg": max_roll, "max_abs_pitch_deg": max_pitch, "max_gravity_xy": max_tilt, "steps": steps},
         "phase_stats": phase_stats, "settled_phase_stats": settled, "acceptance": acceptance,
+        "legacy_acceptance": legacy_acceptance, "legacy_passed": all(legacy_acceptance.values()),
         "passed": all(acceptance.values()),
         "artifacts": {"video": None if args_cli.no_video else str(video_path), "csv": str(csv_path)},
     }

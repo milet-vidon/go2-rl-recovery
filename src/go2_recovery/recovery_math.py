@@ -3,6 +3,22 @@
 import torch
 
 
+def rehearsal_tilt_degrees(unit_sample, rehearsal_sample, progress, angle_range=(20.0, 60.0), rehearsal_fraction=0.35):
+    """Widen tilt distribution while retaining familiar <=30 degree rehearsal.
+
+    Angles exclude the reset's independent +/-0.2 rad perturbation.
+    Samples are caller-supplied for explicit RNG/reproducibility.
+    """
+    low, high = angle_range
+    if not (0 <= low <= 30 <= high <= 90 and 0 <= rehearsal_fraction <= 1):
+        raise ValueError("Expected 0 <= low <= 30 <= high <= 90 and a valid rehearsal fraction")
+    progress = max(0.0, min(float(progress), 1.0))
+    ceiling = 30.0 + (high - 30.0) * progress
+    difficult = low + (ceiling - low) * unit_sample
+    familiar = low + (30.0 - low) * unit_sample
+    return torch.where(rehearsal_sample < rehearsal_fraction, familiar, difficult)
+
+
 def stance_alignment_penalty(foot_b):
     """Nominal 0.32 m stance width and mirrored left/right foot positions."""
     side = foot_b.new_tensor([1., -1., 1., -1.])

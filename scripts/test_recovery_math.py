@@ -16,6 +16,12 @@ upright_error_squared = _MODULE.upright_error_squared
 
 
 def main() -> None:
+    unit = torch.tensor([0., .5, 1., 1.])
+    selection = torch.tensor([.8, .8, .8, .1])
+    torch.testing.assert_close(_MODULE.rehearsal_tilt_degrees(unit, selection, 0), torch.tensor([20., 25., 30., 30.]))
+    torch.testing.assert_close(_MODULE.rehearsal_tilt_degrees(unit, selection, 1), torch.tensor([20., 40., 60., 30.]))
+    torch.testing.assert_close(_MODULE.rehearsal_tilt_degrees(unit, selection, 2), torch.tensor([20., 40., 60., 30.]))
+    print("Hard tilt curriculum preserves easy rehearsal and saturates at 60 degrees.")
     # Contact count alone cannot distinguish these five physically different
     # postures. Reject both crossed feet and crossed knees, plus a single
     # severely twisted joint that would be hidden by averaging over 12 joints.

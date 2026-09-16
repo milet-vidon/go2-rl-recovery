@@ -203,6 +203,17 @@ gym.register(
     },
 )
 
+for _suffix, _cfg in (("", "UnitreeGo2RecoveryRehearsalEnvCfg"), ("-Play", "UnitreeGo2RecoveryRehearsalEnvCfg_PLAY")):
+    gym.register(
+        id=f"Isaac-Recovery-Rehearsal-Flat-Unitree-Go2{_suffix}-v0",
+        entry_point="isaaclab.envs:ManagerBasedRLEnv",
+        disable_env_checker=True,
+        kwargs={
+            "env_cfg_entry_point": f"{__name__}.recovery_env_cfg:{_cfg}",
+            "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:UnitreeGo2RecoveryPPORunnerCfg",
+        },
+    )
+
 for _suffix, _cfg in (("", "UnitreeGo2RecoveryAlignedEnvCfg"), ("-Play", "UnitreeGo2RecoveryAlignedEnvCfg_PLAY")):
     gym.register(
         id=f"Isaac-Recovery-Aligned-Flat-Unitree-Go2{_suffix}-v0",

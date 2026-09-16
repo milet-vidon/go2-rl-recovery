@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -15,6 +15,12 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+if ($Stage -eq "recovery_rehearsal" -and $FallAngleDeg -gt 0) {
+    throw "recovery_rehearsal uses its configured 20-60 degree angle curriculum; -FallAngleDeg would be ignored. Omit it or choose a historical recovery stage."
+}
+if ($Stage -eq "recovery_rehearsal" -and $FocusSide) {
+    throw "recovery_rehearsal preserves its upright/side/fore-aft mixture; -FocusSide would override that rehearsal distribution."
+}
 $IsaacRoot = "E:\IsaacLab"
 $EnvRoot = Join-Path $IsaacRoot "env"
 $RepoRoot = Join-Path $IsaacRoot "repo"
@@ -66,6 +72,8 @@ $Task = if ($Stage -eq "natural_robust_push") {
     "Isaac-Recovery-Uncrossed-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_aligned") {
     "Isaac-Recovery-Aligned-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_rehearsal") {
+    "Isaac-Recovery-Rehearsal-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_lift") {
     "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery") {

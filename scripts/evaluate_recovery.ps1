@@ -4,6 +4,7 @@ param(
     [string]$Task = 'Isaac-Recovery-Stable-Flat-Unitree-Go2-Play-v0',
     [int]$Trials = 20,
     [double]$AngleDeg = 30,
+    [ValidateRange(0, 60)][double]$SettleSeconds = 0,
     [int]$Seed = 20260909,
     [string[]]$Poses = @('side', 'fore_aft'),
     [ValidateSet('oblique', 'front', 'side')][string]$View = 'oblique',
@@ -25,7 +26,7 @@ $env:CONDA_PREFIX = 'E:\IsaacLab\env'
 $env:Path = 'E:\IsaacLab\env;E:\IsaacLab\env\Scripts;' + $env:Path
 $evalArgs = @((Join-Path $PSScriptRoot 'evaluate_go2_recovery.py'), '--task', $Task,
     '--checkpoint', $Checkpoint, '--output_dir', $OutputDir, '--trials', "$Trials",
-    '--angle_deg', "$AngleDeg", '--seed', "$Seed", '--horizon_s', '8', '--hold_s', '3',
+    '--angle_deg', "$AngleDeg", '--settle_s', "$SettleSeconds", '--seed', "$Seed", '--horizon_s', '8', '--hold_s', '3',
     '--min_contacts', '4', '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
 if ($Video) { $evalArgs += @('--video_pose', 'all', '--view', $View) }
 $started = Get-Date

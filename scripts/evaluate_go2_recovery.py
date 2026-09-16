@@ -6,6 +6,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import sys
 import traceback
 from pathlib import Path
@@ -22,6 +23,8 @@ parser.add_argument("--output_dir", required=True, type=Path)
 parser.add_argument("--trials", type=int, default=100, help="Independent trials for each pose class.")
 parser.add_argument("--horizon_s", type=float, default=8.0)
 parser.add_argument("--hold_s", type=float, default=3.0, help="Continuous stable stand duration required for success.")
+parser.add_argument("--settle_s", type=float, default=0.0,
+                    help="Optional pre-policy gravity settling with zero action / nominal-pose PD, NOT passive zero torque.")
 parser.add_argument("--min_contacts", type=int, default=4, help="Required foot contacts for a valid final stand.")
 parser.add_argument("--seed", type=int, default=20260908)
 parser.add_argument("--video_pose", choices=(*POSE_CLASSES, "all"))
@@ -45,6 +48,7 @@ import torch  # noqa: E402
 from rsl_rl.runners import OnPolicyRunner  # noqa: E402
 
 from isaaclab.utils import math as math_utils  # noqa: E402
+from isaaclab.envs.mdp.actions.joint_actions import JointPositionAction  # noqa: E402
 from isaaclab_rl.rsl_rl import RslRlVecEnvWrapper  # noqa: E402
 
 import isaaclab_tasks  # noqa: F401, E402
@@ -145,6 +149,118 @@ def _stance_geometry(env):
     return valid, foot_b, knee_b, delta
 
 
+def _start_snapshot(env, foot_ids, *, contacts_fresh: bool, quiet_steps=None) -> list[dict]:
+    """Record actual per-trial states; pose labels alone do not prove fallen starts."""
+    asset = env.scene["robot"]
+    sensor = env.scene.sensors["contact_forces"]
+    base_ids = sensor.find_bodies("base")[0]
+    gravity = asset.data.projected_gravity_b
+    height = asset.data.root_pos_w[:, 2] - env.scene.env_origins[:, 2]
+    tilt = torch.acos((-gravity[:, 2]).clamp(-1.0, 1.0)) * (180.0 / torch.pi)
+    forces = sensor.data.net_forces_w
+    vertical_contacts = (forces[:, foot_ids, 2] > 5.0).sum(1)
+    base_contact = (forces[:, base_ids].norm(dim=-1) > 1.0).any(1)
+    grounded = (forces.norm(dim=-1) > 1.0).any(1)
+    geometry_ok, _, _, _ = _stance_geometry(env)
+    standing = (_stable_stand(env, foot_ids, args_cli.min_contacts) & geometry_ok
+                & ~base_contact & (vertical_contacts >= args_cli.min_contacts))
+    # Conservative operational definition, not a claim of passive / natural falls.
+    fallen = grounded & ((tilt >= 60.0) | (base_contact & (height < 0.26)))
+    records = []
+    for i in range(env.num_envs):
+        quiet_duration = 0.0 if quiet_steps is None else float(quiet_steps[i]) * env.step_dt
+        settled = contacts_fresh and quiet_duration + 1e-9 >= 0.25
+        standing_i = bool(standing[i]) if contacts_fresh else None
+        fallen_i = bool(fallen[i]) if contacts_fresh else None
+        if not contacts_fresh:
+            classification = "controlled_drop_unsettled_contacts_not_yet_valid"
+        elif standing_i:
+            classification = "standing_at_policy_start_not_fallen_recovery"
+        elif fallen_i and settled:
+            classification = "settled_fallen_under_nominal_pose_PD"
+        elif fallen_i:
+            classification = "fallen_but_not_settled"
+        else:
+            classification = "other_nonstanding_start_not_confirmed_fallen"
+        records.append({
+            "trial": i,
+            "projected_gravity_b": gravity[i].cpu().tolist(),
+            "tilt_from_upright_deg": float(tilt[i]),
+            "gravity_error": float(torch.sqrt(upright_error_squared(gravity[i]))),
+            "height_m": float(height[i]),
+            "root_position_w_m": asset.data.root_pos_w[i].cpu().tolist(),
+            "root_quaternion_wxyz": asset.data.root_quat_w[i].cpu().tolist(),
+            "root_linear_velocity_w_m_s": asset.data.root_lin_vel_w[i].cpu().tolist(),
+            "root_angular_velocity_w_rad_s": asset.data.root_ang_vel_w[i].cpu().tolist(),
+            "joint_positions_rad": asset.data.joint_pos[i].cpu().tolist(),
+            "max_joint_speed_rad_s": float(asset.data.joint_vel[i].abs().max()),
+            "contacts_fresh_since_pose_write": contacts_fresh,
+            "foot_vertical_forces_N": forces[i, foot_ids, 2].cpu().tolist() if contacts_fresh else None,
+            "vertical_foot_contacts": int(vertical_contacts[i]) if contacts_fresh else None,
+            "base_contact": bool(base_contact[i]) if contacts_fresh else None,
+            "any_body_contact": bool(grounded[i]) if contacts_fresh else None,
+            "geometry_ok": bool(geometry_ok[i]),
+            "quiet_supported_window_s": quiet_duration,
+            "settled": settled,
+            "standing_at_policy_start": standing_i,
+            "fallen_at_policy_start": fallen_i,
+            "eligible_settled_fallen_recovery": bool(fallen_i and settled and not standing_i),
+            "classification": classification,
+        })
+    return records
+
+
+def _settle_nominal_pose(env, settle_steps: int) -> torch.Tensor:
+    """Step physics only: no policy, reward, curriculum, interval events, or auto-reset."""
+    terms = env.action_manager.active_terms
+    if len(terms) != 1:
+        raise RuntimeError("PD settling requires exactly one default-offset joint-position action term.")
+    term = env.action_manager.get_term(terms[0])
+    if (type(term) is not JointPositionAction or not term.cfg.use_default_offset
+            or term.cfg.asset_name != "robot" or term.cfg.clip is not None
+            or term.action_dim != env.scene["robot"].num_joints):
+        raise RuntimeError("Zero action is not verified as the complete nominal joint-position PD target.")
+    zeros = torch.zeros((env.num_envs, env.action_manager.total_action_dim), device=env.device)
+    quiet_steps = torch.zeros(env.num_envs, device=env.device, dtype=torch.int32)
+    rendering = env.sim.has_gui() or env.sim.has_rtx_sensors()
+    with torch.no_grad():
+        for step in range(settle_steps):
+            env.action_manager.process_action(zeros)
+            # Mirror the public action/physics APIs used by ManagerBasedRLEnv.step,
+            # but never call env.step: it automatically resets done environments.
+            for _ in range(env.cfg.decimation):
+                env._sim_step_counter += 1
+                env.action_manager.apply_action()
+                env.scene.write_data_to_sim()
+                env.sim.step(render=False)
+                if rendering and env._sim_step_counter % env.cfg.sim.render_interval == 0:
+                    env.sim.render()
+                env.scene.update(dt=env.physics_dt)
+            env.episode_length_buf += 1
+            dones = env.termination_manager.compute()
+            if dones.any():
+                indices = dones.nonzero(as_tuple=False).flatten().cpu().tolist()
+                raise RuntimeError(f"Termination during PD settling at step {step + 1}, trials {indices}; "
+                                   "no automatic reset was performed; evaluation aborted.")
+            asset = env.scene["robot"]
+            grounded = (env.scene.sensors["contact_forces"].data.net_forces_w.norm(dim=-1) > 1.0).any(1)
+            quiet = (grounded & (asset.data.root_lin_vel_w.norm(dim=1) < 0.10)
+                     & (asset.data.root_ang_vel_w.norm(dim=1) < 0.20)
+                     & (asset.data.joint_vel.abs().amax(dim=1) < 0.50))
+            quiet_steps = torch.where(quiet, quiet_steps + 1, torch.zeros_like(quiet_steps))
+    return quiet_steps
+
+
+def _reset_policy_history(env, policy_nn) -> None:
+    """Clear inference history without resetting the settled physical state."""
+    env.action_manager.reset()
+    env.observation_manager.reset()
+    env.termination_manager.reset()
+    env.episode_length_buf.zero_()
+    if hasattr(policy_nn, "reset"):
+        policy_nn.reset(torch.ones(env.num_envs, device=env.device, dtype=torch.bool))
+
+
 def _trace_row(env, foot_ids, pose_class, step, stable_steps):
     asset = env.scene["robot"]
     sensor = env.scene.sensors["contact_forces"]
@@ -183,7 +299,8 @@ def _open_video(path: Path, frame: np.ndarray, fps: int):
     return writer
 
 
-def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s: float, row: dict) -> np.ndarray:
+def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s: float, row: dict,
+              start_classification: str | None = None) -> np.ndarray:
     image = cv2.cvtColor(frame[..., :3], cv2.COLOR_RGB2BGR)
     labels = (
         f"Go2 self-recovery | pose: {pose_class}",
@@ -191,8 +308,11 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
         ("LEG GEOMETRY OK" if row["geometry_ok"] else "INVALID LEG GEOMETRY")
         + (f" | valid stand held {args_cli.hold_s:g}s" if stable_s >= args_cli.hold_s else " | stand hold pending"),
         f"{args_cli.checkpoint.parent.name} / {args_cli.checkpoint.name}",
-        "Simulation | controlled-drop starts | no hardware validation",
+        ("Simulation | pre-settled nominal-pose PD (NOT zero torque)" if args_cli.settle_s > 0
+         else "Simulation | controlled-drop starts | no hardware validation"),
     )
+    if start_classification is not None:
+        labels += (f"Actual policy start: {start_classification}",)
     for i, text in enumerate(labels):
         color = ((80, 220, 80) if row['geometry_ok'] else (60, 80, 255)) if i == 2 else (245, 245, 245)
         font_scale = 0.48 if i >= 3 else 0.70
@@ -231,6 +351,8 @@ def main() -> None:
         raise FileNotFoundError(args_cli.checkpoint)
     if args_cli.trials < 1 or args_cli.horizon_s <= 0 or args_cli.hold_s <= 0:
         raise ValueError("Trials, horizon and hold time must be positive.")
+    if not math.isfinite(args_cli.settle_s) or not 0.0 <= args_cli.settle_s <= 60.0:
+        raise ValueError("settle_s must be finite and between 0 and 60 seconds.")
     if args_cli.min_contacts < 1 or args_cli.min_contacts > 4:
         raise ValueError("min_contacts must be between 1 and 4.")
     if args_cli.video_fps not in (10, 25, 50):
@@ -241,7 +363,7 @@ def main() -> None:
     agent_cfg = load_cfg_from_registry(eval_task, "rsl_rl_cfg_entry_point")
     env_cfg.scene.num_envs = args_cli.trials
     env_cfg.scene.env_spacing = 2.0
-    env_cfg.episode_length_s = args_cli.horizon_s + args_cli.hold_s + 1.0
+    env_cfg.episode_length_s = args_cli.settle_s + args_cli.horizon_s + args_cli.hold_s + 1.0
     env_cfg.sim.device = args_cli.device
     env_cfg.seed = args_cli.seed
     env_cfg.viewer.origin_type = "asset_root"
@@ -266,6 +388,9 @@ def main() -> None:
     generator = torch.Generator(device=env.device).manual_seed(args_cli.seed)
     steps = round((args_cli.horizon_s + args_cli.hold_s) / env.unwrapped.step_dt)
     hold_steps = round(args_cli.hold_s / env.unwrapped.step_dt)
+    settle_steps = math.ceil(args_cli.settle_s / env.unwrapped.step_dt)
+    settle_actual_s = settle_steps * env.unwrapped.step_dt
+    joint_names = list(env.unwrapped.scene["robot"].joint_names)
     results: dict[str, dict] = {}
     trace = []
     checkpoint_name = args_cli.checkpoint.name
@@ -274,6 +399,19 @@ def main() -> None:
         for pose_class in args_cli.poses:
             env.reset()
             _set_pose_class(env.unwrapped, pose_class, generator)
+            release_state = _start_snapshot(env.unwrapped, foot_ids, contacts_fresh=False)
+            if settle_steps:
+                quiet_steps = _settle_nominal_pose(env.unwrapped, settle_steps)
+                policy_start_state = _start_snapshot(
+                    env.unwrapped, foot_ids, contacts_fresh=True, quiet_steps=quiet_steps)
+                _reset_policy_history(env.unwrapped, policy_nn)
+            else:
+                # Preserve the historical default path: no additional physics step
+                # or history reset, so existing controlled-drop runs remain reproducible.
+                policy_start_state = release_state
+            eligible_fallen = torch.tensor(
+                [state["eligible_settled_fallen_recovery"] for state in policy_start_state],
+                device=env.device, dtype=torch.bool)
             obs = env.get_observations()
             if args_cli.video_pose in (pose_class, "all"):
                 _camera(env.unwrapped)
@@ -286,6 +424,17 @@ def main() -> None:
             legacy_success = torch.zeros(env.num_envs, device=env.device, dtype=torch.bool)
             video_writer = None
             video_path = args_cli.output_dir / f"{checkpoint_name}_{pose_class}.mp4"
+            start_label = policy_start_state[0]["classification"] if settle_steps else None
+            if settle_steps and args_cli.video_pose in (pose_class, "all"):
+                # Show the actual pre-policy state before the first learned action.
+                frame = env.unwrapped.render()
+                if frame is None:
+                    raise RuntimeError("No RGB frame returned for the pre-policy state.")
+                video_writer = _open_video(video_path, frame, args_cli.video_fps)
+                initial_row = _trace_row(env.unwrapped, foot_ids, pose_class, -1, stable_steps)
+                trace.append(initial_row)
+                video_writer.write(_annotate(frame, pose_class, -1, env.unwrapped.step_dt, 0.0,
+                                             initial_row, start_label))
             for step in range(steps):
                 # no_grad keeps Isaac Lab's mutable simulator buffers writable across
                 # deterministic pose resets; inference_mode would mark them immutable.
@@ -323,6 +472,7 @@ def main() -> None:
                             env.unwrapped.step_dt,
                             stable_steps[0].item() * env.unwrapped.step_dt,
                             trace[-1],
+                            start_label,
                         )
                     )
             if video_writer is not None:
@@ -335,6 +485,16 @@ def main() -> None:
                 "legacy_contact_height_successes": int(legacy_success.sum().item()),
                 "final_valid_stands": int((stable_steps >= hold_steps).sum().item()),
                 "final_geometry_passes": int(geometry_ok.sum().item()),
+                "release_state_before_settling": release_state,
+                "policy_start_state": policy_start_state,
+                "standing_starts_not_fallen_recovery": sum(
+                    state["standing_at_policy_start"] is True for state in policy_start_state),
+                "settled_fallen_trials": int(eligible_fallen.sum().item()),
+                "settled_fallen_recovery_successes": int((success & eligible_fallen).sum().item()),
+                "settled_fallen_final_valid_stands": int(
+                    ((stable_steps >= hold_steps) & eligible_fallen).sum().item()),
+                "settled_fallen_recovery_rate": (float(success[eligible_fallen].float().mean().item())
+                                                 if eligible_fallen.any() else None),
                 "final_diagnostics": [
                     {
                         "trial": i,
@@ -357,7 +517,8 @@ def main() -> None:
                 "stable_hold_s": args_cli.hold_s,
                 "horizon_s": args_cli.horizon_s,
             }
-            summary = {key: value for key, value in results[pose_class].items() if key != "final_diagnostics"}
+            summary = {key: value for key, value in results[pose_class].items()
+                       if key not in ("final_diagnostics", "release_state_before_settling", "policy_start_state")}
             print(f"{pose_class}: {summary}")
     finally:
         env.close()
@@ -368,9 +529,29 @@ def main() -> None:
         "checkpoint_sha256": hashlib.sha256(args_cli.checkpoint.read_bytes()).hexdigest(),
         "task": eval_task,
         "seed": args_cli.seed,
-        "start_protocol": "controlled drop from conservative default-pose envelope, not pre-settled fallen poses",
-        "time_definition": "onset of the first stable interval held for hold_s; simulation includes hold_s after horizon_s",
-        "protocol_version": "stance_geometry_v1",
+        "start_protocol": ("pre-settled nominal-pose PD: gravity acts with zero policy action commanding default "
+                           "joint positions; NOT passive zero-torque settling; actual fallen/standing status recorded per trial"
+                           if settle_steps else
+                           "controlled drop from conservative default-pose envelope, not pre-settled fallen poses"),
+        "start_protocol_id": "pre_settled_nominal_pose_PD" if settle_steps else "controlled_drop",
+        "settle_requested_s": args_cli.settle_s,
+        "settle_actual_s": settle_actual_s,
+        "settle_control_steps": settle_steps,
+        "settle_controller": "zero action, default joint-position PD; not zero torque" if settle_steps else None,
+        "settle_execution": ("physics/action substeps only; termination checked each control step; auto-reset "
+                             "prohibited; no learned policy, reward computation, curriculum or interval events"
+                             if settle_steps else None),
+        "settled_definition": "at least 0.25 s continuous any-body contact >1 N, root speed <0.10 m/s, "
+                              "angular speed <0.20 rad/s, every joint speed <0.50 rad/s before policy starts",
+        "fallen_start_definition": "current any-body contact >1 N and either tilt from upright >=60 deg "
+                                   "or base contact >1 N with height <0.26 m; eligible only if settled and not already standing",
+        "success_count_definition": "successes counts valid stand acquisition/retention from all starts; "
+                                    "only settled_fallen_recovery_successes counts confirmed settled-fallen starts; "
+                                    "already-standing starts are never counted as fallen recovery",
+        "time_definition": "policy time starts AFTER optional settling; onset of the first stable interval held "
+                           "for hold_s; policy simulation includes hold_s after horizon_s; settling is excluded",
+        "protocol_version": "stance_geometry_v1_presettled_PD_v1" if settle_steps else "stance_geometry_v1",
+        "joint_names": joint_names,
         "video_view": args_cli.view if args_cli.video_pose else None,
         "self_collisions_enabled": env_cfg.scene.robot.spawn.articulation_props.enabled_self_collisions,
         "criterion": f"gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, {args_cli.min_contacts} simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
