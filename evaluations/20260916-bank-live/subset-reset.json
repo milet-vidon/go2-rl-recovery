@@ -1,0 +1,206 @@
+{
+  "protocol": "live_recovery_bank_subset_reset_v1",
+  "status": "passed",
+  "success": true,
+  "started_utc": "2026-09-16T05:08:31.705171+00:00",
+  "bank_path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916",
+  "task": "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260916,
+  "num_envs": 16,
+  "selected_env_ids": [
+    1,
+    7,
+    11
+  ],
+  "collection_mode": false,
+  "checks": {
+    "configuration/joint_reset_disabled": true,
+    "configuration/normal_bank_mode": true,
+    "configuration/live_bank_reset_instance": true,
+    "configuration/bank_loaded": true,
+    "precondition/nonzero_action_history": true,
+    "precondition/nonzero_episode_lengths": true,
+    "unselected/root_state_w": true,
+    "unselected/joint_pos": true,
+    "unselected/joint_vel": true,
+    "unselected/physx_root_transforms_xyzw": true,
+    "unselected/physx_root_com_velocities": true,
+    "unselected/physx_joint_pos": true,
+    "unselected/physx_joint_vel": true,
+    "unselected/action": true,
+    "unselected/prev_action": true,
+    "unselected/episode_length": true,
+    "unselected/last_state_ids": true,
+    "global/sim_step_counter": true,
+    "global/common_step_counter": true,
+    "global/sim_time_s": true,
+    "global/sim_time_step_index": true,
+    "selected/state_ids_exist_once": true,
+    "selected/state_ids_are_train": true,
+    "selected/joint_pos_exact_bank_match": true,
+    "selected/joint_vel_exact_bank_match": true,
+    "selected/physx_joint_pos_exact_bank_match": true,
+    "selected/physx_joint_vel_exact_bank_match": true,
+    "selected/action_reset": true,
+    "selected/prev_action_reset": true,
+    "selected/episode_reset": true,
+    "selected/root_transform_is_yaw_only": true,
+    "selected/root_position_uses_target_origin": true,
+    "selected/root_orientation_matches_bank": true,
+    "selected/root_com_velocity_matches_bank": true,
+    "selected/physx_root_position_matches_buffer": true,
+    "selected/physx_root_quaternion_matches_buffer": true,
+    "selected/physx_root_velocity_matches_bank": true
+  },
+  "scope": "full reset event ordering and per-env state isolation; not a cold-replay or learned-recovery test",
+  "bank_sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+  "bank_train_states": 214,
+  "bank_heldout_states": 30,
+  "reset_event_names": [
+    "reset_base"
+  ],
+  "counters_before": {
+    "sim_step_counter": 0,
+    "common_step_counter": 0,
+    "sim_time_s": 0.009999999776482582,
+    "sim_time_step_index": 2
+  },
+  "counters_after": {
+    "sim_step_counter": 0,
+    "common_step_counter": 0,
+    "sim_time_s": 0.009999999776482582,
+    "sim_time_step_index": 2
+  },
+  "selected_state_ids": [
+    205,
+    118,
+    222
+  ],
+  "selected_pose_classes": [
+    "right",
+    "back",
+    "back"
+  ],
+  "selected_joint_positions": [
+    [
+      0.07703597843647003,
+      -0.0895661786198616,
+      0.08144121617078781,
+      -0.08888453990221024,
+      0.803026556968689,
+      0.7806119322776794,
+      1.004185676574707,
+      0.9983123540878296,
+      -1.501138687133789,
+      -1.5016409158706665,
+      -1.5012273788452148,
+      -1.5036765336990356
+    ],
+    [
+      0.11324504017829895,
+      -0.11312367767095566,
+      0.11325908452272415,
+      -0.11315768957138062,
+      0.816848874092102,
+      0.8169492483139038,
+      1.0221619606018066,
+      1.0222629308700562,
+      -1.5066694021224976,
+      -1.506885051727295,
+      -1.5050241947174072,
+      -1.5052058696746826
+    ],
+    [
+      0.11325500905513763,
+      -0.11315947026014328,
+      0.11323220282793045,
+      -0.11315035074949265,
+      0.8168491721153259,
+      0.8169504404067993,
+      1.0221669673919678,
+      1.0222792625427246,
+      -1.50665283203125,
+      -1.5068976879119873,
+      -1.5050175189971924,
+      -1.5052396059036255
+    ]
+  ],
+  "selected_joint_velocities": [
+    [
+      0.03643365576863289,
+      0.037949517369270325,
+      0.04068011790513992,
+      0.0340094268321991,
+      -0.004849718883633614,
+      -0.020366976037621498,
+      0.006961863487958908,
+      -0.0174738597124815,
+      0.00860142894089222,
+      0.0349026620388031,
+      -0.01879691705107689,
+      0.026372447609901428
+    ],
+    [
+      0.013812609016895294,
+      -0.0024884697049856186,
+      0.010222078301012516,
+      0.002909526228904724,
+      -0.000441006850451231,
+      -0.005507227499037981,
+      -0.0023685588967055082,
+      -0.007406052201986313,
+      -0.0046812426298856735,
+      0.00656623812392354,
+      -0.0009351116605103016,
+      0.008621713146567345
+    ],
+    [
+      0.02708408236503601,
+      0.011282469145953655,
+      0.023670736700296402,
+      0.015634428709745407,
+      -0.00042376527562737465,
+      -0.006339394487440586,
+      -0.002210916019976139,
+      -0.008573577739298344,
+      -0.004893163219094276,
+      0.008955356664955616,
+      -0.001763765700161457,
+      0.010768071748316288
+    ]
+  ],
+  "selected_target_origins": [
+    [
+      4.5,
+      -1.5,
+      0.0
+    ],
+    [
+      1.5,
+      4.5,
+      0.0
+    ],
+    [
+      -1.5,
+      4.5,
+      0.0
+    ]
+  ],
+  "unselected_env_ids": [
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15
+  ],
+  "all_checks_passed": true,
+  "finished_utc": "2026-09-16T05:08:41.412748+00:00"
+}

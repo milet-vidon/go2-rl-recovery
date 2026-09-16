@@ -5,6 +5,8 @@
 
 """Go2 configurations for self-righting and recovery-aware flat-ground locomotion."""
 
+import os
+
 from isaaclab.managers import EventTermCfg as EventTerm
 from isaaclab.managers import RewardTermCfg as RewTerm
 from isaaclab.managers import SceneEntityCfg
@@ -13,6 +15,7 @@ from isaaclab.utils import configclass
 from isaaclab_tasks.manager_based.locomotion.velocity import mdp
 
 from . import recovery_mdp
+from . import recovery_bank_mdp
 from .flat_env_cfg import UnitreeGo2FlatEnvCfg
 
 
@@ -338,6 +341,39 @@ class UnitreeGo2RecoveryAlignedEnvCfg(UnitreeGo2RecoveryUncrossedEnvCfg):
 
 @configclass
 class UnitreeGo2RecoveryAlignedEnvCfg_PLAY(UnitreeGo2RecoveryAlignedEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankEnvCfg(UnitreeGo2RecoveryAlignedEnvCfg):
+    """Pilot: matched fixed physics and a separately collected fallen-state bank."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        collection = os.getenv("ISAACLAB_RECOVERY_BANK_COLLECTION") == "1"
+        bank_path = os.getenv("ISAACLAB_RECOVERY_BANK_PATH", "")
+        if not collection and not bank_path:
+            raise ValueError("RecoveryBank task requires ISAACLAB_RECOVERY_BANK_PATH; collection mode is explicit")
+        self.events.add_base_mass = None
+        self.events.base_com = None
+        self.events.physics_material.params.update({
+            "static_friction_range": (0.8, 0.8), "dynamic_friction_range": (0.6, 0.6),
+            "restitution_range": (0.0, 0.0),
+        })
+        self.events.reset_robot_joints = None
+        self.events.reset_base = EventTerm(func=recovery_bank_mdp.RecoveryBankReset, mode="reset", params={
+            "bank_path": bank_path, "collection_mode": collection,
+            "bank_fraction_start": 0.20, "bank_fraction_end": 0.60, "curriculum_steps": 12000,
+        })
+        self.scene.num_envs = 512
+        self.episode_length_s = 12.0
+
+
+@configclass
+class UnitreeGo2RecoveryBankEnvCfg_PLAY(UnitreeGo2RecoveryBankEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 1

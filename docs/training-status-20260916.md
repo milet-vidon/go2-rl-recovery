@@ -2,6 +2,22 @@
 
 Status: **in progress; user expectations are NOT yet met**. Simulation only. No claim of full reference-video reproduction or real-robot safety. All new code, models, reports and runtime data stay on E:.
 
+## ACTIVE JOB — grounded-state-bank pilot
+
+Started2026-09-16 13:16 local and confirmed actively training; **do not start a duplicate**.
+
+- Run: `E:\IsaacLab\repo\logs\rsl_rl\unitree_go2_recovery\2026-09-16_13-16-04_bank_nominalpd_from3900_20260916`
+- Log: `E:\IsaacLab\artifacts\recovery-20260916\train-bank-pilot.log`; current-turn session71234.
+- Stage `recovery_bank`,512 environments,1,000 additional PPO iterations requested,expected last checkpoint `model_4899.pt` and12,288,000 additional environment steps if completed. Latest observed progress:2,015,232 steps; no runtime error. This is not yet a completed or accepted model.
+- Loaded `bootstrap_bank3900_std060/model_3900.pt`; deterministic actor/critic equal original3900, sampling std0.6 and fresh Adam moments for this exploration pilot. Original parent and accepted models are untouched.
+- Actual saved configs and bootstrap lineage: `configs/recovery-bank-pilot-20260916/`.
+- Bank: `datasets/recovery_states/nominal_pd_v1_20260916/`,SHA256 `71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a`;214 training states,30 heldout states. Nominal-PD-prepared and cold-replay-validated; not passive zero-torque falls.
+- Before launch:19 data/math tests,10 mocked subset-reset tests,37 real-simulator subset-reset checks passed. Real reset changed only env IDs1,7,11; PhysX and cached joints match the recorded train states; global simulation clock unchanged. Report `evaluations/20260916-bank-live/subset-reset.json`.
+- Parent3900 heldout baseline: side0/20 trials from16 unique states; back0/20 from14 unique states. Every trial was confirmed settled-fallen. These40 rollouts cover only30 independent source states. Report `evaluations/20260916-bank3900-heldout/model_3900.pt_recovery_metrics.json`.
+- Visually inspected front and oblique side/back diagnostics: real ground-supported initial bodies, old policy remains/ends back-down, no recovery. Framed videos are in `evaluations/20260916-bank3900-framed-front/` and `...-oblique/`; these are FAILURE evidence, not result demos. First frame still uses the wide initial render view; later tracking keeps all feet in frame. For final deliverables, initialize the offscreen render camera before setting the first tracked view and verify it again.
+
+Next follow-up: let this finite pilot finish, then evaluate candidate checkpoints against3900 using the exact same Bank Play task,bank hash,heldout split,IDs/order,seed20260918,20 trials and1s nominal-PD handover. Also run Aligned Play upright/30degree seed20260918 and45degree seed20260916 geometry regression; preserve the separate locomotion2250 baseline. If settled recovery remains absent, analyze trajectories/rewards before another run, rather than simply adding iterations. A successful bank test alone does not establish arbitrary-fall robustness or an integrated standing/walking/stopping/recovery controller.
+
 ## Acceptance priorities
 
 1. Natural standing, walking and stopping, with no crossed limbs or ground-supported torso.
@@ -9,7 +25,7 @@ Status: **in progress; user expectations are NOT yet met**. Simulation only. No 
 3. Distinguish airborne righting from getting up after an actual settled fall. Do not count an already-standing start as fallen recovery.
 4. Compare checkpoints under identical tasks, seeds and protocols. New candidate promotion requires upright/30-degree regression, harder poses, and visual inspection of both front and oblique views. Do not relax criteria to make a run pass.
 
-## Current training (do not duplicate)
+## Completed controlled-drop rehearsal run
 
 - Run directory: `E:\IsaacLab\repo\logs\rsl_rl\unitree_go2_recovery\2026-09-16_11-46-18_rehearsal60_from3448_20260916`
 - Log: `E:\IsaacLab\artifacts\recovery-20260916\train-rehearsal.log`
@@ -17,8 +33,8 @@ Status: **in progress; user expectations are NOT yet met**. Simulation only. No 
 - Parent: `models/recovery/recovery_aligned_model3448.pt`, SHA256 `1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2`.
 - Parent load run: `2026-09-10_17-15-48_aligned_from_uncrossed2849`, checkpoint `model_3448.pt`.
 - Task/stage: `Isaac-Recovery-Rehearsal-Flat-Unitree-Go2-v0` / `recovery_rehearsal`.
-- 512 environments, 24 rollout steps, **1,000 additional iterations requested**, 12,288,000 additional environment steps if completed. Expected last checkpoint: `model_4447.pt`; verify the actual log/file before calling it complete.
-- Latest confirmed progress before this turn's handoff: 8,134,656 additional environment steps (662/1,000 requested iterations); `model_4000.pt` already saved. Training still running; this is not the final result. Read the log for newer progress.
+- **Completed** at2026-09-16 12:19 local:512 environments,24 rollout steps,1,000 additional iterations,12,288,000 additional environment steps. Log ends atiteration4447/4448 with32min16s training time; `model_4447.pt` saved. No training process remained at12:39. Do not restart this completed run.
+- Final serial evaluation session10915 completed:30-degree seed20260918;45-degree and settled90 seed20260916; parent/final60-degree comparison. See the active grounded-bank pilot above for the current trainer.
 - Final pose mix: upright 25%, side 35%, fore/aft 30%, true inversion 5%, random SO(3) 5%. Pose-mixture curriculum 4,800 control steps.
 - Tilt curriculum expands the hard subset from 20–30 degrees to 20–60 degrees over 12,000 control steps (500 PPO iterations); 35% of side/fore-aft samples retain 20–30-degree rehearsal. Independent +/-0.20 rad reset noise still applies.
 - True inversion is now pi roll, unlike the historical capped `2 * fall_angle` class. Random SO(3) remains unrestricted.
@@ -67,7 +83,7 @@ The 2 s preparation uses **nominal-joint-position PD with zero policy action, NO
 
 1. Inspect training process/log and checkpoint timestamps; avoid duplicate jobs. Prefer one simulator at a time after this finite run, because concurrent evaluation slows this 8 GB GPU / 16 GB RAM machine.
 2. Locomotion2250 enhanced-geometry regression passed; keep it as an independent reference, not evidence that the recovery policy can walk.
-3. Let the current finite1,000-iteration trainer finish; evaluate final4447 with the same parent evaluation task and seed. Do not repeatedly evaluate adjacent checkpoints while slowing training. Check upright/30-degree regression, 45/60-degree starts, then pre-settled side90/full-inversion. Record actual eligible-fallen denominators separately. Add held-out seeds before promotion.
+3. Final4447 has completed30-degree regression: upright/side/fore_aft each20/20;45-degree upright20/20,side15/20,fore_aft18/20,inversion0/20. Its pre-settled side/inversion remains0/18 and0/20. Final45-degree scores are below intermediate3900 (16/20 side,20/20 fore/aft), so do not select the last checkpoint solely because training lasted longer. Complete the60-degree comparison and keep all original reports.
 4. If actual settled recovery remains absent, do not simply prolong high-drop training. Implement a separate fallen-state-bank task: generate physical settled states offline, store local root pose/velocity and full joint positions/velocities, then replay validated states without stepping physics inside a subset reset.
 5. Important reset-order hazard: the inherited `reset_robot_joints` event follows `reset_base`. A new bank task must own the combined joint/root reset and disable the later joint randomization; otherwise it destroys the collision-consistent fallen state.
    - Store root-link pose relative to source env origin, root-CoM world linear/angular velocities, full joint positions/velocities and exact joint-name order. Load once; add the target env origin on replay. Only XY translation/world-yaw augmentation initially; rotate velocities too. No fresh joint/roll/pitch noise or arbitrary raising of the saved root.
@@ -78,6 +94,18 @@ The 2 s preparation uses **nominal-joint-position PD with zero policy action, NO
 7. Update this document with actual checkpoints, measured outcomes, and exact next run. Archive configs and provenance before selecting a model.
 
 ## Continued follow-up
+
+### Grounded-state pilot preparation (12:39 follow-up)
+
+- Final rehearsal evaluation finished. At60degrees, parent3448 scored side5/20,fore/aft7/20; final4447 scored side5/20,fore/aft12/20. The larger course improves some fore/aft drops but not actual settled recovery. Do not extend the same drop-only run blindly.
+- New isolated Bank task: `Isaac-Recovery-Bank-Flat-Unitree-Go2[-Play]-v0`. Root/joint resets are owned by one `RecoveryBankReset` term; the later joint reset is disabled. Collection/training share fixed mass/CoM and friction0.8/0.6,restitution0 with self-collision; this is a fixed-physics pilot, not domain-randomized robustness.
+- Collector first exposed a CPU default-mass / CUDA contact-force mismatch; fixed by moving and caching the weight denominator. Failure log is preserved in `E:\IsaacLab\artifacts\recovery-20260916\bank-smoke.log`. No failed dataset was used for training.
+- Small physical smoke:16 candidates,14 accepted,2 rejected because they were not confirmed fallen. Every accepted state passed an additional1s cold replay after sensor/actuator reset.
+- Pilot bank: `datasets/recovery_states/nominal_pd_v1_20260916/states.npz` and `manifest.json`;256 candidates,244 accepted,12 rejected.214train and30heldout,split by original generation batch before yaw augmentation. Actual totals:left66,right64,back114. Collection + cold replay completed; log `E:\IsaacLab\artifacts\recovery-20260916\bank-v1.log`. Counts describe valid START STATES, not model recovery successes.
+- New bank data/math CPU tests19/19; mocked subset-reset tests10/10; real16-env subset-reset verification passed37 checks. Parent-heldout evaluation completed at0 recoveries; the grounded pilot was then launched as recorded in ACTIVE JOB above.
+- Prepared experimental bootstrap `E:\IsaacLab\repo\logs\rsl_rl\unitree_go2_recovery\bootstrap_bank3900_std060\model_3900.pt`: original3900 deterministic actor/critic unchanged; sampling std set0.6,Adam moments cleared. Original hip std was0.087–0.096,too narrow for a useful new exploration trial. This is a hypothesis being tested,not a performance claim. SHA256 `ca445aa39bdca62fe18e04924e967feda2c2af496f7263238a4c2bf22947a3fa`; complete changes/parent hash in adjoining `model_3900.lineage.json`.
+- Planned bank mixture20%→60% over12000control steps; other resets retain upright/shallow20–30degree rehearsal. Bank root/joint states are not lifted or perturbed; only world-yaw and target-origin transforms. Do not call old `-FallAngleDeg/-FocusSide/-CurriculumSteps` with this stage.
+- Bank evaluation uses `-StateBankPath ... -StateBankSplit heldout -SettleSeconds 1`,Bank Play task,and actual side/back classes. Unique heldout IDs are reported; repeats needed to fill a20trial batch are not additional independent source states. Parent/candidate must use the same IDs,bank hash and fixed physics.
 
 An app thread heartbeat named **Go2 训练与严格验收**, automation ID `go2`, is active every20minutes. It should remain quiet for unchanged/non-actionable progress, continue evidence-based local training/evaluation, and notify only meaningful changes, completion, failure or required decisions. It must not duplicate an active trainer. Local scheduling needs the computer and app available; it is not a cloud training service.
 

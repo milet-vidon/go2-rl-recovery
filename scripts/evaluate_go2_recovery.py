@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -25,16 +26,33 @@ parser.add_argument("--horizon_s", type=float, default=8.0)
 parser.add_argument("--hold_s", type=float, default=3.0, help="Continuous stable stand duration required for success.")
 parser.add_argument("--settle_s", type=float, default=0.0,
                     help="Optional pre-policy gravity settling with zero action / nominal-pose PD, NOT passive zero torque.")
+parser.add_argument("--state_bank_path", type=Path,
+                    help="Optional validated states.npz or directory; only the fixed-physics Bank Play task is allowed.")
+parser.add_argument("--state_bank_split", choices=("heldout", "train"), default="heldout")
 parser.add_argument("--min_contacts", type=int, default=4, help="Required foot contacts for a valid final stand.")
 parser.add_argument("--seed", type=int, default=20260908)
 parser.add_argument("--video_pose", choices=(*POSE_CLASSES, "all"))
-parser.add_argument("--poses", nargs="+", choices=POSE_CLASSES, default=POSE_CLASSES)
+parser.add_argument("--poses", nargs="+", choices=POSE_CLASSES, default=None)
 parser.add_argument("--video_fps", type=int, default=25)
 parser.add_argument("--video_resolution", type=int, nargs=2, default=(960, 540), metavar=("WIDTH", "HEIGHT"))
 parser.add_argument("--angle_deg", type=float, default=90.0, help="Roll/pitch angle used for side and fore-aft starts.")
 parser.add_argument("--view", choices=("oblique", "front", "side"), default="oblique")
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
+if args_cli.poses is None:
+    args_cli.poses = ("side", "upside_down") if args_cli.state_bank_path else POSE_CLASSES
+if args_cli.state_bank_path:
+    if args_cli.task != "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0":
+        parser.error("State-bank evaluation requires Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0")
+    if not math.isfinite(args_cli.settle_s) or args_cli.settle_s < 1.0:
+        parser.error("State-bank replay requires --settle_s >= 1 for nominal-PD handover validation")
+    if any(pose not in ("side", "upside_down") for pose in args_cli.poses):
+        parser.error("State-bank poses must be side (actual left/right) or upside_down (actual back)")
+    # Process-local only. Bank cfg must not load/sample its TRAIN reset bank while
+    # the evaluator supplies the explicitly selected split and fixed state IDs.
+    os.environ["ISAACLAB_RECOVERY_BANK_COLLECTION"] = "1"
+elif args_cli.task == "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0":
+    parser.error("Bank Play evaluation requires explicit --state_bank_path")
 if args_cli.video_pose:
     args_cli.enable_cameras = True
 
@@ -261,6 +279,100 @@ def _reset_policy_history(env, policy_nn) -> None:
         policy_nn.reset(torch.ones(env.num_envs, device=env.device, dtype=torch.bool))
 
 
+def _select_bank_states(bank, pose_class: str, count: int, seed: int):
+    """CPU-local RNG, actual pose labels, and full pool coverage before repeats.
+
+    Per-class seeding makes selected IDs independent of checkpoint and evaluation
+    pose order. Stored requested labels never control selection.
+    """
+    labels = {"side": ("left", "right"), "upside_down": ("back",)}
+    if pose_class not in labels or count < 1:
+        raise ValueError("Bank selection needs side/upside_down and positive trial count")
+    id_values = bank["state_id"].cpu().tolist()
+    candidates = [i for i, label in enumerate(bank["pose_class"]) if label in labels[pose_class]]
+    if not candidates:
+        raise ValueError(f"Selected state-bank split has no actual {labels[pose_class]} states")
+    candidates.sort(key=lambda index: id_values[index])
+    pool = torch.tensor(candidates, dtype=torch.long)
+    salt = 104729 if pose_class == "side" else 130363
+    generator = torch.Generator(device="cpu").manual_seed((int(seed) + salt) % (2**63 - 1))
+    selected = pool[torch.randperm(len(pool), generator=generator)[:count]]
+    if count > len(pool):
+        extra = pool[torch.randint(len(pool), (count - len(pool),), generator=generator)]
+        selected = torch.cat((selected, extra))
+    selected_list = selected.tolist()
+    selected_ids = [id_values[i] for i in selected_list]
+    actual_labels = [bank["pose_class"][i] for i in selected_list]
+    info = {
+        "available_unique_states": len(pool), "selected_state_ids": selected_ids,
+        "selected_unique_state_count": len(set(selected_ids)),
+        "sampling_with_replacement": count > len(pool),
+        "selected_actual_pose_classes": actual_labels,
+        "selected_requested_pose_classes": [bank["requested_pose_class"][i] for i in selected_list],
+        "actual_pose_class_counts": {label: actual_labels.count(label) for label in labels[pose_class]},
+        "yaw_augmentation_rad": 0.0,
+    }
+    return selected.to(device=bank["state_id"].device), info
+
+
+def _validate_bank_environment(bank, env) -> None:
+    """Compare bank provenance against the fixed-physics Bank Play environment."""
+    cfg, metadata = env.cfg, bank["metadata"]
+    if not cfg.events.reset_base.params.get("collection_mode") or cfg.events.reset_robot_joints is not None:
+        raise ValueError("State-bank evaluation requires collection mode and no later joint reset")
+    if cfg.events.add_base_mass is not None or cfg.events.base_com is not None:
+        raise ValueError("State-bank comparison must disable mass/CoM randomization")
+    if not cfg.scene.robot.spawn.articulation_props.enabled_self_collisions:
+        raise ValueError("State-bank comparison requires self collisions")
+    if metadata["body_names"] != list(env.scene["robot"].body_names):
+        raise ValueError("State-bank body names/order differ from target robot")
+    physics = metadata.get("physics", {})
+    if "dt" in physics and not math.isclose(float(physics["dt"]), env.physics_dt, abs_tol=1e-9):
+        raise ValueError("State-bank physics dt differs from target environment")
+    if "decimation" in physics and int(physics["decimation"]) != cfg.decimation:
+        raise ValueError("State-bank control decimation differs from target environment")
+    material = metadata.get("material", {})
+    for name, expected in (("static_friction", 0.8), ("dynamic_friction", 0.6), ("restitution", 0.0)):
+        target = cfg.events.physics_material.params[f"{name}_range"]
+        if tuple(target) != (expected, expected):
+            raise ValueError(f"Bank task has unexpected fixed {name}")
+        if name in material and not math.isclose(float(material[name]), expected, abs_tol=1e-9):
+            raise ValueError(f"Bank manifest {name} differs from target environment")
+
+
+def _set_bank_states(env, bank, selected, transform_bank_root) -> None:
+    """Restore complete measured state, changing only the environment origin."""
+    asset = env.scene["robot"]
+    ids = torch.arange(env.num_envs, device=env.device)
+    pose, velocity = transform_bank_root(
+        bank["root_pose_local"][selected], bank["root_velocity_w"][selected],
+        env.scene.env_origins[ids], 0.0,
+    )
+    asset.write_joint_state_to_sim(bank["joint_pos"][selected], bank["joint_vel"][selected], env_ids=ids)
+    asset.write_root_pose_to_sim(pose, env_ids=ids)  # Root LINK pose.
+    asset.write_root_velocity_to_sim(velocity, env_ids=ids)  # Root CoM world velocity.
+    asset.set_joint_position_target(asset.data.default_joint_pos[ids], env_ids=ids)
+    asset.set_joint_velocity_target(torch.zeros_like(bank["joint_vel"][selected]), env_ids=ids)
+    asset.set_joint_effort_target(torch.zeros_like(bank["joint_vel"][selected]), env_ids=ids)
+    env.action_manager.reset(ids)
+    env.scene.sensors["contact_forces"].reset(ids)
+    env.scene.write_data_to_sim()
+    env.sim.forward()
+    env.scene.update(env.physics_dt)
+    env.episode_length_buf.zero_()
+
+
+def _attach_bank_provenance(records, selection) -> None:
+    for i, state in enumerate(records):
+        state["bank_state_id"] = selection["selected_state_ids"][i]
+        state["bank_saved_pose_class"] = selection["selected_actual_pose_classes"][i]
+        state["bank_requested_pose_class"] = selection["selected_requested_pose_classes"][i]
+        gravity = state["projected_gravity_b"]
+        axis = max(range(3), key=lambda j: abs(gravity[j]))
+        state["actual_pose_class"] = ("left" if gravity[1] > 0 else "right") if axis == 1 else (
+            "back" if axis == 2 and gravity[2] > 0 else "other")
+
+
 def _trace_row(env, foot_ids, pose_class, step, stable_steps):
     asset = env.scene["robot"]
     sensor = env.scene.sensors["contact_forces"]
@@ -311,6 +423,8 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
         ("Simulation | pre-settled nominal-pose PD (NOT zero torque)" if args_cli.settle_s > 0
          else "Simulation | controlled-drop starts | no hardware validation"),
     )
+    if args_cli.state_bank_path:
+        labels = labels[:-1] + (f"Simulation | state-bank {args_cli.state_bank_split} | nominal PD handover",)
     if start_classification is not None:
         labels += (f"Actual policy start: {start_classification}",)
     for i, text in enumerate(labels):
@@ -339,10 +453,13 @@ def _camera(env):
     a = env.scene["robot"].data
     # Front and side are defined by the robot yaw, not by its randomized world yaw.
     heading = math_utils.yaw_quat(a.root_quat_w[:1])
-    offset = {"front": (1.25, 0.0, 0.5), "side": (0.0, 1.45, 0.55), "oblique": (1.05, 1.05, 0.60)}[args_cli.view]
-    eye = a.root_pos_w[0] + math_utils.quat_apply(heading, a.root_pos_w.new_tensor([offset]))[0]
-    target = a.root_pos_w[0].clone()
-    target[2] -= 0.08
+    offset = {"front": (1.65, 0.0, 0.65), "side": (0.0, 1.75, 0.65), "oblique": (1.30, 1.30, 0.75)}[args_cli.view]
+    # Back-down feet are ABOVE the torso: root_height-0.08 aims into the
+    # floor and clips them. Frame the actual articulated body bounds instead.
+    bodies = a.body_pos_w[0]
+    target = (bodies.amin(dim=0) + bodies.amax(dim=0)) * 0.5
+    target[2] += 0.08  # Leave the robot below the diagnostic text overlay.
+    eye = target + math_utils.quat_apply(heading, a.root_pos_w.new_tensor([offset]))[0]
     env.sim.set_camera_view(eye=eye.cpu().tolist(), target=target.cpu().tolist())
 
 
@@ -394,11 +511,26 @@ def main() -> None:
     results: dict[str, dict] = {}
     trace = []
     checkpoint_name = args_cli.checkpoint.name
+    bank = None
 
     try:
+        if args_cli.state_bank_path:
+            from isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_state_bank import (
+                load_recovery_state_bank, transform_bank_root, validate_bank_joint_limits,
+            )
+            bank = load_recovery_state_bank(args_cli.state_bank_path, joint_names, env.device,
+                                            split=args_cli.state_bank_split)
+            limits = env.unwrapped.scene["robot"].data.soft_joint_pos_limits[0]
+            validate_bank_joint_limits(bank, limits[:, 0], limits[:, 1])
+            _validate_bank_environment(bank, env.unwrapped)
         for pose_class in args_cli.poses:
             env.reset()
-            _set_pose_class(env.unwrapped, pose_class, generator)
+            selection = None
+            if bank is None:
+                _set_pose_class(env.unwrapped, pose_class, generator)
+            else:
+                selected, selection = _select_bank_states(bank, pose_class, env.num_envs, args_cli.seed)
+                _set_bank_states(env.unwrapped, bank, selected, transform_bank_root)
             release_state = _start_snapshot(env.unwrapped, foot_ids, contacts_fresh=False)
             if settle_steps:
                 quiet_steps = _settle_nominal_pose(env.unwrapped, settle_steps)
@@ -409,6 +541,9 @@ def main() -> None:
                 # Preserve the historical default path: no additional physics step
                 # or history reset, so existing controlled-drop runs remain reproducible.
                 policy_start_state = release_state
+            if selection is not None:
+                _attach_bank_provenance(release_state, selection)
+                _attach_bank_provenance(policy_start_state, selection)
             eligible_fallen = torch.tensor(
                 [state["eligible_settled_fallen_recovery"] for state in policy_start_state],
                 device=env.device, dtype=torch.bool)
@@ -425,13 +560,20 @@ def main() -> None:
             video_writer = None
             video_path = args_cli.output_dir / f"{checkpoint_name}_{pose_class}.mp4"
             start_label = policy_start_state[0]["classification"] if settle_steps else None
+            if selection is not None:
+                start_label = f"ID {selection['selected_state_ids'][0]} | {start_label}"
             if settle_steps and args_cli.video_pose in (pose_class, "all"):
                 # Show the actual pre-policy state before the first learned action.
+                _camera(env.unwrapped)
+                env.unwrapped.sim.render()
+                env.unwrapped.sim.render()
                 frame = env.unwrapped.render()
                 if frame is None:
                     raise RuntimeError("No RGB frame returned for the pre-policy state.")
                 video_writer = _open_video(video_path, frame, args_cli.video_fps)
                 initial_row = _trace_row(env.unwrapped, foot_ids, pose_class, -1, stable_steps)
+                if selection is not None:
+                    initial_row["bank_state_id"] = selection["selected_state_ids"][0]
                 trace.append(initial_row)
                 video_writer.write(_annotate(frame, pose_class, -1, env.unwrapped.step_dt, 0.0,
                                              initial_row, start_label))
@@ -453,6 +595,8 @@ def main() -> None:
                 stable &= geometry_ok & ~base_contact & current_support
                 stable_steps = torch.where(stable, stable_steps + 1, torch.zeros_like(stable_steps))
                 trace.append(_trace_row(env.unwrapped, foot_ids, pose_class, step, stable_steps))
+                if selection is not None:
+                    trace[-1]["bank_state_id"] = selection["selected_state_ids"][0]
                 if dones.any():
                     raise RuntimeError("Unexpected auto-reset would invalidate trial measurements.")
                 newly_recovered = torch.isnan(recovered_at) & (stable_steps >= hold_steps)
@@ -517,6 +661,16 @@ def main() -> None:
                 "stable_hold_s": args_cli.hold_s,
                 "horizon_s": args_cli.horizon_s,
             }
+            if selection is not None:
+                results[pose_class]["state_bank_selection"] = selection
+                eligible_ids = {state["bank_state_id"] for state in policy_start_state
+                                if state["eligible_settled_fallen_recovery"]}
+                results[pose_class]["settled_fallen_unique_state_count"] = len(eligible_ids)
+                eligible_times = recovered_at[success & eligible_fallen].cpu().numpy()
+                results[pose_class]["settled_fallen_median_recovery_s"] = (
+                    float(np.median(eligible_times)) if len(eligible_times) else None)
+                for i, diagnostic in enumerate(results[pose_class]["final_diagnostics"]):
+                    diagnostic["bank_state_id"] = selection["selected_state_ids"][i]
             summary = {key: value for key, value in results[pose_class].items()
                        if key not in ("final_diagnostics", "release_state_before_settling", "policy_start_state")}
             print(f"{pose_class}: {summary}")
@@ -558,6 +712,32 @@ def main() -> None:
         "results": results,
         "diagnostic_trial": 0,
     }
+    if bank is not None:
+        selected_ids = [state_id for result in results.values()
+                        for state_id in result["state_bank_selection"]["selected_state_ids"]]
+        report.update({
+            "angle_deg": None,
+            "start_protocol_id": f"state_bank_{args_cli.state_bank_split}_nominal_pose_PD",
+            "start_protocol": "Complete measured fallen root-link pose, CoM world velocity and joint state "
+                              "replayed from the explicit bank split; only environment-origin translation, "
+                              "no yaw augmentation, root lifting or new joint noise; at least 1 s nominal-PD "
+                              "handover precedes policy time; actual settled-fallen eligibility rechecked",
+            "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+            "state_bank": {
+                "path": bank["archive_path"], "manifest_path": bank["manifest_path"],
+                "sha256": bank["archive_sha256"], "schema_version": bank["metadata"]["schema_version"],
+                "split": args_cli.state_bank_split, "available_split_states": len(bank["state_id"]),
+                "selected_state_ids": selected_ids, "selected_unique_state_count": len(set(selected_ids)),
+                "selection_protocol": "per-class CPU seed; actual class, sorted IDs, random permutation "
+                                      "without replacement then extra draws only if trials exceed available states",
+                "comparison_requirement": "Compare checkpoints under the same Bank Play task, bank SHA-256, "
+                                          "heldout split, selected IDs/order, seed, trial count and handover duration; "
+                                          "repeated draws are not additional independent source states",
+                "fixed_material": bank["metadata"].get("material"),
+                "physics": bank["metadata"].get("physics"),
+                "diagnostic_train_split_only": args_cli.state_bank_split != "heldout",
+            },
+        })
     trace_path = args_cli.output_dir / f"{checkpoint_name}_recovery_trace.csv"
     with trace_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(trace[0]))

@@ -1,0 +1,30 @@
+{
+  "status": "experimental_training_bootstrap_not_promoted",
+  "parent": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_11-46-18_rehearsal60_from3448_20260916\\model_3900.pt",
+  "parent_sha256": "70f1429040ebe3db1f8bdcbe246bff0c791f50c9739a46568932332e1ffe81aa",
+  "output": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\bootstrap_bank3900_std060\\model_3900.pt",
+  "output_sha256": "ca445aa39bdca62fe18e04924e967feda2c2af496f7263238a4c2bf22947a3fa",
+  "iteration_preserved": 3900,
+  "original_action_std": [
+    0.08693326264619827,
+    0.09559386223554611,
+    0.08828125894069672,
+    0.09201626479625702,
+    0.35810741782188416,
+    0.3898487687110901,
+    0.18831849098205566,
+    0.18218275904655457,
+    0.16224455833435059,
+    0.18750058114528656,
+    0.19021868705749512,
+    0.1793709099292755
+  ],
+  "new_action_std": 0.6,
+  "changes": [
+    "state-independent sampling std",
+    "clear Adam moments for new-start-distribution pilot"
+  ],
+  "unchanged": "all deterministic actor and critic tensors, optimizer parameter groups, saved iteration",
+  "purpose": "Test exploration from actual settled fallen starts; parent recovery hip std was below0.10",
+  "scope": "simulation only; no hardware or evaluation noise injection"
+}
