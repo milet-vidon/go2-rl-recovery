@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9_-]+$')][string]$RunTag,
-    [ValidateRange(100,3000)][int]$Iterations = 1000
+    [ValidateRange(100,3000)][int]$Iterations = 1000,
+    [ValidateSet(64,128,256,512)][int]$NumEnvs = 512
 )
 # Finite serial experiment. Fresh matched weights, NOT continuation of an old actor.
 $ErrorActionPreference = 'Stop'
@@ -21,6 +22,12 @@ $activeSim = @(Get-CimInstance Win32_Process | Where-Object {
     $_.CommandLine -match 'rsl_rl[/\\]train.py|evaluate_go2_|build_recovery_state_bank.py|validate_recovery_bank_live.py'
 })
 if ($activeSim.Count -gt 0) { throw "Another simulator is active: $($activeSim.ProcessId -join ',')" }
+function Assert-PhysicsLogHealthy([string]$LogPath) {
+    # Native crashes can escape the batch launcher's exit code. Never accept
+    # models/reports from a run that overflowed or discarded physical contacts.
+    $bad = Select-String -LiteralPath $LogPath -Pattern 'CUDA error|PhysX error|Failed to get DOF|Traceback \(most recent|buffer.*overflow|discard.*contacts|contacts.*discard' | Select-Object -First 1
+    if ($null -ne $bad) { throw "Invalid simulation log $LogPath : $($bad.Line)" }
+}
 foreach ($arm in @('nominal','current')) {
     foreach ($path in @("configs/$RunTag-$arm", "evaluations/$RunTag-$arm-heldout", "evaluations/$RunTag-$arm-angle30", "evaluations/$RunTag-$arm-angle45")) {
         if (Test-Path -LiteralPath (Join-Path $portfolio $path)) { throw "Existing output $path; do not restart." }
@@ -32,9 +39,10 @@ try {
     foreach ($arm in @('nominal','current')) {
         $runName = "$RunTag`_$arm"
         $trainLog = Join-Path $artifactRoot "$RunTag-$arm-train.log"
-        Write-Output "$(Get-Date -Format o) Starting ${arm}: $Iterations fresh iterations, 512 environments."
-        & ./scripts/train.ps1 -Stage "recovery_bank_$($arm)_target" -NumEnvs 512 -MaxIterations $Iterations -LoadRun $bootstrapRun -Checkpoint model_0.pt -RunName $runName -BankPath $bankPath -Headless *> $trainLog
+        Write-Output "$(Get-Date -Format o) Starting ${arm}: $Iterations fresh iterations, $NumEnvs environments; $($Iterations * $NumEnvs * 24) environment steps per arm."
+        & ./scripts/train.ps1 -Stage "recovery_bank_$($arm)_target" -NumEnvs $NumEnvs -MaxIterations $Iterations -LoadRun $bootstrapRun -Checkpoint model_0.pt -RunName $runName -BankPath $bankPath -Headless *> $trainLog
         if ($LASTEXITCODE -ne 0) { throw "Training failed: $trainLog" }
+        Assert-PhysicsLogHealthy $trainLog
         $runs = @(Get-ChildItem -LiteralPath $runRoot -Directory | Where-Object { $_.Name.EndsWith("_$runName") })
         if ($runs.Count -ne 1) { throw 'Expected exactly one formal run directory.' }
         $candidate = Get-ChildItem -LiteralPath $runs[0].FullName -Filter 'model_*.pt' |
@@ -64,8 +72,10 @@ try {
                 $evalArgs.Seed = if ($protocol -eq 'angle30') { 20260918 } else { 20260916 }
                 $evalArgs.Poses = if ($protocol -eq 'angle30') { @('upright','side','fore_aft') } else { @('upright','side','fore_aft','upside_down') }
             }
-            & ./scripts/evaluate_recovery.ps1 @evalArgs *> (Join-Path $artifactRoot "$RunTag-$arm-$protocol.log")
+            $evalLog = Join-Path $artifactRoot "$RunTag-$arm-$protocol.log"
+            & ./scripts/evaluate_recovery.ps1 @evalArgs *> $evalLog
             if ($LASTEXITCODE -ne 0) { throw "Evaluation failed: $arm $protocol" }
+            Assert-PhysicsLogHealthy $evalLog
             Write-Output "$(Get-Date -Format o) Completed $arm $protocol. Inspect actual pose results; no automatic promotion."
         }
     }

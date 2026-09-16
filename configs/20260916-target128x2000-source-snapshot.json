@@ -1,0 +1,113 @@
+{
+  "captured_local": "2026-09-16T16:30:56.2783767+08:00",
+  "purpose": "Mid-first-arm source audit, not an automatic runtime lock. Compare again before accepting the pair; do not install overlays until both arms and evaluations finish.",
+  "run_tag": "20260916-target128x2000",
+  "source_portfolio_base_commit": "a3e2a41",
+  "files": [
+    {
+      "path": "E:\\IsaacLab\\repo\\scripts\\reinforcement_learning\\rsl_rl\\train.py",
+      "sha256": "7586436b3318c1eb705600aef07bdd54f55d5c35943b266563972adc0c7a22cb",
+      "last_write_local": "2026-09-06T01:15:18.8329642+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_assets\\isaaclab_assets\\robots\\unitree.py",
+      "sha256": "0211154aeb65a73a0d1e1093df051e1878bf9b112d657c59b3008b62e328a5b2",
+      "last_write_local": "2026-09-08T12:20:48.4325791+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py",
+      "sha256": "b10e302ad1e0c53bec501e75d02b40bfc6af3389290a4c82717bc83b8f8cad7a",
+      "last_write_local": "2026-09-16T15:21:54.2651683+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py",
+      "sha256": "8a87c5866d1e155ec46168847d6be890743a813681abe7882fea8f198fcb8802",
+      "last_write_local": "2026-09-06T01:15:19.3079083+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py",
+      "sha256": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4",
+      "last_write_local": "2026-09-16T14:37:45.6816151+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py",
+      "sha256": "48d949b9b261ca9be335e4cd31b379179d8fa6011b120e7f9733131a62b45704",
+      "last_write_local": "2026-09-06T01:15:19.3090254+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py",
+      "sha256": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3",
+      "last_write_local": "2026-09-09T01:15:19.2950555+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py",
+      "sha256": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20",
+      "last_write_local": "2026-09-09T15:47:56.1534590+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py",
+      "sha256": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55",
+      "last_write_local": "2026-09-09T23:14:21.1204242+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py",
+      "sha256": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082",
+      "last_write_local": "2026-09-16T14:49:35.4546114+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py",
+      "sha256": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4",
+      "last_write_local": "2026-09-16T12:45:28.5255612+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py",
+      "sha256": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac",
+      "last_write_local": "2026-09-16T15:16:05.0590864+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py",
+      "sha256": "cd31702e4247309ccff571534987b2b23ddaf6cbf37cbe7ff3870fe6da2a1571",
+      "last_write_local": "2026-09-16T15:18:36.1519255+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py",
+      "sha256": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814",
+      "last_write_local": "2026-09-16T14:12:38.4640143+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py",
+      "sha256": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce",
+      "last_write_local": "2026-09-16T14:12:38.4660390+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py",
+      "sha256": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442",
+      "last_write_local": "2026-09-16T12:49:42.6734956+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py",
+      "sha256": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba",
+      "last_write_local": "2026-09-08T22:47:06.8409194+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py",
+      "sha256": "6d31140968214ba96388a3094eb87877bdd9cdacdbae2c7ebdc4be0645093f40",
+      "last_write_local": "2026-09-06T01:15:19.3100303+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py",
+      "sha256": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901",
+      "last_write_local": "2026-09-09T01:11:18.0392375+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\actuators\\actuator_pd.py",
+      "sha256": "6a29a2e47128e6c758ea787c08a713fc5d067a42e707970b07ed660bb401826a",
+      "last_write_local": "2026-09-06T01:15:18.8656655+08:00"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\envs\\manager_based_rl_env.py",
+      "sha256": "81e899e33c62b1669d33a62c7510bc76c4910fd5a2f8c58e4e823fb19b38110b",
+      "last_write_local": "2026-09-06T01:15:18.9152058+08:00"
+    }
+  ]
+}

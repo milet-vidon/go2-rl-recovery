@@ -43,6 +43,36 @@ def make(reference='current', joint_ids=slice(None), **overrides):
 
 
 class ActionTests(unittest.TestCase):
+    def test_report_distinguishes_direct_pd_handover_from_zero_policy_action(self):
+        tree = ast.parse((ROOT / 'scripts/evaluate_go2_recovery.py').read_text(encoding='utf-8'))
+        node = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+                    and n.name == '_mark_target_action_report')
+        scope = {}
+        exec(compile(ast.Module(body=[node], type_ignores=[]), '<metadata>', 'exec'), scope)
+        mark = scope[node.name]
+        for reference in ('nominal', 'current'):
+            for settle_steps in (0, 50):
+                for bank in (False, True):
+                    report = {'settle_control_steps': settle_steps, 'settle_controller': None,
+                              'start_protocol': 'unchanged protocol',
+                              'results': {'side': {'successes': 0, 'final_valid_stands': 0}}}
+                    if bank:
+                        report['state_bank'] = {'comparison_requirement': 'matched bank'}
+                    original_results = copy.deepcopy(report['results'])
+                    mark(report, reference, .25, .02, 4)
+                    self.assertEqual(report['results'], original_results)
+                    self.assertEqual(report['action_representation']['reference'], reference)
+                    if settle_steps:
+                        self.assertIn('direct nominal-position PD', report['settle_controller'])
+                        self.assertIn('not zero torque', report['settle_controller'])
+                        if not bank:
+                            self.assertIn('bypassing policy action processing', report['start_protocol'])
+                    else:
+                        self.assertIsNone(report['settle_controller'])
+                        self.assertIsNone(report['action_representation']['pre_policy_handover'])
+                    if bank or not settle_steps:
+                        self.assertEqual(report['start_protocol'], 'unchanged protocol')
+
     def test_nominal_handover_uses_same_targets_not_relative_zero_actions(self):
         tree=ast.parse((ROOT/'scripts/evaluate_go2_recovery.py').read_text(encoding='utf-8'))
         node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='_settle_nominal_pose')

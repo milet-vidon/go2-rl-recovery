@@ -529,6 +529,28 @@ def _mark_action_mode(report, stochastic_diagnostic=False):
             + report["success_count_definition"])
 
 
+def _mark_target_action_report(report, reference, scale, sample_period_s, decimation):
+    """Describe sampled targets without changing recorded physics or outcomes."""
+    handover = "direct nominal-position PD, not policy zero action"
+    report["action_representation"] = {
+        "reference": reference, "scale": scale,
+        "target": "q_reference + scale * action, soft-joint-limit clamped",
+        "sample_period_s": sample_period_s,
+        "held_over_physics_substeps": decimation,
+        "pre_policy_handover": handover if report["settle_control_steps"] else None,
+    }
+    if report["settle_control_steps"]:
+        report["settle_controller"] = handover + "; not zero torque"
+        if "state_bank" not in report:
+            report["start_protocol"] = (
+                "pre-settled nominal-pose PD: default joint positions commanded directly, "
+                "bypassing policy action processing; NOT passive zero-torque settling; "
+                "actual fallen/standing status recorded per trial")
+    if "state_bank" in report:
+        report["state_bank"]["comparison_requirement"] += (
+            "; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation")
+
+
 def _new_motion_diagnostic(env):
     a = env.scene["robot"].data
     return {"q_min": a.joint_pos.clone(), "q_max": a.joint_pos.clone(),
@@ -847,17 +869,9 @@ def main() -> None:
         })
     _mark_action_mode(report, args_cli.stochastic_diagnostic)
     if args_cli.task in target_tasks:
-        reference = env_cfg.actions.joint_pos.reference
-        report["action_representation"] = {
-            "reference": reference, "scale": env_cfg.actions.joint_pos.scale,
-            "target": "q_reference + scale * action, soft-joint-limit clamped",
-            "sample_period_s": env_cfg.sim.dt * env_cfg.decimation,
-            "held_over_physics_substeps": env_cfg.decimation,
-            "pre_policy_handover": "direct nominal-position PD, not policy zero action",
-        }
-        if "state_bank" in report:
-            report["state_bank"]["comparison_requirement"] += (
-                "; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation")
+        _mark_target_action_report(
+            report, env_cfg.actions.joint_pos.reference, env_cfg.actions.joint_pos.scale,
+            env_cfg.sim.dt * env_cfg.decimation, env_cfg.decimation)
     trace_path = args_cli.output_dir / f"{checkpoint_name}_recovery_trace.csv"
     with trace_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(trace[0]))
