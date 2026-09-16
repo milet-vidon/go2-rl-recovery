@@ -35,6 +35,8 @@ parser.add_argument("--seed", type=int, default=20260909)
 parser.add_argument("--video_fps", type=int, default=25)
 parser.add_argument("--width", type=int, default=960)
 parser.add_argument("--height", type=int, default=540)
+parser.add_argument("--view", choices=("legacy", "front", "oblique"), default="legacy",
+                    help="Rendering only; front/oblique track the articulated body in yaw coordinates.")
 parser.add_argument("--real_time", action="store_true")
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
@@ -189,10 +191,34 @@ def _diagnostic_floor():
     light.func('/World/DiagnosticSun', light, orientation=(0.8805, 0.2798, 0.3647, 0.1159))
 
 
+def _camera_geometry(quaternion, bodies, view):
+    """Pure rendering geometry; never changes the simulation or policy state."""
+    offsets = {"front": (1.65, 0.0, 0.65), "oblique": (1.30, 1.30, 0.75)}
+    offset = np.array(offsets[view], dtype=float)
+    w, x, y, z = quaternion
+    yaw = np.arctan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z))
+    c, s = np.cos(yaw), np.sin(yaw)
+    rotated = np.array((c * offset[0] - s * offset[1],
+                        s * offset[0] + c * offset[1], offset[2]))
+    target = (bodies.min(axis=0) + bodies.max(axis=0)) * 0.5
+    target = target.copy()
+    target[2] += 0.08
+    return target + rotated, target
+
+
+def _set_video_view(env):
+    if args_cli.view == "legacy":
+        return
+    data = env.scene["robot"].data
+    eye, target = _camera_geometry(data.root_quat_w[0].detach().cpu().numpy(),
+                                   data.body_pos_w[0].detach().cpu().numpy(), args_cli.view)
+    env.sim.set_camera_view(eye=eye.tolist(), target=target.tolist())
+
+
 def _annotate(frame: np.ndarray, phase: str, t: float, row: dict[str, float]) -> np.ndarray:
     image = cv2.cvtColor(frame[..., :3], cv2.COLOR_RGB2BGR)
     lines = (
-        f"Go2 stand-walk-stop | {phase}",
+        f"Go2 stand-walk-stop | {phase} | view={args_cli.view}",
         f"t={t:5.2f}s cmd=({row['cmd_x']:+.2f}, {row['cmd_y']:+.2f}, {row['cmd_yaw']:+.2f})",
         f"height={row['height']:.3f}m roll={row['roll_deg']:+.1f} pitch={row['pitch_deg']:+.1f}",
         f"speed={row['speed']:.2f}m/s contacts={int(row['foot_contacts'])} base_contact={int(row['base_contact'])}",
@@ -280,6 +306,12 @@ def main() -> None:
     phase_stats: dict[str, dict[str, float]] = {}
     start_wall = time.time()
     try:
+        if writer is not None:
+            # Initialize the offscreen camera before selecting the tracked view.
+            # Render-only warmup: no physics step, reset, or action is performed.
+            env.unwrapped.render()
+            _set_video_view(env.unwrapped)
+            env.unwrapped.render()
         for step in range(steps):
             t = step * dt
             phase, command = _phase(t)
@@ -355,6 +387,7 @@ def main() -> None:
             stats = phase_stats.setdefault(phase, {"count": 0.0, "height_sum": 0.0, "contacts_sum": 0.0, "speed_sum": 0.0})
             stats["count"] += 1.0; stats["height_sum"] += row["height"]; stats["contacts_sum"] += row["foot_contacts"]; stats["speed_sum"] += row["speed"]
             if writer is not None and step % sample_every == 0:
+                _set_video_view(env.unwrapped)
                 frame = env.unwrapped.render()
                 if frame is None:
                     raise RuntimeError("No RGB frame returned")
@@ -416,6 +449,7 @@ def main() -> None:
         "checkpoint": None if args_cli.checkpoint is None else str(args_cli.checkpoint.resolve()),
         "checkpoint_sha256": None if args_cli.checkpoint is None else hashlib.sha256(args_cli.checkpoint.read_bytes()).hexdigest(),
         "task": args_cli.task, "seed": args_cli.seed, "geometry": geometry,
+        "video_view": None if args_cli.no_video else args_cli.view,
         "protocol_version": "stand_walk_stop_stance_geometry_v2",
         "rest_geometry_protocol": "stance_geometry_v1",
         "protocol": {"stand_s": args_cli.stand_s, "walk_s": args_cli.walk_s, "stop_s": args_cli.stop_s, "walk_speed": args_cli.walk_speed, "lateral_speed": args_cli.lateral_speed, "yaw_rate": args_cli.yaw_rate, "push_delta_vy": args_cli.push_speed},
