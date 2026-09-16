@@ -19,6 +19,8 @@ All historical recovery task shaping is removed ONLY in this isolated task: upri
 
 ## Unchanged acceptance and limitations
 
+The [19:27interim audit](smith-interim-audit-20260916.md) found higher roll reward but lower stand reward and greater joint-limit penalty. Training is still running; this warning is not a pose diagnosis or a reason to promote the checkpoint. Runtime hashes and the saved reward-only configuration remain consistent.
+
 Reward values do NOT certify normal stance: the dense formula has no foot-contact or crossing test, and its height term saturates. External acceptance remains four simultaneous current vertical foot forces>5N, no base contact, body height0.30–0.55m, proper leg geometry, low body speeds and at least3continuous seconds of valid standing including a valid finish. Side/back bank starts are rechecked as actually settled-fallen after1second nominal-position PD; this is NOT passive zero-torque settling. Controlled drops are reported separately. The same development heldout set is reused, not a new independent final benchmark.
 
 No new integrated walk/fall/recover/walk controller exists. Locomotion2250 and limited-domain recovery3448 remain unchanged and cannot be replaced without numerical and front/oblique visual checks.
@@ -40,3 +42,9 @@ Formal finite command ALREADY RUNNING (do not execute again):
 ```
 
 This runs6,144,000 environment steps, then sequential20-trial heldout side/back, controlled30degree and45degree suites under the new matching action task. No automatic promotion or extra training. It rejects duplicate outputs, records and rechecks source hashes, checks saved configs, and rejects invalid physics logs. Keep a single simulator running and every output on E:. See the [live status](training-status-20260916.md) before resuming; do not rerun the whole launcher over an existing run.
+
+## Video follow-up (prepared, not started)
+
+`scripts/record_smith_recovery_review.ps1 -PreflightOnly` checks that training and all three batch evaluations are complete and no other simulator is active. The current preflight correctly returns NOT READY with three missing reports and active PID119728, creates no output and starts no simulator. Once READY, omit `-PreflightOnly` to record the new candidate; never run it over an existing output directory.
+
+The recorder runs four serial simulator calls: heldout side/back in front and oblique views, then controlled upright in both views. It preserves six raw videos and attempts three complete paired clips. Matching views are independent seeded replays, not simultaneous cameras. It does not replay or relabel the old locomotion baseline as this actor and is not a continuous walking/recovery controller. Both failures and successes remain uncut. The recorder checks source/checkpoint/report hashes, strict protocol, nominal-PD handover and bank eligibility; inconsistent paired outcomes retain both raw recordings for review instead of being forced into a pair. Actual visual inspection remains required.
