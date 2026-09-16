@@ -17,7 +17,7 @@ $ErrorActionPreference = 'Stop'
 if (-not (Test-Path -LiteralPath $Checkpoint -PathType Leaf)) { throw "Missing checkpoint: $Checkpoint" }
 if ([IO.Path]::GetPathRoot([IO.Path]::GetFullPath($OutputDir)) -ne 'E:\') { throw 'Outputs must be on E:.' }
 $bankDiagnosticTask = 'Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0'
-$targetTasks = @('Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0')
+$targetTasks = @('Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0')
 if ($StochasticDiagnostic -and ($Task -ne $bankDiagnosticTask -or [string]::IsNullOrWhiteSpace($StateBankPath))) {
     throw 'StochasticDiagnostic requires BackExplore Play and an explicit StateBankPath; this is NOT acceptance.'
 }

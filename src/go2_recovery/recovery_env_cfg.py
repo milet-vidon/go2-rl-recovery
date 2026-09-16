@@ -16,6 +16,7 @@ from isaaclab_tasks.manager_based.locomotion.velocity import mdp
 
 from . import recovery_mdp
 from . import recovery_bank_mdp
+from . import recovery_smith_mdp
 from .recovery_control_targets import ControlStepJointPositionActionCfg
 from .flat_env_cfg import UnitreeGo2FlatEnvCfg
 
@@ -427,6 +428,38 @@ class UnitreeGo2RecoveryBankCurrentTargetEnvCfg(UnitreeGo2RecoveryBankNominalTar
 
 @configclass
 class UnitreeGo2RecoveryBankCurrentTargetEnvCfg_PLAY(UnitreeGo2RecoveryBankCurrentTargetEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankSmithNominalEnvCfg(UnitreeGo2RecoveryBankNominalTargetEnvCfg):
+    """Reward-only method adaptation; fixed nominal actions, bank, Go2 and PPO.
+
+    Replace all historical recovery task shaping as a single reward-design
+    experiment. Generic motor/action regularizers remain identical. The strict
+    external recovery criterion is NOT relaxed by the dense shaping reward.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        for name in ("upright_and_height", "orientation_progress", "recovery_success",
+                     "stable_stand", "static_stance", "low_height_support", "low_height_lift",
+                     "conditional_stand_posture", "uncrossed_stand", "crossed_limbs"):
+            setattr(self.rewards, name, None)
+        # Separate log components; 10*roll + 10*stand equals 20*total.
+        self.rewards.smith_roll = RewTerm(
+            func=recovery_smith_mdp.SmithRecoveryReward,
+            weight=10.0, params={"mode": "roll", "target_height": 0.32})
+        self.rewards.smith_stand = RewTerm(
+            func=recovery_smith_mdp.SmithRecoveryReward,
+            weight=10.0, params={"mode": "stand", "target_height": 0.32})
+
+
+@configclass
+class UnitreeGo2RecoveryBankSmithNominalEnvCfg_PLAY(UnitreeGo2RecoveryBankSmithNominalEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 1

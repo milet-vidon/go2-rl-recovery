@@ -45,7 +45,7 @@ if args_cli.poses is None:
     args_cli.poses = ("side", "upside_down") if args_cli.state_bank_path else POSE_CLASSES
 diagnostic_task = "Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0"
 target_tasks = tuple(f"Isaac-Recovery-Bank-{v}-Flat-Unitree-Go2-Play-v0"
-                     for v in ("NominalTarget", "CurrentTarget"))
+                     for v in ("NominalTarget", "CurrentTarget", "SmithNominal"))
 if args_cli.stochastic_diagnostic and (args_cli.task != diagnostic_task or not args_cli.state_bank_path):
     parser.error("Stochastic diagnostics require BackExplore Play and an explicit state bank")
 if args_cli.state_bank_path:

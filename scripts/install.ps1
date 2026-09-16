@@ -6,7 +6,7 @@ if (-not (Test-Path (Join-Path $destination 'flat_env_cfg.py'))) { throw 'Provid
 if ([IO.Path]::GetPathRoot([IO.Path]::GetFullPath($IsaacLabRepo)) -eq 'C:\') { throw 'This project stores generated code and backups outside C:.' }
 $backup = Join-Path (Split-Path $IsaacLabRepo -Parent) ('artifacts\install-backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
 $copies = @()
-foreach ($name in @('standard_env_cfg.py', 'robust_env_cfg.py', 'natural_env_cfg.py', 'natural_stop_env_cfg.py', 'natural_robust_env_cfg.py', 'recovery_env_cfg.py', 'recovery_mdp.py', 'recovery_math.py', 'recovery_state_bank.py', 'recovery_bank_mdp.py', 'recovery_back_exploration.py', 'recovery_control_targets.py')) {
+foreach ($name in @('standard_env_cfg.py', 'robust_env_cfg.py', 'natural_env_cfg.py', 'natural_stop_env_cfg.py', 'natural_robust_env_cfg.py', 'recovery_env_cfg.py', 'recovery_mdp.py', 'recovery_math.py', 'recovery_state_bank.py', 'recovery_bank_mdp.py', 'recovery_back_exploration.py', 'recovery_control_targets.py', 'recovery_smith_math.py', 'recovery_smith_mdp.py')) {
     $copies += @{ Source = Join-Path $portfolio "src\go2_recovery\$name"; Target = Join-Path $destination $name }
 }
 $copies += @{ Source = Join-Path $portfolio 'src\go2_recovery\go2_registry_snapshot.py'; Target = Join-Path $destination '__init__.py' }
