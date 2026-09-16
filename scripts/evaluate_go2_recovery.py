@@ -29,6 +29,8 @@ parser.add_argument("--settle_s", type=float, default=0.0,
 parser.add_argument("--state_bank_path", type=Path,
                     help="Optional validated states.npz or directory; only the fixed-physics Bank Play task is allowed.")
 parser.add_argument("--state_bank_split", choices=("heldout", "train"), default="heldout")
+parser.add_argument("--stochastic_diagnostic", action="store_true",
+                    help="BackExplore sampling diagnostic ONLY; never a model acceptance result.")
 parser.add_argument("--min_contacts", type=int, default=4, help="Required foot contacts for a valid final stand.")
 parser.add_argument("--seed", type=int, default=20260908)
 parser.add_argument("--video_pose", choices=(*POSE_CLASSES, "all"))
@@ -41,9 +43,16 @@ AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
 if args_cli.poses is None:
     args_cli.poses = ("side", "upside_down") if args_cli.state_bank_path else POSE_CLASSES
+diagnostic_task = "Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0"
+target_tasks = tuple(f"Isaac-Recovery-Bank-{v}-Flat-Unitree-Go2-Play-v0"
+                     for v in ("NominalTarget", "CurrentTarget"))
+if args_cli.stochastic_diagnostic and (args_cli.task != diagnostic_task or not args_cli.state_bank_path):
+    parser.error("Stochastic diagnostics require BackExplore Play and an explicit state bank")
 if args_cli.state_bank_path:
-    if args_cli.task != "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0":
-        parser.error("State-bank evaluation requires Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0")
+    allowed_tasks = (diagnostic_task,) if args_cli.stochastic_diagnostic else (
+        "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0", *target_tasks)
+    if args_cli.task not in allowed_tasks:
+        parser.error(f"This state-bank action mode requires one of {allowed_tasks}")
     if not math.isfinite(args_cli.settle_s) or args_cli.settle_s < 1.0:
         parser.error("State-bank replay requires --settle_s >= 1 for nominal-PD handover validation")
     if any(pose not in ("side", "upside_down") for pose in args_cli.poses):
@@ -53,6 +62,9 @@ if args_cli.state_bank_path:
     os.environ["ISAACLAB_RECOVERY_BANK_COLLECTION"] = "1"
 elif args_cli.task == "Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0":
     parser.error("Bank Play evaluation requires explicit --state_bank_path")
+elif args_cli.task in target_tasks:
+    # Deterministic controlled-drop evaluation owns its starts, never the train bank.
+    os.environ["ISAACLAB_RECOVERY_BANK_COLLECTION"] = "1"
 if args_cli.video_pose:
     args_cli.enable_cameras = True
 
@@ -76,6 +88,9 @@ from isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_math i
     upright_error_squared,
 )
 from isaaclab_tasks.utils.parse_cfg import load_cfg_from_registry  # noqa: E402
+from isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_control_targets import (  # noqa: E402
+    ControlStepJointPositionAction,
+)
 
 
 def _uniform(shape: tuple[int, ...], low: float, high: float, *, device: str, generator: torch.Generator) -> torch.Tensor:
@@ -234,7 +249,8 @@ def _settle_nominal_pose(env, settle_steps: int) -> torch.Tensor:
     if len(terms) != 1:
         raise RuntimeError("PD settling requires exactly one default-offset joint-position action term.")
     term = env.action_manager.get_term(terms[0])
-    if (type(term) is not JointPositionAction or not term.cfg.use_default_offset
+    sampled_target = type(term) is ControlStepJointPositionAction
+    if ((not sampled_target and (type(term) is not JointPositionAction or not term.cfg.use_default_offset))
             or term.cfg.asset_name != "robot" or term.cfg.clip is not None
             or term.action_dim != env.scene["robot"].num_joints):
         raise RuntimeError("Zero action is not verified as the complete nominal joint-position PD target.")
@@ -243,12 +259,19 @@ def _settle_nominal_pose(env, settle_steps: int) -> torch.Tensor:
     rendering = env.sim.has_gui() or env.sim.has_rtx_sensors()
     with torch.no_grad():
         for step in range(settle_steps):
-            env.action_manager.process_action(zeros)
+            if not sampled_target:
+                env.action_manager.process_action(zeros)
             # Mirror the public action/physics APIs used by ManagerBasedRLEnv.step,
             # but never call env.step: it automatically resets done environments.
             for _ in range(env.cfg.decimation):
                 env._sim_step_counter += 1
-                env.action_manager.apply_action()
+                if sampled_target:
+                    # Handover is explicitly the SAME nominal-pose PD in both arms,
+                    # independent of what a zero action means to the new policy.
+                    asset = env.scene["robot"]
+                    asset.set_joint_position_target(asset.data.default_joint_pos)
+                else:
+                    env.action_manager.apply_action()
                 env.scene.write_data_to_sim()
                 env.sim.step(render=False)
                 if rendering and env._sim_step_counter % env.cfg.sim.render_interval == 0:
@@ -379,27 +402,48 @@ def _trace_row(env, foot_ids, pose_class, step, stable_steps):
     gravity = asset.data.projected_gravity_b[0]
     base_id = sensor.find_bodies("base")[0]
     geometry_ok, foot_b, knee_b, delta = _stance_geometry(env)
+    # Copy trial-zero trace data in two blocks rather than synchronizing for
+    # every scalar. Keep integer counters separate from float32 pose data.
+    values = torch.cat((
+        torch.stack((
+            asset.data.root_pos_w[0, 2] - env.scene.env_origins[0, 2],
+            torch.atan2(gravity[1], -gravity[2]) * 180 / torch.pi,
+            torch.atan2(gravity[0], -gravity[2]) * 180 / torch.pi,
+            torch.sqrt(upright_error_squared(gravity)),
+            asset.data.root_lin_vel_w[0].norm(),
+            asset.data.root_ang_vel_w[0].norm(),
+            (asset.data.joint_pos[0] - asset.data.default_joint_pos[0]).square().mean().sqrt(),
+        )),
+        torch.cat((foot_b[0], knee_b[0, :, 1:2]), dim=1).reshape(-1),
+        torch.stack((asset.data.joint_pos[0], delta[0]), dim=1).reshape(-1),
+    )).detach().cpu().tolist()
+    counts = torch.stack((
+        (sensor.data.net_forces_w[0, foot_ids, 2] > 5).sum(),
+        (sensor.data.net_forces_w[0, base_id].norm(dim=-1) > 1).any(),
+        stable_steps[0],
+        geometry_ok[0],
+    )).to(torch.int64).detach().cpu().tolist()
     row = {
         "pose": pose_class, "time_s": (step + 1) * env.step_dt, "trial": 0,
-        "height": float(asset.data.root_pos_w[0, 2] - env.scene.env_origins[0, 2]),
-        "roll_deg": float(torch.atan2(gravity[1], -gravity[2]) * 180 / torch.pi),
-        "pitch_deg": float(torch.atan2(gravity[0], -gravity[2]) * 180 / torch.pi),
-        "gravity_error": float(torch.sqrt(upright_error_squared(gravity))),
-        "speed": float(asset.data.root_lin_vel_w[0].norm()),
-        "angular_speed": float(asset.data.root_ang_vel_w[0].norm()),
-        "feet_contact": int((sensor.data.net_forces_w[0, foot_ids, 2] > 5).sum()),
-        "base_contact": bool((sensor.data.net_forces_w[0, base_id].norm(dim=-1) > 1).any()),
-        "joint_rms": float((asset.data.joint_pos[0] - asset.data.default_joint_pos[0]).square().mean().sqrt()),
-        "stable_hold_s": float(stable_steps[0]) * env.step_dt,
-        "geometry_ok": bool(geometry_ok[0]),
+        "height": float(values[0]),
+        "roll_deg": float(values[1]),
+        "pitch_deg": float(values[2]),
+        "gravity_error": float(values[3]),
+        "speed": float(values[4]),
+        "angular_speed": float(values[5]),
+        "feet_contact": int(counts[0]),
+        "base_contact": bool(counts[1]),
+        "joint_rms": float(values[6]),
+        "stable_hold_s": float(counts[2]) * env.step_dt,
+        "geometry_ok": bool(counts[3]),
     }
     for i, name in enumerate(("FL", "FR", "RL", "RR")):
         for j, axis in enumerate("xyz"):
-            row[f"{name}_foot_{axis}_b"] = float(foot_b[0, i, j])
-        row[f"{name}_knee_y_b"] = float(knee_b[0, i, 1])
+            row[f"{name}_foot_{axis}_b"] = float(values[7 + 4 * i + j])
+        row[f"{name}_knee_y_b"] = float(values[7 + 4 * i + 3])
     for i, name in enumerate(asset.joint_names):
-        row[name] = float(asset.data.joint_pos[0, i])
-        row[name + "_offset"] = float(delta[0, i])
+        row[name] = float(values[23 + 2 * i])
+        row[name + "_offset"] = float(values[23 + 2 * i + 1])
     return row
 
 
@@ -415,7 +459,8 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
               start_classification: str | None = None) -> np.ndarray:
     image = cv2.cvtColor(frame[..., :3], cv2.COLOR_RGB2BGR)
     labels = (
-        f"Go2 self-recovery | pose: {pose_class}",
+        (f"STOCHASTIC DIAGNOSTIC - NOT ACCEPTANCE | {pose_class}"
+         if getattr(args_cli, "stochastic_diagnostic", False) else f"Go2 self-recovery | pose: {pose_class}"),
         f"time: {(step + 1) * dt:4.2f} s | valid stand hold: {stable_s:4.2f} s",
         ("LEG SHAPE ONLY: OK" if row["geometry_ok"] else "INVALID LEG GEOMETRY")
         + (f" | valid stand held {args_cli.hold_s:g}s" if stable_s >= args_cli.hold_s else " | stand hold pending"),
@@ -432,6 +477,8 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
         # reserved for a CURRENT completed, continuous valid-standing hold.
         status_color = ((80, 220, 80) if stable_s >= args_cli.hold_s
                         else ((0, 190, 255) if row['geometry_ok'] else (60, 80, 255)))
+        if getattr(args_cli, "stochastic_diagnostic", False):
+            status_color = (0, 190, 255)  # Never render a green acceptance marker.
         color = status_color if i == 2 else (245, 245, 245)
         font_scale = 0.48 if i >= 3 else 0.70
         cv2.putText(image, text, (20, 38 + i * 32), cv2.FONT_HERSHEY_SIMPLEX, font_scale, color, 1 if i >= 3 else 2, cv2.LINE_AA)
@@ -467,6 +514,55 @@ def _camera(env):
     env.sim.set_camera_view(eye=eye.cpu().tolist(), target=target.cpu().tolist())
 
 
+def _select_policy_action(runner, device, stochastic_diagnostic=False):
+    inference = runner.get_inference_policy(device=device)
+    return runner.alg.policy.act if stochastic_diagnostic else inference
+
+
+def _mark_action_mode(report, stochastic_diagnostic=False):
+    report["policy_action_mode"] = "stochastic_diagnostic" if stochastic_diagnostic else "deterministic_mean"
+    report["acceptance_eligible"] = not stochastic_diagnostic
+    if stochastic_diagnostic:
+        report["protocol_version"] += "_stochastic_diagnostic_NOT_ACCEPTANCE"
+        report["success_count_definition"] = (
+            "STOCHASTIC TRAINING DIAGNOSTIC ONLY: counts below cannot accept or promote a model. "
+            + report["success_count_definition"])
+
+
+def _new_motion_diagnostic(env):
+    a = env.scene["robot"].data
+    return {"q_min": a.joint_pos.clone(), "q_max": a.joint_pos.clone(),
+            "joint_speed_peak": torch.zeros_like(a.joint_pos),
+            "applied_torque_peak": torch.zeros_like(a.joint_pos),
+            "std_min": torch.full_like(a.joint_pos, float("inf")),
+            "std_max": torch.zeros_like(a.joint_pos),
+            "min_tilt_deg": torch.full_like(a.root_pos_w[:, 2], 180.0),
+            "max_height_m": a.root_pos_w[:, 2] - env.scene.env_origins[:, 2]}
+
+
+def _update_motion_diagnostic(env, motion, action_std):
+    # Read-only control-boundary samples; these are NOT maxima over every
+    # physics substep, and cannot prove that substep saturation never occurred.
+    a = env.scene["robot"].data
+    motion["q_min"] = torch.minimum(motion["q_min"], a.joint_pos)
+    motion["q_max"] = torch.maximum(motion["q_max"], a.joint_pos)
+    motion["joint_speed_peak"] = torch.maximum(motion["joint_speed_peak"], a.joint_vel.abs())
+    motion["applied_torque_peak"] = torch.maximum(motion["applied_torque_peak"], a.applied_torque.abs())
+    motion["std_min"] = torch.minimum(motion["std_min"], action_std)
+    motion["std_max"] = torch.maximum(motion["std_max"], action_std)
+    gravity = a.projected_gravity_b
+    tilt = torch.rad2deg(torch.acos((-gravity[:, 2] / gravity.norm(dim=-1).clamp_min(1e-6)).clamp(-1, 1)))
+    motion["min_tilt_deg"] = torch.minimum(motion["min_tilt_deg"], tilt)
+    motion["max_height_m"] = torch.maximum(motion["max_height_m"], a.root_pos_w[:, 2] - env.scene.env_origins[:, 2])
+
+
+def _motion_diagnostic_report(motion, step_dt=0.02):
+    return {"sample_rate_hz": 1.0 / step_dt, "acceptance_eligible": False,
+            "measurement": "policy control-boundary samples only; peaks may miss physics-substep extrema",
+            "joint_span_rad": (motion["q_max"] - motion["q_min"]).cpu().tolist(),
+            **{key: value.cpu().tolist() for key, value in motion.items() if key not in ("q_min", "q_max")}}
+
+
 def main() -> None:
     if not args_cli.checkpoint.is_file():
         raise FileNotFoundError(args_cli.checkpoint)
@@ -498,7 +594,7 @@ def main() -> None:
     env = RslRlVecEnvWrapper(env, clip_actions=agent_cfg.clip_actions)
     runner = OnPolicyRunner(env, agent_cfg.to_dict(), log_dir=None, device=args_cli.device)
     runner.load(str(args_cli.checkpoint))
-    policy = runner.get_inference_policy(device=env.device)
+    policy = _select_policy_action(runner, env.device, args_cli.stochastic_diagnostic)
     policy_nn = runner.alg.policy
     if args_cli.video_pose:
         _diagnostic_scene(env.unwrapped)
@@ -583,11 +679,14 @@ def main() -> None:
                 trace.append(initial_row)
                 video_writer.write(_annotate(frame, pose_class, -1, env.unwrapped.step_dt, 0.0,
                                              initial_row, start_label))
+            motion = _new_motion_diagnostic(env.unwrapped) if args_cli.stochastic_diagnostic else None
             for step in range(steps):
                 # no_grad keeps Isaac Lab's mutable simulator buffers writable across
                 # deterministic pose resets; inference_mode would mark them immutable.
                 with torch.no_grad():
                     obs, _, dones, _ = env.step(policy(obs))
+                if motion is not None:
+                    _update_motion_diagnostic(env.unwrapped, motion, policy_nn.action_std)
                 if hasattr(policy_nn, "reset"):
                     policy_nn.reset(dones)
                 stable = _stable_stand(env.unwrapped, foot_ids, args_cli.min_contacts)
@@ -667,6 +766,8 @@ def main() -> None:
                 "stable_hold_s": args_cli.hold_s,
                 "horizon_s": args_cli.horizon_s,
             }
+            if motion is not None:
+                results[pose_class]["stochastic_motion_diagnostic"] = _motion_diagnostic_report(motion, env.unwrapped.step_dt)
             if selection is not None:
                 results[pose_class]["state_bank_selection"] = selection
                 eligible_ids = {state["bank_state_id"] for state in policy_start_state
@@ -744,6 +845,19 @@ def main() -> None:
                 "diagnostic_train_split_only": args_cli.state_bank_split != "heldout",
             },
         })
+    _mark_action_mode(report, args_cli.stochastic_diagnostic)
+    if args_cli.task in target_tasks:
+        reference = env_cfg.actions.joint_pos.reference
+        report["action_representation"] = {
+            "reference": reference, "scale": env_cfg.actions.joint_pos.scale,
+            "target": "q_reference + scale * action, soft-joint-limit clamped",
+            "sample_period_s": env_cfg.sim.dt * env_cfg.decimation,
+            "held_over_physics_substeps": env_cfg.decimation,
+            "pre_policy_handover": "direct nominal-position PD, not policy zero action",
+        }
+        if "state_bank" in report:
+            report["state_bank"]["comparison_requirement"] += (
+                "; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation")
     trace_path = args_cli.output_dir / f"{checkpoint_name}_recovery_trace.csv"
     with trace_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(trace[0]))

@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "recovery_bank_control", "recovery_bank_release", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -16,7 +16,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release")) {
+if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target")) {
     if ($FallAngleDeg -gt 0 -or $FocusSide -or $CurriculumSteps -gt 0) {
         throw "$Stage uses its configured validated-state mixture; old angle/focus/mixture overrides are not supported."
     }
@@ -28,9 +28,9 @@ if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_releas
     $env:ISAACLAB_RECOVERY_BANK_PATH = $resolvedBankPath
     Remove-Item Env:ISAACLAB_RECOVERY_BANK_COLLECTION -ErrorAction SilentlyContinue
 } elseif (-not [string]::IsNullOrWhiteSpace($BankPath)) {
-    throw '-BankPath is only supported by recovery_bank, recovery_bank_control, or recovery_bank_release.'
+    throw '-BankPath is only supported by the recovery_bank stages.'
 }
-if ($Stage -in @("recovery_bank_control", "recovery_bank_release") -and [string]::IsNullOrWhiteSpace($LoadRun)) {
+if ($Stage -in @("recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore") -and [string]::IsNullOrWhiteSpace($LoadRun)) {
     throw "$Stage requires -LoadRun and the parent checkpoint so policy noise and optimizer state are resumed normally."
 }
 if ($Stage -eq "recovery_rehearsal" -and $FallAngleDeg -gt 0) {
@@ -98,6 +98,12 @@ $Task = if ($Stage -eq "natural_robust_push") {
     "Isaac-Recovery-Bank-Control-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_bank_release") {
     "Isaac-Recovery-Bank-Release-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_back_explore") {
+    "Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_nominal_target") {
+    "Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_current_target") {
+    "Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_lift") {
     "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery") {

@@ -73,6 +73,30 @@ class UnitreeGo2RecoveryPPORunnerCfg(UnitreeGo2FlatPPORunnerCfg):
 
 
 @configclass
+class UnitreeGo2BackExplorationActorCriticCfg(RslRlPpoActorCriticCfg):
+    """Same actor/critic parameters, with back-conditioned sampling covariance."""
+
+    class_name = "BackExplorationActorCritic"
+    back_std_floor: float = 0.6
+    back_full_activation_gz: float = 0.5
+
+
+@configclass
+class UnitreeGo2RecoveryBackExplorePPORunnerCfg(UnitreeGo2RecoveryPPORunnerCfg):
+    """Isolated covariance experiment; inference still uses the original mean."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        # This snapshot is installed in go2/agents/rsl_rl_ppo_cfg.py. Register
+        # only when this experimental runner is requested, never at import time.
+        from ..recovery_back_exploration import register_back_exploration_actor_critic
+
+        register_back_exploration_actor_critic()
+        self.policy = UnitreeGo2BackExplorationActorCriticCfg(**self.policy.to_dict())
+        self.policy.class_name = "BackExplorationActorCritic"
+
+
+@configclass
 class UnitreeGo2RecoveryLocomotionPPORunnerCfg(UnitreeGo2RecoveryPPORunnerCfg):
     """Uses the recovery experiment root so RSL-RL can resume its checkpoint directly."""
 

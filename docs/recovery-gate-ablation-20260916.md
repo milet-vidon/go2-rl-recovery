@@ -1,6 +1,6 @@
 # Grounded recovery: posture-penalty gate ablation
 
-Status: in progress, simulation only. Neither arm is accepted or recommended. This is a bounded diagnostic experiment, not full reference-video reproduction.
+Status: completed2026-09-16 14:38 local, both arms REJECTED. Simulation only, not full reference-video reproduction. Do not extend this gate-only branch without new evidence.
 
 ## Evidence motivating the change
 
@@ -17,7 +17,9 @@ Recorded and visually inspected all four front/oblique side/back diagnostics, in
 
 ## Controlled comparison
 
-Both arms load the exact final4899 checkpoint and preserve its learned Gaussian std and Adam state; no exploration reset. Same seed42,512 environments,24 rollout steps,unchanged PPO. Both fix bank sampling at60%, matching the pilot's plateau; otherwise resuming would reset the global counter and restart the easier20→60% mixture.214 train states only. The30 heldout states never enter training.
+Both arms load the exact final4899 checkpoint and preserve its learned Gaussian std and Adam state; no exploration reset. Same seed42,512 environments,24 rollout steps,unchanged PPO. Both fix bank sampling at60%, matching the pilot's plateau; otherwise resuming would reset the global counter and restart the easier20→60% mixture.214 train states only. The30 heldout states never enter gradient training, but repeated use to guide these experiments makes them a development-validation set, NOT a final untouched generalization test. A promising candidate needs a separately generated unseen bank/seed before a robustness claim.
+
+Checkpoint audit confirms Adam's17 parameter-state step counts20000(parent4899)→20040(control4900)→22000(control4998), with continuous learned std rather than a reset. RSL loads the optimizer's LR but does not serialize/restore the PPO Python `learning_rate` scalar; the adaptive schedule starts from configured0.0005 in BOTH arms and can overwrite the loaded group LR. The A/B comparison remains matched, but this is not an exact resumption of all scheduler state.
 
 | Arm | Anatomical penalty gate | All other rewards/physics |
 | --- | --- | --- |
@@ -45,7 +47,27 @@ Orchestrator log: `E:/IsaacLab/artifacts/recovery-20260916/gate100-orchestrator.
 
 Each final checkpoint is evaluated in the SAME existing Bank Play task:seed20260918,20 trials each side/back,heldout split,1s nominal-PD handover,8s horizon+3s hold. Same IDs/order as the3900/4899 baselines. Also Aligned Play30degree seed20260918 and45degree seed20260916,upright included. Final acceptance still requires correct foot/knee/joint geometry,simultaneous four vertical contacts,clear base,height.30–.55m,small motion and3s continuous retention. Do not count partial righting or mean training reward as success.
 
-Before launch:13 new gate/reward/config tests,19 bank-data tests,10 subset-reset tests and earlier recovery-math tests pass. Legacy reward outputs are bitwise unchanged in regression tests; new task configs differ only bygate mode. Overlay installed with backup `E:/IsaacLab/artifacts/install-backup-20260916-141830`.
+Before launch:13 new gate/reward/config tests,19 bank-data tests,10 subset-reset tests and earlier recovery-math tests pass. Legacy reward outputs are bitwise unchanged in regression tests; new task configs differ only bygate mode. Overlay installed with backup `E:/IsaacLab/artifacts/install-backup-20260916-141830`. Four additional video-label regressions also pass: geometry-only agreement never becomes a green recovery marker.
+
+## Completed paired results (14:38 local)
+
+Control100:checkpoint4998,SHA256 `32b08ae508326f71f12e1fe39e14889ad21497e7bd7e941510565133d685877b`. Release100:checkpoint4998,SHA256 `d0f035a8b6b0001f2be7b7222b3a6fc0a22561219f20090604537e1286ccd5f1`,run `2026-09-16_14-28-46_20260916-gate100_release`. Each trained1,228,800 additional environment steps. Actual env.yaml files differ only bylog_dir andthe intendedgate mode.
+
+| Protocol / pose (20 trials each) | Parent4899 | Control100 | Release100 |
+| --- | ---: | ---: | ---: |
+| Grounded validation side (16 unique states) | 0 | 0 | 0 |
+| Grounded validation back (14 unique states) | 0 | 0 | 0 |
+| Controlled drop30degree upright | 20 | 20 | 20 |
+| Controlled drop30degree side | 10 | 10 | 11 |
+| Controlled drop30degree fore/aft | 18 | 17 | 14 |
+| Controlled drop45degree upright | 20 | 20 | 20 |
+| Controlled drop45degree side | 0 | 0 | 0 |
+| Controlled drop45degree fore/aft | 10 | 5 | 6 |
+| Controlled drop full inversion | 0 | 0 | 0 |
+
+Final valid stands equal these success counts. Side mean final tilt:parent65.72degrees,Control66.37,Release66.11; mean heightsapproximately0.150m. Release sometimes reaches2 current foot contacts but still does not stand. Back remainsapproximately180degrees. There is no meaningful trajectory advance supporting another300 rounds of this branch. This100-round result does not prove the penalty was irrelevant in every setting, but it does not justify promoting or blindly extending this intervention.
+
+All six control/release reports and raw traces are retained in `evaluations/20260916-gate100-{control,release}-{heldout,angle30,angle45}/`;actual saved configs in `configs/20260916-gate100-{control,release}/`. Next:separate [back-conditioned exploration experiment](back-exploration-20260916.md),using the original4899 parent and Control reward,not the Release checkpoint.
 
 ## Primary research cross-check; not a claimed reproduction
 

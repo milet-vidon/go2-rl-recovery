@@ -16,6 +16,7 @@ from isaaclab_tasks.manager_based.locomotion.velocity import mdp
 
 from . import recovery_mdp
 from . import recovery_bank_mdp
+from .recovery_control_targets import ControlStepJointPositionActionCfg
 from .flat_env_cfg import UnitreeGo2FlatEnvCfg
 
 
@@ -391,6 +392,41 @@ class UnitreeGo2RecoveryBankControlEnvCfg(UnitreeGo2RecoveryBankEnvCfg):
 
 @configclass
 class UnitreeGo2RecoveryBankControlEnvCfg_PLAY(UnitreeGo2RecoveryBankControlEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankNominalTargetEnvCfg(UnitreeGo2RecoveryBankControlEnvCfg):
+    """Fresh action-reference control; soft-clamped nominal target at 50 Hz."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.actions.joint_pos = ControlStepJointPositionActionCfg(
+            asset_name="robot", joint_names=[".*"], reference="nominal")
+
+
+@configclass
+class UnitreeGo2RecoveryBankNominalTargetEnvCfg_PLAY(UnitreeGo2RecoveryBankNominalTargetEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankCurrentTargetEnvCfg(UnitreeGo2RecoveryBankNominalTargetEnvCfg):
+    """Single-variable pair: reference is measured q at the control boundary."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.actions.joint_pos.reference = "current"
+
+
+@configclass
+class UnitreeGo2RecoveryBankCurrentTargetEnvCfg_PLAY(UnitreeGo2RecoveryBankCurrentTargetEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 1

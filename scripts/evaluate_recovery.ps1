@@ -10,14 +10,21 @@ param(
     [int]$Seed = 20260909,
     [string[]]$Poses = @('side', 'fore_aft'),
     [ValidateSet('oblique', 'front', 'side')][string]$View = 'oblique',
-    [switch]$Video
+    [switch]$Video,
+    [switch]$StochasticDiagnostic
 )
 $ErrorActionPreference = 'Stop'
 if (-not (Test-Path -LiteralPath $Checkpoint -PathType Leaf)) { throw "Missing checkpoint: $Checkpoint" }
 if ([IO.Path]::GetPathRoot([IO.Path]::GetFullPath($OutputDir)) -ne 'E:\') { throw 'Outputs must be on E:.' }
+$bankDiagnosticTask = 'Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0'
+$targetTasks = @('Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0')
+if ($StochasticDiagnostic -and ($Task -ne $bankDiagnosticTask -or [string]::IsNullOrWhiteSpace($StateBankPath))) {
+    throw 'StochasticDiagnostic requires BackExplore Play and an explicit StateBankPath; this is NOT acceptance.'
+}
 if (-not [string]::IsNullOrWhiteSpace($StateBankPath)) {
-    if ($Task -ne 'Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0') {
-        throw 'StateBankPath requires Task Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0.'
+    $expectedBankTasks = if ($StochasticDiagnostic) { @($bankDiagnosticTask) } else { @('Isaac-Recovery-Bank-Flat-Unitree-Go2-Play-v0') + $targetTasks }
+    if ($Task -notin $expectedBankTasks) {
+        throw "This state-bank action mode requires one of: $($expectedBankTasks -join ', ')."
     }
     if ($SettleSeconds -lt 1) { throw 'State-bank replay requires SettleSeconds >= 1 for nominal-PD handover.' }
     if (-not (Test-Path -LiteralPath $StateBankPath)) { throw "Missing state bank: $StateBankPath" }
@@ -42,18 +49,19 @@ $evalArgs = @((Join-Path $PSScriptRoot 'evaluate_go2_recovery.py'), '--task', $T
     '--angle_deg', "$AngleDeg", '--settle_s', "$SettleSeconds", '--seed', "$Seed", '--horizon_s', '8', '--hold_s', '3',
     '--min_contacts', '4', '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
 if ($Video) { $evalArgs += @('--video_pose', 'all', '--view', $View) }
+if ($StochasticDiagnostic) { $evalArgs += '--stochastic_diagnostic' }
 if (-not [string]::IsNullOrWhiteSpace($StateBankPath)) {
     $evalArgs += @('--state_bank_path', $StateBankPath, '--state_bank_split', $StateBankSplit)
 }
 $started = Get-Date
 $previousBankCollection = [Environment]::GetEnvironmentVariable('ISAACLAB_RECOVERY_BANK_COLLECTION', 'Process')
 try {
-    if (-not [string]::IsNullOrWhiteSpace($StateBankPath)) { $env:ISAACLAB_RECOVERY_BANK_COLLECTION = '1' }
+    if (-not [string]::IsNullOrWhiteSpace($StateBankPath) -or $Task -in $targetTasks) { $env:ISAACLAB_RECOVERY_BANK_COLLECTION = '1' }
     & 'E:\IsaacLab\env\python.exe' @evalArgs
     if ($LASTEXITCODE -ne 0) { throw "Recovery evaluation exited with $LASTEXITCODE" }
 }
 finally {
-    if (-not [string]::IsNullOrWhiteSpace($StateBankPath)) {
+    if (-not [string]::IsNullOrWhiteSpace($StateBankPath) -or $Task -in $targetTasks) {
         if ($null -eq $previousBankCollection) {
             Remove-Item Env:ISAACLAB_RECOVERY_BANK_COLLECTION -ErrorAction SilentlyContinue
         } else {
