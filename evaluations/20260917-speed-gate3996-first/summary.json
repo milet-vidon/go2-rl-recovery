@@ -1,0 +1,456 @@
+{
+  "schema_version": "speed_candidate_regression_v1",
+  "status": "completed_screening_only",
+  "started_at": "2026-09-17T11:15:36.4478172+08:00",
+  "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_11-14-21_20260917-speedgate128x50-first\\model_3996.pt",
+  "checkpoint_sha256": "41DB1EBBAE4EE466F99ADFFD48E68A6BE907E928008A5AA992E0EF1BC9FB376B",
+  "source_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_speed_candidate.ps1",
+      "sha256": "2C3E8A5F4175320D13C7F3C112246E3B7C8D2BC3D8A40155EED8D20EF6A1394C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_stand_walk_stop.ps1",
+      "sha256": "601C7223218FEC4C925A06CFDED2E21A8BBC244135276DB19BF4EC10FD9D4926"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py",
+      "sha256": "2FBD670D819278CAA19142D77BC65ECC74F960E4AFC19E8142FEE3E507CBA41C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_stand_walk_stop.py",
+      "sha256": "BBBA369177D95BC24163BDD2B5BA96506F5DB7D4B1CE38875F8A8885C49E22E4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py",
+      "sha256": "3ADAC45C45374CF840ADC5F441696A3A8F9C673E2CA9C6AA8370F6342402BB3D"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py",
+      "sha256": "48D949B9B261CA9BE335E4CD31B379179D8FA6011B120E7F9733131A62B45704"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py",
+      "sha256": "A6CFDBFE8EBC62AD8E74F48FE8E24F7CA6588F024C8A11FDD54BEBEC30BCCAF3"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py",
+      "sha256": "49316079D0B65334A9B2676377F37514A0140BEDDF834EAC49586C20ACDD9D20"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py",
+      "sha256": "02A04A057297E3574FAD0E142C886654B3EDCE3EE9DD23147D03A2BC0029DD55"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py",
+      "sha256": "C39EDA11F96ED6B6CEFA177C31B905BD9D408B78769C9A48EC8E3DF4A0BCD082"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py",
+      "sha256": "1B824C4AC1CA0761C37297F481A5D173F2343185FA01DD1F165129FAAA2126F4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py",
+      "sha256": "5220033D6B0F76BC313527DCE017BB37F67F19A192034A15AC2A9EB7ABD6ECAC"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py",
+      "sha256": "45836EFA79A4ADED4B9A8CB3F46CA5AC0A0D9C9A0F7D4609884FF65059A7865F"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py",
+      "sha256": "FBA46228C3A46EEC4231614F9CD1280A0DFCE15E486AF13E3CC810D7B56F6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py",
+      "sha256": "EDE261709A60F9953BCF637CCC700CCA2665631D9767568D4A0CDEEBFC5E26CE"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py",
+      "sha256": "8DB2CCC466C1CB7EC1E7A4678B232903F2DBA9CA717327A317DAE006D9CA0ED9"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py",
+      "sha256": "EDD6E0D71EB815D47F0CA76E97936046B3B16343B8A517D4D68AED6E0D3F7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py",
+      "sha256": "8839BB2658BCFE87FCCA32BDFC8F903290D57EDB52585EB9764E681043C26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py",
+      "sha256": "3146A0265981B20FAE39BA9059964E2E6535034B75B745E260CCF6CF63E40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py",
+      "sha256": "2FF13438054FB63ECCF4FDF69AD799D4298077501DE4142749202FEC7AB3E08C"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py",
+      "sha256": "A9DABE626515C73693B9F90D98AC9A5189D8356B78FF466641F24382B991F7BA"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py",
+      "sha256": "6D31140968214BA96388A3094EB87877BDD9CDACDBAE2C7EBDC4BE0645093F40"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py",
+      "sha256": "CD57B11C69747296938E15B5487B0A185C29F45244B20CFB0C71BF57979AF901"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py",
+      "sha256": "8A87C5866D1E155EC46168847D6BE890743A813681ABE7882FEA8F198FCB8802"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py",
+      "sha256": "498E15670AAB92AA8E9616B5C82A5277E6F7A519762DA3295E4B2FC4CE7F16F4"
+    }
+  ],
+  "rows": [
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\normal-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\normal-seed20260909.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": false,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.036419774139718655,
+      "max_tilt_deg": 5.342784850874598,
+      "seed": 20260909,
+      "report_passed": false,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "report_sha256": "3C6DE27FA7A7004FB670AF32E1B7E055F66D5186CFD9C9FB186D4F0B1B685216",
+      "actual_vx": 0.37337553679943086,
+      "commanded_vx": 0.5,
+      "actual_yaw": -0.038939897907631735,
+      "actual_vy": 0.12492256503697717
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\normal-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\normal-seed20260910.log",
+      "failed_criteria": [],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.05440024792268458,
+      "max_tilt_deg": 2.3079303120574175,
+      "seed": 20260910,
+      "report_passed": true,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "report_sha256": "F06856738541C21ED4B56EC963F14155786641944498881CA19FCA7CFD02C68E",
+      "actual_vx": 0.5208537620306015,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.021230279785564302,
+      "actual_vy": -0.025771617458584452
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\normal-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\normal-seed20260911.log",
+      "failed_criteria": [],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.0466798305195718,
+      "max_tilt_deg": 3.1362459222816694,
+      "seed": 20260911,
+      "report_passed": true,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "report_sha256": "0DDC5B4820BAA66BE2819635FD48E95D066EE1E15551DF1EC20DBB32AA4B7B53",
+      "actual_vx": 0.48607877484389717,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.007467045018940033,
+      "actual_vy": 0.0125204530978434
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\retained08-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\retained08-seed20260909.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.055226107296649514,
+      "max_tilt_deg": 4.7252794008447925,
+      "seed": 20260909,
+      "report_passed": false,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "report_sha256": "674BE55E627F1CFA8B05E8885A5325A3B6363882F8A5D6039D021DCB1DFCC2AB",
+      "actual_vx": 0.607334497996739,
+      "commanded_vx": 0.8,
+      "actual_yaw": -0.05845130932617134,
+      "actual_vy": 0.0831653247288029
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\retained08-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\retained08-seed20260910.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.07775391875708332,
+      "max_tilt_deg": 4.452011216115399,
+      "seed": 20260910,
+      "report_passed": false,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "report_sha256": "0A149E0FCE78FFFF222C3D3BD599CF95FF4B4F04D9200711FED0B2E56838BF82",
+      "actual_vx": 0.6748967824663434,
+      "commanded_vx": 0.8,
+      "actual_yaw": -0.007018792935289509,
+      "actual_vy": 0.038815205688089396
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\retained08-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\retained08-seed20260911.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.05975779339039862,
+      "max_tilt_deg": 5.021456893824055,
+      "seed": 20260911,
+      "report_passed": false,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "report_sha256": "F1CF15ED2EFAD052F427A9D699B0CEE152A9A7BD2D7C4607982915C5AED1C7E9",
+      "actual_vx": 0.6519065717288426,
+      "commanded_vx": 0.8,
+      "actual_yaw": -0.02225492941556565,
+      "actual_vy": 0.06718211981767257
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\target10-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\target10-seed20260909.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.061156446550620816,
+      "max_tilt_deg": 5.591352510244287,
+      "seed": 20260909,
+      "report_passed": false,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "report_sha256": "B310665CAADBCEBC66AB6D41CDA6ABD26DC8ECD316B28C000292E4F889F78B90",
+      "actual_vx": 0.7127741384506225,
+      "commanded_vx": 1.0,
+      "actual_yaw": -0.06319147331374032,
+      "actual_vy": 0.10950297409934658
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\target10-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\target10-seed20260910.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.11688270232687159,
+      "max_tilt_deg": 6.194730140862744,
+      "seed": 20260910,
+      "report_passed": false,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "report_sha256": "818CED6640FDC4B9AE6D8C582D75C010F8F92B5DDD08FC7431FB368B2EEB0869",
+      "actual_vx": 0.7858153646332877,
+      "commanded_vx": 1.0,
+      "actual_yaw": -0.0117576957921431,
+      "actual_vy": 0.060193990471972415
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\target10-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\target10-seed20260911.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": true,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.10810560202533495,
+      "max_tilt_deg": 5.5772959809324005,
+      "seed": 20260911,
+      "report_passed": false,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "report_sha256": "EE5A5FCD76EC5D600C252FE7A7303B21FBD1742DE5E114129BA90F7541D7C513",
+      "actual_vx": 0.7921165805203574,
+      "commanded_vx": 1.0,
+      "actual_yaw": -0.021296687861738193,
+      "actual_vy": 0.05967694638118181
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\left-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\left-seed20260909.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.04844122120143177,
+      "max_tilt_deg": 5.753710375683721,
+      "seed": 20260909,
+      "report_passed": true,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "report_sha256": "7039EF4C94F6054935764EBCB0055263EC61E2B21AA4CCEB89D42389393AF6BB",
+      "actual_vx": 0.4072769969701767,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.3809903028181621,
+      "actual_vy": 0.06449433864227364
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\left-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\left-seed20260910.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.07499015577093773,
+      "max_tilt_deg": 3.6715169619215793,
+      "seed": 20260910,
+      "report_passed": true,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "report_sha256": "D1D9AB8F921AB40D41D82C9243BB58FC0EF4389BD279DCF299F2FA1E6CC1D374",
+      "actual_vx": 0.4782089584214347,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.5310080714736666,
+      "actual_vy": -0.06064490305525916
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\left-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\left-seed20260911.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.06872775960474982,
+      "max_tilt_deg": 3.459881202611207,
+      "seed": 20260911,
+      "report_passed": true,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "report_sha256": "55E7083216C5669C7404DA82761852906A0190643B735DFBA110270397339296",
+      "actual_vx": 0.48602527890886577,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.5229150492378644,
+      "actual_vy": -0.05166866554346468
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\right-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\right-seed20260909.log",
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.05202084296259576,
+      "max_tilt_deg": 5.201566420916353,
+      "seed": 20260909,
+      "report_passed": false,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "report_sha256": "344E934128937035BAAFFA2485DB79F8168A5764285F6E409D0A7B1B46798E9F",
+      "actual_vx": 0.3633453232901437,
+      "commanded_vx": 0.5,
+      "actual_yaw": -0.4535999916281019,
+      "actual_vy": 0.10228123796837671
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\right-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\right-seed20260910.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.05469296674502168,
+      "max_tilt_deg": 3.6494908825087573,
+      "seed": 20260910,
+      "report_passed": true,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "report_sha256": "A042BC31528D6A26DDF789F0DE19DDE482FC4A96A9504607051564E46B9AD52E",
+      "actual_vx": 0.45805534992899216,
+      "commanded_vx": 0.5,
+      "actual_yaw": -0.49627666643687657,
+      "actual_vy": 0.012443021152700696
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\right-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\right-seed20260911.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.0,
+      "contact_slip_mean": 0.03945727888388389,
+      "max_tilt_deg": 3.912174408458747,
+      "seed": 20260911,
+      "report_passed": true,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "report_sha256": "9D43F865644F8382F08A07AED5FFA8052FA55C9B6E2D63F1E2F7665FFF4F235B",
+      "actual_vx": 0.43914915553161077,
+      "commanded_vx": 0.5,
+      "actual_yaw": -0.481876939535141,
+      "actual_vy": 0.03732304193079471
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\push05-seed20260909\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\push05-seed20260909.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.5,
+      "contact_slip_mean": 0.04348479716029792,
+      "max_tilt_deg": 4.965864703508853,
+      "seed": 20260909,
+      "report_passed": true,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "report_sha256": "3CB5A956C5C2B65638F08571CE6100B2E90FA6765DDD82C61E46DD6B3442F44B",
+      "actual_vx": 0.42602580079010555,
+      "commanded_vx": 0.5,
+      "actual_yaw": -0.03701000620444704,
+      "actual_vy": 0.028278981813637073
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\push05-seed20260910\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\push05-seed20260910.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.5,
+      "contact_slip_mean": 0.056593204858682626,
+      "max_tilt_deg": 3.6321468977719795,
+      "seed": 20260910,
+      "report_passed": true,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "report_sha256": "61113BADEE3E4F0CFF1F54346E228099C6F62B5BF45FC5BDC4F626F26B99BCEE",
+      "actual_vx": 0.5232413899047034,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.023532695903309753,
+      "actual_vy": -0.051273855833902156
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-gate3996-first\\push05-seed20260911\\model_3996_stand_walk_stop.json",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-gate3996-first\\push05-seed20260911.log",
+      "failed_criteria": [],
+      "straight_drift_passed": null,
+      "push_delta_vy": 0.5,
+      "contact_slip_mean": 0.04749184671060657,
+      "max_tilt_deg": 4.39642927108395,
+      "seed": 20260911,
+      "report_passed": true,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "report_sha256": "26A034CDC73D5BE040277403B293577E58F09B0FF066C8DF390235C371C5A30B",
+      "actual_vx": 0.5102331110409328,
+      "commanded_vx": 0.5,
+      "actual_yaw": 0.013142400247150882,
+      "actual_vy": -0.034625195499850506
+    }
+  ],
+  "promotion_performed": false,
+  "acceptance_eligible": false,
+  "limitations": "Development simulation screening only. No high-speed or integrated recovery acceptance. No videos in this batch; turn/push controls require matched frozen-baseline comparison before a no-regression claim.",
+  "finished_at": "2026-09-17T11:34:05.9786649+08:00"
+}

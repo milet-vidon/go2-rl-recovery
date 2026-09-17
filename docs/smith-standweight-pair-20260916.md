@@ -1,5 +1,17 @@
 # Smith stand-weight continuation: bounded paired experiment
 
+**RESUMED by explicit user request,22:52local.** The interrupted w30 arm alone resumes via resume_smith_w30_2900.ps1, from saved2900 with98remaining updates. Isolated load handling restores adaptiveLR1e-5 and starts iteration2901, expectedfinal2998/Adamstep60000. The actual config and28source hashes passed; real load marker and first iteration were verified. Environment/RNG restart is a confound: this is NOT a bitwise uninterrupted weight-only paired run. See [current status](training-status-20260916.md); the shutdown record below is historical. Do not rerun w10 or the whole pair.
+
+**PAUSED BY USER at2026-09-16 21:01local for shutdown.** W30 was stopped before completion; latest preserved checkpoint is2900, not2998. No w30 final evaluation exists. Heartbeatgo2 isPAUSED; do not restart until explicitly requested. See the top of [current status](training-status-20260916.md) for checkpoint hash and the verified zero-process shutdown state. The ACTIVE snapshots below are historical.
+
+## Latest20:42update
+
+First arm completed training20:36:48 and all three evaluation suites20:41:09. Final2998 SHA256 `3a685e8e4a180c254408f61f84433a6935fc9c3ee495b64a8afed7009d821fb4`. Settled-bank side/back each remain0/20 ever-valid,0/20 final-valid,0/20 geometry and0/20 four-foot endings. Final mean height0.1413/0.1468m, mean tilt24.31/18.64degrees and mean maximum joint offset1.781/1.874rad. Config/report consistency passed, NOT policy acceptance; no promotion. Second arm started20:41:10, PID154808, from the SAME parent1999. Wait for its full evaluation. The launch snapshot below is historical and must not trigger a duplicate job.
+
+## Original launch snapshot
+
+Verification20:44: all nine w10 groups, including upright, are0/20 ever-valid/final-valid/geometry. W30 actual saved config passed the complete single-variable guard; all19 snapshot hashes remain unchanged. W30 is still training; its reward magnitude is not evidence of a performance pass.
+
 Status20:18local: ACTIVE. Both16env×2iteration smokes completed and their actual configs passed;17model and51optimizer tensors per checkpoint are finite. Formal orchestrator39467 started20:16:24, w10 PID33584/run `2026-09-16_20-16-37_20260916-smithstandpair128x1000_w10`; w30 is queued in the same finite script. The preceding2000-iteration run and all new videos are complete and visually checked. Check [live status](training-status-20260916.md) before continuing; do not start a duplicate. Simulation only; expectations are not met.
 
 ## Evidence and hypothesis

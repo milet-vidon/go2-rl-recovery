@@ -1,0 +1,652 @@
+{
+  "angle_deg": null,
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+  "checkpoint_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+  "task": "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260918,
+  "start_protocol": "Complete measured fallen root-link pose, CoM world velocity and joint state replayed from the explicit bank split; only environment-origin translation, no yaw augmentation, root lifting or new joint noise; at least 1 s nominal-PD handover precedes policy time; actual settled-fallen eligibility rechecked",
+  "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+  "settle_requested_s": 1.0,
+  "settle_actual_s": 1.0,
+  "settle_control_steps": 50,
+  "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+  "settle_execution": "physics/action substeps only; termination checked each control step; auto-reset prohibited; no learned policy, reward computation, curriculum or interval events",
+  "settled_definition": "at least 0.25 s continuous any-body contact >1 N, root speed <0.10 m/s, angular speed <0.20 rad/s, every joint speed <0.50 rad/s before policy starts",
+  "fallen_start_definition": "current any-body contact >1 N and either tilt from upright >=60 deg or base contact >1 N with height <0.26 m; eligible only if settled and not already standing",
+  "success_count_definition": "DUAL-POLICY diagnostic counts, NOT performance of the roll checkpoint alone. successes counts valid stand acquisition/retention from all starts; only settled_fallen_recovery_successes counts confirmed settled-fallen starts; already-standing starts are never counted as fallen recovery",
+  "time_definition": "policy time starts AFTER optional settling; onset of the first stable interval held for hold_s; policy simulation includes hold_s after horizon_s; settling is excluded",
+  "protocol_version": "handoff_transition_experimental_v1",
+  "joint_names": [
+    "FL_hip_joint",
+    "FR_hip_joint",
+    "RL_hip_joint",
+    "RR_hip_joint",
+    "FL_thigh_joint",
+    "FR_thigh_joint",
+    "RL_thigh_joint",
+    "RR_thigh_joint",
+    "FL_calf_joint",
+    "FR_calf_joint",
+    "RL_calf_joint",
+    "RR_calf_joint"
+  ],
+  "video_view": "front",
+  "self_collisions_enabled": true,
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 1,
+      "successes": 1,
+      "legacy_contact_height_successes": 1,
+      "final_valid_stands": 1,
+      "final_geometry_passes": 1,
+      "release_state_before_settling": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.00017580389976501465,
+            0.9919764399528503,
+            0.12642574310302734
+          ],
+          "tilt_from_upright_deg": 97.26309967041016,
+          "gravity_error": 1.5009504556655884,
+          "height_m": 0.15423063933849335,
+          "root_position_w_m": [
+            -0.013832103461027145,
+            0.008625500835478306,
+            0.15423063933849335
+          ],
+          "root_quaternion_wxyz": [
+            0.6130415201187134,
+            -0.6961808800697327,
+            -0.2802588939666748,
+            0.24691607058048248
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.005228359252214432,
+            9.853623487288132e-05,
+            -0.0016854085261002183
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.055321428924798965,
+            0.039443451911211014,
+            -0.006441513542085886
+          ],
+          "joint_positions_rad": [
+            0.0967027097940445,
+            -0.08069601655006409,
+            0.09600690752267838,
+            -0.08470186591148376,
+            0.8063454031944275,
+            0.8038216829299927,
+            0.9969515800476074,
+            1.0051287412643433,
+            -1.5026577711105347,
+            -1.5015194416046143,
+            -1.5068522691726685,
+            -1.5012686252593994
+          ],
+          "max_joint_speed_rad_s": 0.08245109766721725,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 132,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        }
+      ],
+      "policy_start_state": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.0001856386661529541,
+            0.9922640919685364,
+            0.12414336204528809
+          ],
+          "tilt_from_upright_deg": 97.13128662109375,
+          "gravity_error": 1.499428629875183,
+          "height_m": 0.15424448251724243,
+          "root_position_w_m": [
+            -0.013751871883869171,
+            0.008548823185265064,
+            0.15424448251724243
+          ],
+          "root_quaternion_wxyz": [
+            0.6138381958007812,
+            -0.6954742670059204,
+            -0.2799772322177887,
+            0.24724644422531128
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0013638339005410671,
+            0.005486890207976103,
+            -0.0004484775708988309
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.05295662209391594,
+            0.06672953069210052,
+            -0.006135960109531879
+          ],
+          "joint_positions_rad": [
+            0.09439681470394135,
+            -0.07948947697877884,
+            0.09372055530548096,
+            -0.08368215709924698,
+            0.8063742518424988,
+            0.8035570979118347,
+            0.9970115423202515,
+            1.0048978328704834,
+            -1.50266432762146,
+            -1.5013537406921387,
+            -1.5069153308868408,
+            -1.5013571977615356
+          ],
+          "max_joint_speed_rad_s": 0.09584131836891174,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.523209571838379,
+            0.0,
+            6.478534698486328,
+            0.0
+          ],
+          "vertical_foot_contacts": 2,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 132,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        }
+      ],
+      "standing_starts_not_fallen_recovery": 0,
+      "settled_fallen_trials": 1,
+      "settled_fallen_recovery_successes": 1,
+      "settled_fallen_final_valid_stands": 1,
+      "settled_fallen_recovery_rate": 1.0,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": true,
+          "stable_hold_s": 9.18,
+          "height_m": 0.3221946060657501,
+          "gravity_error": 0.027552014216780663,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.16616596281528473,
+            -0.11120366305112839,
+            0.15762782096862793,
+            -0.15358544886112213
+          ],
+          "knees_y_b": [
+            0.1577058583498001,
+            -0.12326730787754059,
+            0.14767368137836456,
+            -0.1465199738740921
+          ],
+          "max_joint_offset_rad": 0.3887311518192291,
+          "bank_state_id": 132
+        }
+      ],
+      "success_rate": 1.0,
+      "median_recovery_s": 1.8200000524520874,
+      "p90_recovery_s": 1.8200000524520874,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0,
+      "handoff_diagnostic": {
+        "triggered_trials": 1,
+        "untriggered_trials": 0,
+        "final_valid_after_trigger": 1,
+        "total_success_denominator_includes_untriggered": true,
+        "switch_records": [
+          {
+            "trial": 0,
+            "policy_time_s": 1.04,
+            "root_position_local_m": [
+              0.07016637176275253,
+              -0.1917283982038498,
+              0.1590975522994995
+            ],
+            "root_quaternion_wxyz": [
+              0.8039966821670532,
+              -0.032466303557157516,
+              0.059400055557489395,
+              0.5907681584358215
+            ],
+            "root_linear_velocity_w_m_s": [
+              -0.06065724045038223,
+              -0.19760292768478394,
+              0.012596425600349903
+            ],
+            "root_angular_velocity_w_rad_s": [
+              0.016934793442487717,
+              -0.030050508677959442,
+              0.23068346083164215
+            ],
+            "joint_positions_rad": [
+              -1.0422239303588867,
+              -0.6082818508148193,
+              -0.8186684250831604,
+              0.979827344417572,
+              2.0655219554901123,
+              -0.04052378237247467,
+              0.6444684863090515,
+              0.9086936116218567,
+              -2.627286195755005,
+              -2.6283881664276123,
+              -2.6227850914001465,
+              -2.686448097229004
+            ],
+            "joint_velocities_rad_s": [
+              -0.41763508319854736,
+              0.22913995385169983,
+              0.045759737491607666,
+              0.36788737773895264,
+              -0.39091813564300537,
+              0.5808202624320984,
+              0.11918745934963226,
+              0.18171456456184387,
+              -0.7700632810592651,
+              0.0062821898609399796,
+              0.07397107779979706,
+              -0.44145750999450684
+            ],
+            "policy_observation": [
+              -0.20652693510055542,
+              -0.0011749118566513062,
+              -0.015170278958976269,
+              -0.05431880056858063,
+              -0.021016862243413925,
+              0.22585934400558472,
+              0.1338750123977661,
+              -0.017977721989154816,
+              -0.9908351302146912,
+              0.0,
+              0.0,
+              0.0,
+              -1.1422239542007446,
+              -0.5082818269729614,
+              -0.9186684489250183,
+              1.0798273086547852,
+              1.2655220031738281,
+              -0.8405237793922424,
+              -0.3555315136909485,
+              -0.09130638837814331,
+              -1.1272861957550049,
+              -1.1283881664276123,
+              -1.1227850914001465,
+              -1.186448097229004,
+              -0.41763508319854736,
+              0.22913995385169983,
+              0.045759737491607666,
+              0.36788737773895264,
+              -0.39091813564300537,
+              0.5808202624320984,
+              0.11918745934963226,
+              0.18171456456184387,
+              -0.7700632810592651,
+              0.0062821898609399796,
+              0.07397107779979706,
+              -0.44145750999450684,
+              -5.642120838165283,
+              -1.6852357387542725,
+              -6.879851818084717,
+              6.147120952606201,
+              4.201939582824707,
+              -3.099130868911743,
+              -0.7960317730903625,
+              -1.3548768758773804,
+              -5.560900688171387,
+              -6.377993106842041,
+              -7.460113048553467,
+              -7.744050979614258
+            ],
+            "previous_raw_action": [
+              -5.642120838165283,
+              -1.6852357387542725,
+              -6.879851818084717,
+              6.147120952606201,
+              4.201939582824707,
+              -3.099130868911743,
+              -0.7960317730903625,
+              -1.3548768758773804,
+              -5.560900688171387,
+              -6.377993106842041,
+              -7.460113048553467,
+              -7.744050979614258
+            ],
+            "previous_previous_raw_action": [
+              -5.581758499145508,
+              -1.647362470626831,
+              -6.818628311157227,
+              6.150111675262451,
+              4.170454502105713,
+              -3.098956346511841,
+              -0.7923134565353394,
+              -1.3730442523956299,
+              -5.547894477844238,
+              -6.349891185760498,
+              -7.416468143463135,
+              -7.701027870178223
+            ],
+            "velocity_command_b": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "previous_executed_joint_target_rad": [
+              -0.9424798488616943,
+              -0.521308958530426,
+              -0.9424798488616943,
+              0.9424798488616943,
+              1.850484848022461,
+              0.025217294692993164,
+              0.8009920716285706,
+              0.6612807512283325,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128
+            ],
+            "stand_actor_raw_action": [
+              -2.258074998855591,
+              -4.67216682434082,
+              0.630852460861206,
+              0.2741437554359436,
+              0.05948533117771149,
+              0.13586102426052094,
+              0.6908626556396484,
+              -1.0235118865966797,
+              0.3184492588043213,
+              -1.669171690940857,
+              -3.700305461883545,
+              1.2154690027236938
+            ],
+            "roll_actor_raw_action": [
+              -5.688875675201416,
+              -1.7232979536056519,
+              -6.937249183654785,
+              6.151252269744873,
+              4.226917743682861,
+              -3.098430871963501,
+              -0.8006690740585327,
+              -1.3398786783218384,
+              -5.576491355895996,
+              -6.406414031982422,
+              -7.5040764808654785,
+              -7.7883100509643555
+            ],
+            "action_linf_jump": 8.95952033996582,
+            "clamped_joint_target_linf_jump_rad": 1.432320237159729,
+            "two_actor_action_linf_difference": 9.003779411315918
+          }
+        ],
+        "clamped_target_fraction_per_joint": [
+          [
+            0.06363636255264282,
+            0.05999999865889549,
+            0.08727272599935532,
+            0.07636363804340363,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08727272599935532,
+            0.04727272689342499,
+            0.05999999865889549,
+            0.09090909361839294
+          ]
+        ],
+        "clamp_sample_period_s": 0.02
+      },
+      "state_bank_selection": {
+        "available_unique_states": 16,
+        "selected_state_ids": [
+          132
+        ],
+        "selected_unique_state_count": 1,
+        "sampling_with_replacement": false,
+        "selected_actual_pose_classes": [
+          "left"
+        ],
+        "selected_requested_pose_classes": [
+          "left"
+        ],
+        "actual_pose_class_counts": {
+          "left": 1,
+          "right": 0
+        },
+        "yaw_augmentation_rad": 0.0
+      },
+      "settled_fallen_unique_state_count": 1,
+      "settled_fallen_median_recovery_s": 1.8200000524520874
+    }
+  },
+  "diagnostic_trial": 0,
+  "state_bank": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz",
+    "manifest_path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json",
+    "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+    "schema_version": "nominal_pd_fallen_v1",
+    "split": "heldout",
+    "available_split_states": 30,
+    "selected_state_ids": [
+      132
+    ],
+    "selected_unique_state_count": 1,
+    "selection_protocol": "per-class CPU seed; actual class, sorted IDs, random permutation without replacement then extra draws only if trials exceed available states",
+    "comparison_requirement": "Compare checkpoints under the same Bank Play task, bank SHA-256, heldout split, selected IDs/order, seed, trial count and handover duration; repeated draws are not additional independent source states; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation",
+    "fixed_material": {
+      "static_friction": 0.8,
+      "dynamic_friction": 0.6,
+      "restitution": 0.0
+    },
+    "physics": {
+      "dt": 0.005,
+      "decimation": 4
+    },
+    "diagnostic_train_split_only": false
+  },
+  "policy_action_mode": "deterministic_mean",
+  "acceptance_eligible": false,
+  "controller_type": "experimental_dual_policy_handoff_transition",
+  "single_policy_acceptance_eligible": false,
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "stand_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "action_representation": {
+    "reference": "nominal",
+    "scale": 0.25,
+    "target": "q_reference + scale * action, soft-joint-limit clamped",
+    "sample_period_s": 0.02,
+    "held_over_physics_substeps": 4,
+    "pre_policy_handover": "direct nominal-position PD, not policy zero action"
+  },
+  "baseline_metric_protocol_version": "stance_geometry_v1_state_bank_PD_v1_dual_policy_diagnostic_v1",
+  "training_collection_eligible": false,
+  "transition_experiment": {
+    "mode": "hard",
+    "ramp_seconds": 0.0,
+    "step_dt": 0.02,
+    "ramp_steps": 0,
+    "horizon_s": 8.0,
+    "hold_s": 3.0,
+    "min_contacts": 4,
+    "policy_control_steps": 550,
+    "policy_duration_including_hold_s": 11.0,
+    "unchanged_one_way_gate": true,
+    "state_or_history_reset_at_switch": false,
+    "hidden_pd_at_switch": false,
+    "retry_enabled": false,
+    "equation": "k=1..N: (1-k/N)*previous-issued-raw-at-edge + (k/N)*current-stand-actor; exact stand after N",
+    "hard_zero_semantics": "exact original torch.where(switched[:,None], stand_action, roll_action)",
+    "actual_action_and_history_asserted_every_step": true,
+    "actual_joint_target_asserted_every_step_atol_rad": 1e-06,
+    "evaluator_source_sha256": "c3a433568561fbe0893d61a570cf420304d44dcf986440e8d7efebd85ff7f10a",
+    "math_source_sha256": "b66167039b4698d66f3cc412b19bacd0b1b2f37279f7ce0856ec6c09b196aa4e",
+    "baseline_evaluator_path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_recovery.py",
+    "baseline_evaluator_sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+    "transition_trace_file": "model_1999.pt_handoff_transition_trace.json",
+    "engineering_diagnostic_not_paper_reproduction": true,
+    "no_standing_retention_acceptance": true,
+    "known_baseline_caveat": "Stand3547-only upright20/20 is NOT dual-policy upright. Frozen old dual1999-to3547 cold controls were upright12/20, side9/20, upside_down20/20; hard equivalence must be measured, never assumed.",
+    "heldout_reuse_caveat": "Repeatedly inspected bank cases are development evidence, not a fresh generalization test.",
+    "transition_trace_sha256": "2964d21118b3fce3d6d42c18a8455a81fdb1a73803d54cbf1219df6613689348"
+  },
+  "trace_csv": "model_1999.pt_recovery_trace.csv"
+}

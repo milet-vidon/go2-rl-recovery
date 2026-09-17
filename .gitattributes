@@ -1,2 +1,4 @@
 # Blank context lines in unified patches contain one required context marker.
 *.patch text eol=lf whitespace=-blank-at-eol
+# Preserve the copied development checkpoint/config archive byte-for-byte.
+models/development/20260917/** -text whitespace=cr-at-eol

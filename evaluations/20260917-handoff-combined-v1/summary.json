@@ -1,0 +1,161 @@
+{
+  "protocol": "combined_12case_development_v1",
+  "status": "error",
+  "started_at": "2026-09-17T11:48:51.8498979+08:00",
+  "source_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\audit_handoff_mirror_coordinates.py",
+      "sha256": "6337B44E1A9EAE37B7697F4B9F4C6A7C984AB6577D1F08B6C1463C1228E3A281"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\compare_handoff_combined.py",
+      "sha256": "7D7D6F63FED59F9F53E35DD17BEE63483335A046A94CF8BEE0E3211219254312"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\compare_handoff_supported_startup.py",
+      "sha256": "0A43EB401871B410465A2CFE506D20B52DE7D89F746CF94641D1E5A60A784D61"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\compare_handoff_transition_baseline.py",
+      "sha256": "A6649F3A134B3D033A15370A6232F2BAA4FADD527B7852315DCA64E1BC57043F"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.ps1",
+      "sha256": "9C49D687B9CB9BF0AB77DC69D663582E501EEE81C7BF591BC1F711C8081B0B11"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.py",
+      "sha256": "0788BEB2E8D4457F6C286D9AFF80638B269E080A9B75167F9F7977456380BED0"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_mirror.py",
+      "sha256": "CF2FBBDCEAE0E460727A969BF080E1E230ED716F00F914F47381A167DF50BA95"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_supported_startup.py",
+      "sha256": "30E63D6F60261D3E163C212568613D0F8941DA9CE2D8B50676AD6FC281800C60"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\run_handoff_combined_diagnostics.ps1",
+      "sha256": "E2B46E1FF123169831BFBF8E88FE911CF31E8F435F0C0EE57F6F2B0865D38E3C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\go2_ppo_snapshot.py",
+      "sha256": "498E15670AAB92AA8E9616B5C82A5277E6F7A519762DA3295E4B2FC4CE7F16F4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\go2_registry_snapshot.py",
+      "sha256": "3ADAC45C45374CF840ADC5F441696A3A8F9C673E2CA9C6AA8370F6342402BB3D"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_action_restore.py",
+      "sha256": "4BA289446D2B2E11B5B2FD8E9282B152C628538CE26285AD717D051E5E7B5352"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_env_cfg.py",
+      "sha256": "68565E9C809CCAE979E12977543EE94EB9F9B1BAD676F0EA062DB0CC9080BC70"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_reset_env.py",
+      "sha256": "15BA7024566759ED4C677ABA687089CF94E882EAD55BE4617AF9AA2C309FEE4C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_transition_math.py",
+      "sha256": "B66167039B4698D66F3CC412B19BACD0B1B2F37279F7CE0856EC6C09B196AA4E"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_env_cfg.py",
+      "sha256": "A6CFDBFE8EBC62AD8E74F48FE8E24F7CA6588F024C8A11FDD54BEBEC30BCCAF3"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_robust_env_cfg.py",
+      "sha256": "49316079D0B65334A9B2676377F37514A0140BEDDF834EAC49586C20ACDD9D20"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_stop_env_cfg.py",
+      "sha256": "02A04A057297E3574FAD0E142C886654B3EDCE3EE9DD23147D03A2BC0029DD55"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_back_exploration.py",
+      "sha256": "C39EDA11F96ED6B6CEFA177C31B905BD9D408B78769C9A48EC8E3DF4A0BCD082"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_bank_mdp.py",
+      "sha256": "1B824C4AC1CA0761C37297F481A5D173F2343185FA01DD1F165129FAAA2126F4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_control_targets.py",
+      "sha256": "5220033D6B0F76BC313527DCE017BB37F67F19A192034A15AC2A9EB7ABD6ECAC"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_env_cfg.py",
+      "sha256": "45836EFA79A4ADED4B9A8CB3F46CA5AC0A0D9C9A0F7D4609884FF65059A7865F"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_handoff_math.py",
+      "sha256": "DF8A45A5E64DDC05A3062B73F769134FD3612AA4149F88EAE51A67252699369B"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_math.py",
+      "sha256": "FBA46228C3A46EEC4231614F9CD1280A0DFCE15E486AF13E3CC810D7B56F6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_mdp.py",
+      "sha256": "EDE261709A60F9953BCF637CCC700CCA2665631D9767568D4A0CDEEBFC5E26CE"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_smith_math.py",
+      "sha256": "8DB2CCC466C1CB7EC1E7A4678B232903F2DBA9CA717327A317DAE006D9CA0ED9"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_smith_mdp.py",
+      "sha256": "EDD6E0D71EB815D47F0CA76E97936046B3B16343B8A517D4D68AED6E0D3F7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_state_bank.py",
+      "sha256": "8839BB2658BCFE87FCCA32BDFC8F903290D57EDB52585EB9764E681043C26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_supported_math.py",
+      "sha256": "3146A0265981B20FAE39BA9059964E2E6535034B75B745E260CCF6CF63E40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_supported_mdp.py",
+      "sha256": "2FF13438054FB63ECCF4FDF69AD799D4298077501DE4142749202FEC7AB3E08C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\robust_env_cfg.py",
+      "sha256": "A9DABE626515C73693B9F90D98AC9A5189D8356B78FF466641F24382B991F7BA"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\roll_mirror_math.py",
+      "sha256": "9E3EDF7CD402C745242FA41E8DCF3D4CCB3818CB474344CFF52C104C00426D91"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\speed_gate_math.py",
+      "sha256": "AA05E2AA4013A8A19A2CA139BD2B56468B7D455AF0A76FF8745850D0154C0D94"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\standard_env_cfg.py",
+      "sha256": "CD57B11C69747296938E15B5487B0A185C29F45244B20CFB0C71BF57979AF901"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\supported_startup_math.py",
+      "sha256": "47991846F57272192B10171CF43EED5E772FDBC063853CC0601A82110AF6FE93"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+      "sha256": "5527C4053CB6EF8E6616DA65B7DC32A9464EB8D1366F4966A4EB4B65BC913FDB"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+      "sha256": "71E4C7A39FF81836D2EAD1C4533988C696E5BD4A0FC939B8CEF6B4F6DAEC1B1C"
+    }
+  ],
+  "rows": [],
+  "acceptance_eligible": false,
+  "promotion_performed": false,
+  "notice": "Cold independent20-trial development cases. First9controls must match historical references before both factors ON. No new training or integrated locomotion acceptance.",
+  "error": "Combined exact audit failed: E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-combined-v1\\s0m0-upright\\exact_comparison.json",
+  "finished_at": "2026-09-17T11:50:26.1816509+08:00"
+}

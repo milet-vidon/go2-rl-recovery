@@ -1,0 +1,47 @@
+# Original-distribution speed continuation: comparison contract
+
+This finite development control finished18screens at `2026-09-17T03:37:12+08:00` (started03:17:35), with15/18passing. Target1.0m/s remains0/3; the model is NOT promoted. Final control3947 SHA is `3dfbe03e0ac332fee688c970b420167affcdb6e8cacee16e40fc12120751df3f`. Full configuration/68finite-tensor/optimizer-continuation guards passed, but integrity is not fast-running acceptance or causal proof. The complete result was independently audited during the03:57heartbeat, replacing the earlier2/18partial snapshot.
+
+## Verified setup
+
+The control starts from frozen3648 SHA `475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8`, not the failed expanded3947. Its run is `E:/IsaacLab/repo/logs/rsl_rl/unitree_go2_flat/2026-09-17_03-10-21_20260917-speedretention128x300`. Compare its final checkpoint by full path and SHA: both branches use the filename `model_3947.pt`, which does not identify the same weights.
+
+Read-only comparison of the actual saved `params/env.yaml` and `agent.yaml` with `configs/20260917-speedcurriculum128x300` found exactly these differences: command `lin_vel_x` upper bound1.2 versus1.0, environment log path, and run name. Both have128environments,300updates (921,600environment steps), seed42, the same frozen parent/full-optimizer resume and explicit initial runner LR1e-5. Rewards,30%standing mixture, other commands, pushes, physics, observations/actions and PPO configuration match. Their37shared training source-snapshot paths have identical SHA values. The control's final `artifacts/recovery-20260917/20260917-speedretention128x300/config-checkpoint-check.log` also records successful full-schema and68tensor/provenance checks; these integrity checks do not establish policy quality.
+
+Both training logs identify `cuda:0`, NVIDIA RTX4060 Laptop GPU, driver610.47 and D3D12. No GPU/driver change was observed between these two runs. This does not freeze runtime load, GPU numerical execution, asset contents or future hardware/software state.
+
+## Match reports before comparing outcomes
+
+For every completed control row, verify the actual report SHA, checkpoint path/SHA, and `passed == all(acceptance.values())`; do not trust the summary alone. Pair with expanded3947 by `(case,seed)` and compare:
+
+- Task `Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0`; protocol `stand_walk_stop_stance_geometry_v2`; rest geometry `stance_geometry_v1`; full `protocol`, `criteria`, `rest_stance_criterion`, and robot/joint/body/asset geometry metadata. Both use no-video evaluation, seeds20260909/10/11 and stand4s/walk8s/stop6s, with the first1s excluded from each settled phase. Check evaluator and inherited runtime source hashes, not just protocol labels.
+- Six command cases: normal0.5, retained0.8, target1.0m/s; left/right0.5m/s with yaw±0.5rad/s; and0.5m/s with lateral delta-v0.5m/s. Lateral command stays0. The push case is not fallen recovery, and no commanded lateral-walking retention case exists here.
+- Report every failed acceptance field, actual `settled_phase_stats.walk.vx_b_mean`, `vy_b_mean`, `yaw_rate_mean`, `contact_slip_mean`, and tilt. For stand/stop compare geometry fraction/invalid count, current four-vertical-contact fraction, current base clearance, height minimum, speed-p95 and maximum joint offset. Compare sample counts and global steps; missing/nonfinite fields invalidate a comparison.
+- Keep the extra straightness gate separate: abs(mean vy)<0.12m/s and abs(mean yaw)<0.15rad/s only for unperturbed straight cases. `report_passed=true` with failed extra drift is not a preservation pass. Do not require four-foot contact during locomotion, weaken thresholds, round near-failures into passes, or substitute commanded/peak speed for sustained measured speed.
+
+Frozen3648 has matched current-v2 reports for the nine straight cases in `evaluations/20260917-speed-baselines/summary.json`, plus left/seed20260909 in `evaluations/20260917-speed3648-left09-control`. This is not a complete18case parent matrix: unsupported turn/push parent comparisons remain unknown until separately measured. Expanded3947's complete18case reference is `evaluations/20260917-speed-candidate3947/summary.json` (14/18; target1.0=0/3; left=2/3). These three evaluation seeds do not constitute three independent training replicates.
+
+## Completed18case audit — no promotion
+
+Every row in the [control summary](../evaluations/20260917-speed-retention-control3947/summary.json) was checked against its actual JSON report: report SHA, model path/SHA, seed/command, all acceptance booleans and their aggregation, failed-field list, reported metrics, extra drift gate, finite settled metrics and900steps. All18logs passed the fatal CUDA/PhysX/contact-buffer error screen. All snapshotted evaluation sources still match their hashes; the25common evaluation-source paths with expanded3947 are identical. All18control/expanded report pairs, nine control/parent straight pairs and the available parent left09 pair match the full protocol/criteria/rest-criterion/geometry metadata. Summary SHA: `cf33b2809e700d834c195b5dc8317310ccd1bd168f81671729d85c44bff09379`.
+
+| Scenario | Control /3 | Expanded /3 | Frozen3648 matched evidence |
+| --- | ---: | ---: | --- |
+| Normal0.5 | 3 | 3 | 3/3 |
+| Retained0.8 | 3 | 3 | 3/3 |
+| Target1.0 | 0 | 0 | 0/3 |
+| Left yaw+0.5 | 3 | 2 | Only seed09: pass |
+| Right yaw-0.5 | 3 | 3 | No full matched batch |
+| Lateral delta-v0.5 | 3 | 3 | No full matched batch |
+
+All three control target1.0failures are **only `walk_tracking`**. In seed09/10/11 order, actual vx is0.840405/0.842149/0.832786m/s, with errors0.159595/0.157851/0.167214 above the unchanged strict0.12limit. Slip0.080700/0.112386/0.108686passes. The actual reports for [seed09](../evaluations/20260917-speed-retention-control3947/target10-seed20260909/model_3947_stand_walk_stop.json), [seed10](../evaluations/20260917-speed-retention-control3947/target10-seed20260910/model_3947_stand_walk_stop.json), [seed11](../evaluations/20260917-speed-retention-control3947/target10-seed20260911/model_3947_stand_walk_stop.json) show slower tracking but less slip than expanded3947 (vx0.868040/0.903671/0.902390) and parent3648 (vx0.843118/0.888817/0.888869). Lower slip at a lower achieved speed is not an isolated improvement at matched actual speed.
+
+Stand/stop geometry passes100% of settled samples in all36phase records, with zero invalid samples and100%current-base clearance. Unperturbed current four-foot vertical support is100%; pushed rest minimum is98.4%, above the unchanged95%exclusive gate. Minimum rest height is0.306814m without pushes and0.300350m with pushes. Maximum rest speed-p95 is0.016674/0.076815m/s respectively; maximum joint offset across rest records is0.350742rad. Settled stand/stop sample counts are150/250. These numeric rest results and all nine straight-case drift gates pass; this batch contains no videos.
+
+The extra pass versus expanded3947 is left09: achieved yaw0.444909rad/s passes, versus expanded0.335797failure and [matched parent0.415084pass](../evaluations/20260917-speed3648-left09-control/natural_robust_push_model3648_stand_walk_stop.json). This does not mean uniformly better motion. Normal0.5seed10/11 lateral drift magnitudes0.091705/0.076026 and yaw magnitudes0.065499/0.058574 exceed parent0.049566/0.044804 and0.008958/0.003791; all three normal slip means also exceed the parent, although every gate still passes. Control0.8actual vx0.748739/0.751960/0.755199passes, but is not evidence of fast running. The control trades speed for reduced target-speed slip and avoids the one observed expanded left-turn failure; neither branch solves1.0tracking with all criteria.
+
+## Interpretation and stop rule
+
+This comparison asks whether an equal-budget continuation on the old command distribution also changes retention. Full model/optimizer resume is not uninterrupted simulation: RNG/simulator state is freshly initialized, the historical parent used512environments, and both new branches use128. Equal seed42 does not certify identical multi-environment physical starts, random streams, trajectories or minibatches; command changes and terminations can diverge subsequent sampling. GPU execution and resource/hardware/software changes must be disclosed when observed, not invented as explanations. An observed difference between these single-training-run branches is evidence consistent with an effect of range expansion, not proof that range alone caused a particular failure. A control that also fails would likewise not prove expansion harmless.
+
+The prespecified300updates and18screens are complete. Decision: preserve both diagnostic branches and frozen3648, do not promote this control, do not advance to1.5/2.0, and do not automatically extend unchanged training. Target-speed improvement must coexist with standing/stopping,0.5/0.8tracking, turn/push checks and the extra drift gates. No commanded lateral/backward-walking retention, broader terrain, new-seed, continuous fall/recover/walk, video or hardware test was performed in this batch; missing matched parent turn/push cases prevent a complete old-function non-regression claim. New-seed tests and visually inspected front/oblique demonstrations remain necessary before a broader capability claim. Neither outcome establishes2m/s running, integrated recovery, hardware safety, or full reference-video reproduction.

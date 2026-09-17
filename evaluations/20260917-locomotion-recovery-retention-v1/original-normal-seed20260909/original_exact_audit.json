@@ -1,0 +1,29 @@
+{
+  "protocol": "retention_instrumentation_original_exact_audit_v1",
+  "exact": true,
+  "old_report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\normal-seed20260909\\model_3947_stand_walk_stop.json",
+  "old_sha256": "1eee522ddcc9005c5a4fc83396086797f18350251d49121f3100f1114686fcee",
+  "new_report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\original-normal-seed20260909\\model_3947_stand_walk_stop.json",
+  "new_sha256": "1c2544fbdd01a49b6058f356d11d85e020027bae1cfa0c1a6b3b51a9f9a32f14",
+  "common_report_keys_exact": [
+    "checkpoint",
+    "checkpoint_sha256",
+    "task",
+    "seed",
+    "geometry",
+    "video_view",
+    "rest_geometry_protocol",
+    "protocol",
+    "criteria",
+    "rest_stance_criterion",
+    "global",
+    "phase_stats",
+    "settled_phase_stats",
+    "acceptance",
+    "legacy_acceptance",
+    "legacy_passed",
+    "passed"
+  ],
+  "full900row_csv_sha256": "700b67843445c5e844e83a13a7f453ce16c59c0f6498cabeda01982cfa1f1ec2",
+  "scope": "Only original0.5 seed20260909 instrumentation equivalence; not recovery-physics retention or full flow"
+}

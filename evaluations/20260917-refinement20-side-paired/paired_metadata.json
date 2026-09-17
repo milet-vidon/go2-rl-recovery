@@ -1,0 +1,629 @@
+{
+  "protocol": "supported_refinement_paired_trial0_v1",
+  "pose": "side",
+  "trials": 20,
+  "video_trial": 0,
+  "sources": [
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "00fed178b3b162c9e015f22d6392d891988785673d19ac573b770e7067d9e8be",
+      "trace_csv": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_recovery_trace.csv",
+      "trace_csv_sha256": "77d6b0730085ae3375b9eb58beea9dd571e4f11761441826c9df685ca3176472",
+      "full_trace": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\supported_refinement_full_trace.jsonl",
+      "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+      "neighborhood": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_handoff_combined_trace.json",
+      "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+      "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+      "verified_provenance": {
+        "invocation_sha256": "6d319a12889e2e22260d7937360998962eb5b4ef29ae1717844556896378bb62",
+        "verified_input_files": 42,
+        "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+        "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+        "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+        "training": {
+          "training_receipt": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\training_result.json",
+          "training_receipt_sha256": "531fde006c9f164f7535f0937f7a2828935eb868ed2f39cc00991fe49bdbb94f",
+          "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\model_3746.pt",
+          "checkpoint_sha256": "f40772c228996400a9813ad244b48509737dabf2c31af001144de34283433b9e",
+          "parent_checkpoint_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+          "mode": "formal",
+          "verified_updates": 200,
+          "verified_environment_steps": 614400,
+          "actual_checkpoint_iteration": 3746,
+          "actual_adam_step": 75120,
+          "smoke_diagnostic_only": false,
+          "formal_training_verified": true,
+          "recovery_acceptance_proven": false,
+          "promotion_performed": false,
+          "verification_boundary": "Source/artifact/CPU-checkpoint and independent stage-ledger consistency; not a signed attestation or recovery success proof."
+        }
+      },
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_side.mp4",
+      "video_sha256": "fb0b0a242596433851dd28a921ecad8d129bf8b3bf313f0616bf4a4e3210f61d"
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "7d2d37cb93f666e8b08d7d69b734efd93f726a729f50124d908b997c251f8992",
+      "trace_csv": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_recovery_trace.csv",
+      "trace_csv_sha256": "77d6b0730085ae3375b9eb58beea9dd571e4f11761441826c9df685ca3176472",
+      "full_trace": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\supported_refinement_full_trace.jsonl",
+      "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+      "neighborhood": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_handoff_combined_trace.json",
+      "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+      "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+      "verified_provenance": {
+        "invocation_sha256": "e9d4a93948a32035bd641925aba00208227bff0829933951d67fb387b905b42c",
+        "verified_input_files": 42,
+        "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+        "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+        "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+        "training": {
+          "training_receipt": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\training_result.json",
+          "training_receipt_sha256": "531fde006c9f164f7535f0937f7a2828935eb868ed2f39cc00991fe49bdbb94f",
+          "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\model_3746.pt",
+          "checkpoint_sha256": "f40772c228996400a9813ad244b48509737dabf2c31af001144de34283433b9e",
+          "parent_checkpoint_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+          "mode": "formal",
+          "verified_updates": 200,
+          "verified_environment_steps": 614400,
+          "actual_checkpoint_iteration": 3746,
+          "actual_adam_step": 75120,
+          "smoke_diagnostic_only": false,
+          "formal_training_verified": true,
+          "recovery_acceptance_proven": false,
+          "promotion_performed": false,
+          "verification_boundary": "Source/artifact/CPU-checkpoint and independent stage-ledger consistency; not a signed attestation or recovery success proof."
+        }
+      },
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_side.mp4",
+      "video_sha256": "3dceaa987874c296813c83387eff8d85ea70f13d8736596485c1ad8721110c0c"
+    }
+  ],
+  "source_properties": [
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    },
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    }
+  ],
+  "output": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-paired\\supported_refinement_side_front_oblique.mp4",
+  "output_sha256": "68de62c6bfdd45829b0610dcc280c09fb6c31d416510f5d11dac7893065542ae",
+  "output_properties": {
+    "frames": 276,
+    "fps": 25.0,
+    "width": 1920,
+    "height": 636
+  },
+  "duration_s": 11.04,
+  "banner_added_pixels": 96,
+  "source_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_recovery_metrics.json",
+      "sha256": "00fed178b3b162c9e015f22d6392d891988785673d19ac573b770e7067d9e8be"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_recovery_metrics.json",
+      "sha256": "7d2d37cb93f666e8b08d7d69b734efd93f726a729f50124d908b997c251f8992"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\full_trajectory_audit_v1.json",
+      "sha256": "3b076d407c26a10c3271ab738995c21a2bef5f411783dda545c754eb4ee94b0b"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\audit_supported_refinement.py",
+      "sha256": "a2d44a311b12ed14bcc7d220ab78389cb67ffab6a413297636994b362a6171b8"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_supported_refinement.ps1",
+      "sha256": "53f781916e1921fcc1e1697f8ab5965e8ef5b224594a1d27e86ad4b118d4d97f"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_supported_refinement.py",
+      "sha256": "bdb03cf09fafa9c0ed5aa14ee8818b4f95b6d145300e33b6e5cac8bd1b0ad0ff"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\pair_handoff_combined_demo.py",
+      "sha256": "f52f2d03ad5fd14b679ed254e7179f4f90100d3fe8be03f989d7c70fdb67a463"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\pair_supported_refinement_demo.py",
+      "sha256": "76707104289b494a1d9054d9ee42974bcf538542f7415f3bed42fd5ffbb21685"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\test_pair_supported_refinement_demo.py",
+      "sha256": "460ee9865bb9bc8a63640549b6978580b82b22051e7ebea3657d54331bfb303e"
+    }
+  ],
+  "evidence_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json",
+      "sha256": "809d90f8c2618e1ad961e2e8b5bfe33df358d20373ad85e341c26af249a342aa"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz",
+      "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\combined_generated.py",
+      "sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\invocation.json",
+      "sha256": "6d319a12889e2e22260d7937360998962eb5b4ef29ae1717844556896378bb62"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_handoff_combined_trace.json",
+      "sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_recovery_metrics.json",
+      "sha256": "00fed178b3b162c9e015f22d6392d891988785673d19ac573b770e7067d9e8be"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_recovery_trace.csv",
+      "sha256": "77d6b0730085ae3375b9eb58beea9dd571e4f11761441826c9df685ca3176472"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\model_1999.pt_side.mp4",
+      "sha256": "fb0b0a242596433851dd28a921ecad8d129bf8b3bf313f0616bf4a4e3210f61d"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-front\\supported_refinement_full_trace.jsonl",
+      "sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\combined_generated.py",
+      "sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\invocation.json",
+      "sha256": "e9d4a93948a32035bd641925aba00208227bff0829933951d67fb387b905b42c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_handoff_combined_trace.json",
+      "sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_recovery_metrics.json",
+      "sha256": "7d2d37cb93f666e8b08d7d69b734efd93f726a729f50124d908b997c251f8992"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_recovery_trace.csv",
+      "sha256": "77d6b0730085ae3375b9eb58beea9dd571e4f11761441826c9df685ca3176472"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\model_1999.pt_side.mp4",
+      "sha256": "3dceaa987874c296813c83387eff8d85ea70f13d8736596485c1ad8721110c0c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-refinement20-side-oblique\\supported_refinement_full_trace.jsonl",
+      "sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\combined_generated.py",
+      "sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\invocation.json",
+      "sha256": "ef83aefd7a2492f45f1617cdfbaf3933ba0a23330b58c72b78d6658ee8d4d918"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\model_1999.pt_handoff_combined_trace.json",
+      "sha256": "3edf0b78d5d2d4073f222bc979c5e2c5dc6ca2e5e7976adc79e6200b1be9f27f"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\model_1999.pt_recovery_metrics.json",
+      "sha256": "dfd70708654f3aa0dd9d7bdce2468332143d355d4430a76720ac3bb12a824a51"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\model_1999.pt_recovery_trace.csv",
+      "sha256": "d0052622ed1c874d1ca9fc926f90c1f7d6fcab69a04147e0f6bdc43154632584"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\off-side\\supported_refinement_full_trace.jsonl",
+      "sha256": "5dc9a9be72d738794fc3a1643cffd478826e16163b01f1838db8faaee6f55cfd"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\combined_generated.py",
+      "sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\invocation.json",
+      "sha256": "cb27a2417ca7d58a595c51c038f2cdd2156184797ac2b3a997045febb0f264bc"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_handoff_combined_trace.json",
+      "sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_recovery_metrics.json",
+      "sha256": "a4c224e8b8649ed87dad83b6a00312078558383d8e2c6585116911a99864ab20"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_recovery_trace.csv",
+      "sha256": "f91068eaf8efc1c1783a6eeb4499c8090f7ce757474bf827295e4bd9da254dc1"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\supported_refinement_full_trace.jsonl",
+      "sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_recovery.py",
+      "sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.py",
+      "sha256": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_mirror.py",
+      "sha256": "cf2fbbdceae0e460727a969bf080e1e230ed716f00f914f47381a167df50ba95"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_transition.py",
+      "sha256": "c3a433568561fbe0893d61a570cf420304d44dcf986440e8d7efebd85ff7f10a"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_natural_handoff_candidate.py",
+      "sha256": "a97f8592fc61dc2fe2e07fcd2a669eb040b64219e2348602d6d7aa015f0d53ee"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_supported_refinement.ps1",
+      "sha256": "53f781916e1921fcc1e1697f8ab5965e8ef5b224594a1d27e86ad4b118d4d97f"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_supported_refinement.py",
+      "sha256": "bdb03cf09fafa9c0ed5aa14ee8818b4f95b6d145300e33b6e5cac8bd1b0ad0ff"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\supported_refinement_gate.py",
+      "sha256": "f1c99fca606f4f52b34be040604e818d8d4a2ded48321847d00c9d5ac7c048df"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py",
+      "sha256": "2fbd670d819278caa19142d77bc65ecc74f960e4afc19e8142fee3e507cba41c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_transition_math.py",
+      "sha256": "b66167039b4698d66f3cc412b19bacd0b1b2f37279f7ce0856ec6c09b196aa4e"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_handoff_math.py",
+      "sha256": "df8a45a5e64ddc05a3062b73f769134fd3612aa4149f88eae51a67252699369b"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\roll_mirror_math.py",
+      "sha256": "9e3edf7cd402c745242fa41e8dcf3d4ccb3818cb474344cff52c104c00426d91"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\supported_startup_math.py",
+      "sha256": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+      "sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\model_3746.pt",
+      "sha256": "f40772c228996400a9813ad244b48509737dabf2c31af001144de34283433b9e"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\training_result.json",
+      "sha256": "531fde006c9f164f7535f0937f7a2828935eb868ed2f39cc00991fe49bdbb94f"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+      "sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py",
+      "sha256": "3adac45c45374cf840adc5f441696a3a8f9c673e2ca9c6aa8370f6342402bb3d"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py",
+      "sha256": "8a87c5866d1e155ec46168847d6be890743a813681abe7882fea8f198fcb8802"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py",
+      "sha256": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py",
+      "sha256": "48d949b9b261ca9be335e4cd31b379179d8fa6011b120e7f9733131a62b45704"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py",
+      "sha256": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py",
+      "sha256": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py",
+      "sha256": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py",
+      "sha256": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py",
+      "sha256": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py",
+      "sha256": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py",
+      "sha256": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py",
+      "sha256": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py",
+      "sha256": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py",
+      "sha256": "8db2ccc466c1cb7ec1e7a4678b232903f2dba9ca717327a317dae006d9ca0ed9"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py",
+      "sha256": "edd6e0d71eb815d47f0ca76e97936046b3b16343b8a517d4d68aed6e0d3f7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py",
+      "sha256": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py",
+      "sha256": "3146a0265981b20fae39ba9059964e2e6535034b75b745e260ccf6cf63e40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py",
+      "sha256": "2ff13438054fb63eccf4fdf69ad799d4298077501de4142749202fec7ab3e08c"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py",
+      "sha256": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py",
+      "sha256": "6d31140968214ba96388a3094eb87877bdd9cdacdbae2c7ebdc4be0645093f40"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py",
+      "sha256": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901"
+    },
+    {
+      "path": "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd",
+      "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a"
+    },
+    {
+      "path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+      "sha256": "ba171c972b987d8c8fb7157ccad2ba9c0c1fed105755d2d8af46bef96cc11c6d"
+    }
+  ],
+  "reference_audit": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\full_trajectory_audit_v1.json",
+  "reference_audit_sha256": "3b076d407c26a10c3271ab738995c21a2bef5f411783dda545c754eb4ee94b0b",
+  "nonvideo_reference_audited_again_in_this_process": true,
+  "reference": {
+    "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_recovery_metrics.json",
+    "report_sha256": "a4c224e8b8649ed87dad83b6a00312078558383d8e2c6585116911a99864ab20",
+    "trace_csv": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_recovery_trace.csv",
+    "trace_csv_sha256": "f91068eaf8efc1c1783a6eeb4499c8090f7ce757474bf827295e4bd9da254dc1",
+    "full_trace": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\supported_refinement_full_trace.jsonl",
+    "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+    "neighborhood": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-refinement-v1\\supported-side\\model_1999.pt_handoff_combined_trace.json",
+    "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+    "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+    "verified_provenance": {
+      "invocation_sha256": "cb27a2417ca7d58a595c51c038f2cdd2156184797ac2b3a997045febb0f264bc",
+      "verified_input_files": 42,
+      "generated_source_sha256": "3c1c087241c809b6a1ce7b2f7add81542bf78ebc6cc7f7c760f9a192df728254",
+      "neighborhood_sha256": "eb6f02fbfa06c8052a8f291cb12c808bd84471ee3d4d8cb6272bb1e8dfb4bff0",
+      "full_trace_sha256": "829a56d1d8d30c63ba4ebcef180614dac2f0f6a20f70eeddd558a0d3c6463c0c",
+      "training": {
+        "training_receipt": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\training_result.json",
+        "training_receipt_sha256": "531fde006c9f164f7535f0937f7a2828935eb868ed2f39cc00991fe49bdbb94f",
+        "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\model_3746.pt",
+        "checkpoint_sha256": "f40772c228996400a9813ad244b48509737dabf2c31af001144de34283433b9e",
+        "parent_checkpoint_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+        "mode": "formal",
+        "verified_updates": 200,
+        "verified_environment_steps": 614400,
+        "actual_checkpoint_iteration": 3746,
+        "actual_adam_step": 75120,
+        "smoke_diagnostic_only": false,
+        "formal_training_verified": true,
+        "recovery_acceptance_proven": false,
+        "promotion_performed": false,
+        "verification_boundary": "Source/artifact/CPU-checkpoint and independent stage-ledger consistency; not a signed attestation or recovery success proof."
+      }
+    }
+  },
+  "all_report_fields_except_view_exact": true,
+  "all550_control_csv_rows_vs_nonvideo_exact": true,
+  "front_oblique_all551_csv_rows_exact": true,
+  "extra_pre_action_video_row_checked_against_actual_start": true,
+  "all11000_control_interfaces_byte_exact": true,
+  "all20_starts_and_results_exact": true,
+  "successes": 20,
+  "final_valid_stands": 20,
+  "refinement_final_valid_holds": 20,
+  "acceptance_eligible": false,
+  "single_policy_acceptance_eligible": false,
+  "training_collection_eligible": false,
+  "promotion_performed": false,
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "stand_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "refinement_actor_training": {
+    "training_receipt": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\training_result.json",
+    "training_receipt_sha256": "531fde006c9f164f7535f0937f7a2828935eb868ed2f39cc00991fe49bdbb94f",
+    "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-natural-stand128x200-first\\model_3746.pt",
+    "checkpoint_sha256": "f40772c228996400a9813ad244b48509737dabf2c31af001144de34283433b9e",
+    "parent_checkpoint_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "mode": "formal",
+    "verified_updates": 200,
+    "verified_environment_steps": 614400,
+    "actual_checkpoint_iteration": 3746,
+    "actual_adam_step": 75120,
+    "smoke_diagnostic_only": false,
+    "formal_training_verified": true,
+    "recovery_acceptance_proven": false,
+    "promotion_performed": false,
+    "verification_boundary": "Source/artifact/CPU-checkpoint and independent stage-ledger consistency; not a signed attestation or recovery success proof."
+  },
+  "note": "Front left, oblique right: independent matched-condition replays, NOT simultaneous cameras. Three actors: roll1999, stand3547, refine3746. Full276 source frames at25fps; no temporal cuts, speed change, spatial crop or input resize. Only trial0 of each20-environment batch is filmed after1s nominal-PD preparation. This single-pose zero-command posture stage is NOT a continuous recovery/walk/trot/run workflow or naturalness certificate. Failure outcomes are never excluded."
+}

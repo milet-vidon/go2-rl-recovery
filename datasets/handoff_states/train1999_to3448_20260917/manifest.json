@@ -1,0 +1,915 @@
+{
+  "schema_version": "handoff_observation_collection_v1",
+  "status": "raw_observation_collection_not_replay_validated",
+  "training_ready": false,
+  "replay_validated": false,
+  "acceptance_eligible": false,
+  "legacy_bank_loader_compatible": false,
+  "created_utc": "2026-09-16T17:27:53.324879+00:00",
+  "source_split": "train",
+  "num_samples": 79,
+  "total_source_trials": 80,
+  "untriggered_source_trials": 1,
+  "unique_triggered_source_ids": 79,
+  "source_reports": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-train-side\\model_1999.pt_recovery_metrics.json",
+      "sha256": "dc72ce664cf6610d195a2ba636b42e658fddffc43d70336f1a7dc5aed6c762ff",
+      "seed": 20260917,
+      "recorded_acceptance_eligible": true,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1_dual_policy_diagnostic_v1",
+      "pose_ledgers": [
+        {
+          "pose": "side",
+          "total_trials": 40,
+          "triggered_trials": 40,
+          "untriggered_trials": 0,
+          "trials": [
+            {
+              "trial": 0,
+              "source_train_state_id": 24,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.0
+            },
+            {
+              "trial": 1,
+              "source_train_state_id": 213,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 2,
+              "source_train_state_id": 228,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.02
+            },
+            {
+              "trial": 3,
+              "source_train_state_id": 49,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.72
+            },
+            {
+              "trial": 4,
+              "source_train_state_id": 160,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.02
+            },
+            {
+              "trial": 5,
+              "source_train_state_id": 97,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 6,
+              "source_train_state_id": 111,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 7,
+              "source_train_state_id": 241,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 8,
+              "source_train_state_id": 56,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.02
+            },
+            {
+              "trial": 9,
+              "source_train_state_id": 104,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 10,
+              "source_train_state_id": 173,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.58
+            },
+            {
+              "trial": 11,
+              "source_train_state_id": 69,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.6
+            },
+            {
+              "trial": 12,
+              "source_train_state_id": 224,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 13,
+              "source_train_state_id": 21,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 14,
+              "source_train_state_id": 33,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.56
+            },
+            {
+              "trial": 15,
+              "source_train_state_id": 25,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 16,
+              "source_train_state_id": 253,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.7000000000000001
+            },
+            {
+              "trial": 17,
+              "source_train_state_id": 233,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 18,
+              "source_train_state_id": 88,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.02
+            },
+            {
+              "trial": 19,
+              "source_train_state_id": 220,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 20,
+              "source_train_state_id": 101,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 21,
+              "source_train_state_id": 169,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.72
+            },
+            {
+              "trial": 22,
+              "source_train_state_id": 209,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 23,
+              "source_train_state_id": 127,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.9400000000000001
+            },
+            {
+              "trial": 24,
+              "source_train_state_id": 244,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.04
+            },
+            {
+              "trial": 25,
+              "source_train_state_id": 245,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 26,
+              "source_train_state_id": 124,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 27,
+              "source_train_state_id": 105,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.6
+            },
+            {
+              "trial": 28,
+              "source_train_state_id": 117,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.6
+            },
+            {
+              "trial": 29,
+              "source_train_state_id": 240,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.98
+            },
+            {
+              "trial": 30,
+              "source_train_state_id": 255,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.0
+            },
+            {
+              "trial": 31,
+              "source_train_state_id": 36,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.0
+            },
+            {
+              "trial": 32,
+              "source_train_state_id": 217,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.7000000000000001
+            },
+            {
+              "trial": 33,
+              "source_train_state_id": 212,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.06
+            },
+            {
+              "trial": 34,
+              "source_train_state_id": 181,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.58
+            },
+            {
+              "trial": 35,
+              "source_train_state_id": 208,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.0
+            },
+            {
+              "trial": 36,
+              "source_train_state_id": 177,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 37,
+              "source_train_state_id": 76,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 1.0
+            },
+            {
+              "trial": 38,
+              "source_train_state_id": 5,
+              "source_pose_class": "right",
+              "triggered": true,
+              "switch_time_s": 0.54
+            },
+            {
+              "trial": 39,
+              "source_train_state_id": 8,
+              "source_pose_class": "left",
+              "triggered": true,
+              "switch_time_s": 0.96
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-train-upside_down\\model_1999.pt_recovery_metrics.json",
+      "sha256": "fa136fe28c6ea7aed071b15ef83c978e617268a0cafbc29371b893644b9b839c",
+      "seed": 20260917,
+      "recorded_acceptance_eligible": true,
+      "protocol_version": "stance_geometry_v1_state_bank_PD_v1_dual_policy_diagnostic_v1",
+      "pose_ledgers": [
+        {
+          "pose": "upside_down",
+          "total_trials": 40,
+          "triggered_trials": 39,
+          "untriggered_trials": 1,
+          "trials": [
+            {
+              "trial": 0,
+              "source_train_state_id": 54,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.4
+            },
+            {
+              "trial": 1,
+              "source_train_state_id": 98,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.54
+            },
+            {
+              "trial": 2,
+              "source_train_state_id": 102,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.54
+            },
+            {
+              "trial": 3,
+              "source_train_state_id": 82,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.44
+            },
+            {
+              "trial": 4,
+              "source_train_state_id": 126,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.74
+            },
+            {
+              "trial": 5,
+              "source_train_state_id": 74,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.52
+            },
+            {
+              "trial": 6,
+              "source_train_state_id": 107,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.46
+            },
+            {
+              "trial": 7,
+              "source_train_state_id": 250,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.46
+            },
+            {
+              "trial": 8,
+              "source_train_state_id": 165,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.5
+            },
+            {
+              "trial": 9,
+              "source_train_state_id": 230,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.48
+            },
+            {
+              "trial": 10,
+              "source_train_state_id": 214,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.48
+            },
+            {
+              "trial": 11,
+              "source_train_state_id": 122,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.44
+            },
+            {
+              "trial": 12,
+              "source_train_state_id": 73,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.66
+            },
+            {
+              "trial": 13,
+              "source_train_state_id": 191,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.6
+            },
+            {
+              "trial": 14,
+              "source_train_state_id": 14,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.58
+            },
+            {
+              "trial": 15,
+              "source_train_state_id": 34,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.5
+            },
+            {
+              "trial": 16,
+              "source_train_state_id": 62,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.5
+            },
+            {
+              "trial": 17,
+              "source_train_state_id": 31,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.44
+            },
+            {
+              "trial": 18,
+              "source_train_state_id": 231,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.7
+            },
+            {
+              "trial": 19,
+              "source_train_state_id": 90,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.7600000000000002
+            },
+            {
+              "trial": 20,
+              "source_train_state_id": 99,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.68
+            },
+            {
+              "trial": 21,
+              "source_train_state_id": 202,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.5
+            },
+            {
+              "trial": 22,
+              "source_train_state_id": 79,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.42
+            },
+            {
+              "trial": 23,
+              "source_train_state_id": 238,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.6
+            },
+            {
+              "trial": 24,
+              "source_train_state_id": 166,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.48
+            },
+            {
+              "trial": 25,
+              "source_train_state_id": 163,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.54
+            },
+            {
+              "trial": 26,
+              "source_train_state_id": 167,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.38
+            },
+            {
+              "trial": 27,
+              "source_train_state_id": 77,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.84
+            },
+            {
+              "trial": 28,
+              "source_train_state_id": 223,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.52
+            },
+            {
+              "trial": 29,
+              "source_train_state_id": 78,
+              "source_pose_class": "back",
+              "triggered": false,
+              "switch_time_s": null
+            },
+            {
+              "trial": 30,
+              "source_train_state_id": 38,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.66
+            },
+            {
+              "trial": 31,
+              "source_train_state_id": 226,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.6
+            },
+            {
+              "trial": 32,
+              "source_train_state_id": 195,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.5
+            },
+            {
+              "trial": 33,
+              "source_train_state_id": 182,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.56
+            },
+            {
+              "trial": 34,
+              "source_train_state_id": 67,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.44
+            },
+            {
+              "trial": 35,
+              "source_train_state_id": 23,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.66
+            },
+            {
+              "trial": 36,
+              "source_train_state_id": 119,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.7
+            },
+            {
+              "trial": 37,
+              "source_train_state_id": 179,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.58
+            },
+            {
+              "trial": 38,
+              "source_train_state_id": 227,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 3.44
+            },
+            {
+              "trial": 39,
+              "source_train_state_id": 190,
+              "source_pose_class": "back",
+              "triggered": true,
+              "switch_time_s": 2.56
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "joint_names": [
+      "FL_hip_joint",
+      "FR_hip_joint",
+      "RL_hip_joint",
+      "RR_hip_joint",
+      "FL_thigh_joint",
+      "FR_thigh_joint",
+      "RL_thigh_joint",
+      "RR_thigh_joint",
+      "FL_calf_joint",
+      "FR_calf_joint",
+      "RL_calf_joint",
+      "RR_calf_joint"
+    ],
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    },
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_aligned_model3448.pt",
+    "stand_sha256": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+    "source_bank": {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz",
+      "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+      "manifest_path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json",
+      "manifest_sha256": "809d90f8c2618e1ad961e2e8b5bfe33df358d20373ad85e341c26af249a342aa",
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "train_state_count": 214
+    },
+    "action_representation": {
+      "reference": "nominal",
+      "scale": 0.25,
+      "target": "q_reference + scale * action, soft-joint-limit clamped",
+      "sample_period_s": 0.02,
+      "held_over_physics_substeps": 4,
+      "pre_policy_handover": "direct nominal-position PD, not policy zero action"
+    },
+    "physics": {
+      "dt": 0.005,
+      "decimation": 4
+    },
+    "fixed_material": {
+      "static_friction": 0.8,
+      "dynamic_friction": 0.6,
+      "restitution": 0.0
+    },
+    "self_collisions_enabled": true,
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched"
+  },
+  "collector_source": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_recovery.py",
+    "sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+    "attestation": "Caller declares capture-time SHA; current source file verified against it. Reports do not embed collector SHA, so source-at-capture identity is not independently proven by report bytes."
+  },
+  "exporter_source_sha256": "9c45e289c349742456750eab4e864315c9ced1b435aff779642a08d6367d805d",
+  "numeric_storage": "Recorded JSON numbers preserved as float64; no measured-state clipping or joint reordering.",
+  "frames": {
+    "root_link_pose_local": "xyz in world axes minus source environment origin; root LINK world quaternion wxyz",
+    "root_com_velocity_w": "root CoM linear xyz then angular xyz in world axes, m/s and rad/s",
+    "velocity_command_b": "body-frame vx, vy in m/s and yaw rate in rad/s",
+    "joint_positions_rad": "asset joint_names native order; rad",
+    "joint_velocities_rad_s": "asset joint_names native order; rad/s",
+    "previous_raw_action": "a[t-1] at pre-stand-action switch boundary",
+    "previous_previous_raw_action": "a[t-2] at the same boundary"
+  },
+  "observation_contract": "48 unnormalized, uncorrupted values: body linear3, angular3, gravity3, command3, q-default12, qd12, previous raw action12; scales=1, default joint velocities=0",
+  "replay_limits": [
+    "NOT a training/reset bank; legacy loader must reject this schema.",
+    "Recompute observations from restored physical state and history before validating input replay; do not substitute stored obs to hide a mismatch.",
+    "PhysX contact manifolds, friction and solver caches are NOT restored. Matching explicit state/input does not guarantee identical future trajectories.",
+    "Sensor contacts at replay start are not fresh evidence; no success classification until new physics observations.",
+    "Soft/hard joint-limit exceedances are measured, not repaired or certified safe; cold replay needs separate validation."
+  ],
+  "joint_limit_exceedance": {
+    "soft_limit_excess_rad": {
+      "samples_with_any_excess": 79,
+      "maximum_rad": 0.10620903968811035
+    },
+    "hard_limit_excess_rad": {
+      "samples_with_any_excess": 39,
+      "maximum_rad": 0.0014890432357788086
+    }
+  },
+  "array_shapes": {
+    "joint_positions_rad": [
+      79,
+      12
+    ],
+    "joint_velocities_rad_s": [
+      79,
+      12
+    ],
+    "previous_raw_action": [
+      79,
+      12
+    ],
+    "previous_previous_raw_action": [
+      79,
+      12
+    ],
+    "previous_executed_joint_target_rad": [
+      79,
+      12
+    ],
+    "policy_observation": [
+      79,
+      48
+    ],
+    "velocity_command_b": [
+      79,
+      3
+    ],
+    "stand_actor_raw_action": [
+      79,
+      12
+    ],
+    "roll_actor_raw_action": [
+      79,
+      12
+    ],
+    "soft_limit_excess_rad": [
+      79,
+      12
+    ],
+    "hard_limit_excess_rad": [
+      79,
+      12
+    ],
+    "root_link_pose_local": [
+      79,
+      7
+    ],
+    "root_com_velocity_w": [
+      79,
+      6
+    ],
+    "source_train_state_id": [
+      79
+    ],
+    "source_pose_class": [
+      79
+    ],
+    "rollout_pose": [
+      79
+    ],
+    "source_trial": [
+      79
+    ],
+    "source_seed": [
+      79
+    ],
+    "switch_time_s": [
+      79
+    ],
+    "source_report_index": [
+      79
+    ],
+    "sample_id": [
+      79
+    ]
+  },
+  "archive_filename": "handoff_observations.npz",
+  "archive_sha256": "4546db065dad9127b1591440f1248ae4ebaf50f556af9a5533c6a9b2abc3c1b5"
+}

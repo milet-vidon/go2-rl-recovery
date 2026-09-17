@@ -1,0 +1,139 @@
+{
+  "schema_version": "go2_locomotion_diagnostic_pair_v1",
+  "diagnostic_only": true,
+  "acceptance_eligible": false,
+  "promotion_performed": false,
+  "note": "Independent matched replays, not synchronized cameras. Complete 18-s footage; no cropping, resizing or trimming. Simulation only.",
+  "checkpoint_sha256": "aaa3fcdd796bfb99feb95a4940889c8fd4ebeff61282aac0b258ec856b1d7604",
+  "checkpoints": [
+    {
+      "path": "../../../repo/logs/rsl_rl/unitree_go2_flat/2026-09-17_01-22-52_20260917-speedcurriculum128x300/model_3947.pt",
+      "sha256": "aaa3fcdd796bfb99feb95a4940889c8fd4ebeff61282aac0b258ec856b1d7604",
+      "bytes": 983925
+    },
+    {
+      "path": "../../../repo/logs/rsl_rl/unitree_go2_flat/2026-09-17_01-22-52_20260917-speedcurriculum128x300/model_3947.pt",
+      "sha256": "aaa3fcdd796bfb99feb95a4940889c8fd4ebeff61282aac0b258ec856b1d7604",
+      "bytes": 983925
+    }
+  ],
+  "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260909,
+  "protocol": {
+    "stand_s": 4.0,
+    "walk_s": 8.0,
+    "stop_s": 6.0,
+    "walk_speed": 1.0,
+    "lateral_speed": 0.0,
+    "yaw_rate": 0.0,
+    "push_delta_vy": 0.0
+  },
+  "report_passed": false,
+  "failed_report_criteria": [
+    "walk_tracking"
+  ],
+  "acceptance": {
+    "no_reset": true,
+    "no_base_contact": true,
+    "supported_height": true,
+    "level": true,
+    "walk_tracking": false,
+    "quiet_stand_stop": true,
+    "feet_lift_in_walk": true,
+    "limited_slip": true,
+    "four_feet_at_rest": true,
+    "normal_stance_geometry_at_rest": true,
+    "four_vertical_contacts_at_rest": true,
+    "no_current_base_contact_at_rest": true,
+    "geometry_and_support_at_rest": true
+  },
+  "captions": [
+    "DIAGNOSTIC | model 3947 | target 1.0 m/s | NOT ACCEPTED",
+    "Complete stand 4s / walk 8s / stop 6s | measured mean vx 0.868 m/s | failed: walk_tracking",
+    "LEFT: FRONT  |  RIGHT: OBLIQUE  |  Independent matched replays, NOT synchronized cameras",
+    "All 450 source frames retained at native 960x540 per view / 25 fps. No trimming or resizing.",
+    "SHA256 aaa3fcdd796bfb99 | seed 20260909 | Simulation only; no fall-recovery or continuous controller claim.",
+    "Single-seed visual diagnostic is NOT the multi-seed acceptance result; baseline recommendations unchanged."
+  ],
+  "sources": [
+    {
+      "view": "front",
+      "report": {
+        "path": "../20260917-speed3947-video-target10-front/model_3947_stand_walk_stop.json",
+        "sha256": "137f5199f3088bd66e2040e635f2a84bd3e15e7beffa67a0bdd6b68272c87d0c",
+        "bytes": 8208
+      },
+      "video": {
+        "path": "../20260917-speed3947-video-target10-front/model_3947_stand_walk_stop.mp4",
+        "sha256": "5bd958ca4a0be4473b8f96992815155677851e8333fd2dc72761140c6a97f67a",
+        "bytes": 37093988,
+        "frames": 450,
+        "fps": 25.0,
+        "width": 960,
+        "height": 540,
+        "decoded_frames": 450,
+        "duration_s": 18.0,
+        "protocol_frames": 450,
+        "recorded_initial_frames": 0,
+        "initial_frame_note": "No separately recorded initial frame."
+      }
+    },
+    {
+      "view": "oblique",
+      "report": {
+        "path": "../20260917-speed3947-video-target10-oblique/model_3947_stand_walk_stop.json",
+        "sha256": "2a4ece87e7c8725e9ae39ab87803fe740e66b1a513bdd4326c8537ab5b9dcc27",
+        "bytes": 8214
+      },
+      "video": {
+        "path": "../20260917-speed3947-video-target10-oblique/model_3947_stand_walk_stop.mp4",
+        "sha256": "d4b818290434ff5be900240250de6d1a5be6656be0cb025b999223b87d614a98",
+        "bytes": 37197227,
+        "frames": 450,
+        "fps": 25.0,
+        "width": 960,
+        "height": 540,
+        "decoded_frames": 450,
+        "duration_s": 18.0,
+        "protocol_frames": 450,
+        "recorded_initial_frames": 0,
+        "initial_frame_note": "No separately recorded initial frame."
+      }
+    }
+  ],
+  "composition": {
+    "left": "front",
+    "right": "oblique",
+    "source_width": 960,
+    "source_height": 540,
+    "caption_height": 160,
+    "original_render_regions_preserved": true,
+    "added_title_card_frames": 0
+  },
+  "output": {
+    "path": "model_3947_target10_diagnostic_front_oblique.mp4",
+    "sha256": "671cd1919c2f3857298d5161ec7733650f9bd6559a0c4a56b94e201a93605af5",
+    "bytes": 41611789,
+    "frames": 450,
+    "decoded_frames": 450,
+    "fps": 25,
+    "duration_s": 18.0,
+    "width": 1920,
+    "height": 700,
+    "codec": "H.264",
+    "pixel_format": "yuv420p",
+    "audio": false
+  },
+  "builder_sources": [
+    {
+      "path": "../../scripts/pair_locomotion_views.py",
+      "sha256": "afbabbbc7263e6ebd5e11398554de0cd028409765bacc50ebccd338376d7aecd",
+      "bytes": 9323
+    },
+    {
+      "path": "../../scripts/build_full_scenario_review.py",
+      "sha256": "a7dead8ad03e65d802a28d01bc985c252213ff16c172fb96ca7ed922b0a28eec",
+      "bytes": 26421
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "protocol": "continuous_flow_trace_audit_v1",
+  "audit_passed": false,
+  "training_prerequisite_eligible": false,
+  "report_path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-continuous05-control3947-side-full-v2\\continuous_flow_report.json",
+  "error": "ValueError: Mismatch: current foot vertical force",
+  "source_sha256": "091ff5445fde1aebe37c666a776fdd5cdd6ea364efd0f4bb7b4ac2afb623889e",
+  "promotion_performed": false
+}

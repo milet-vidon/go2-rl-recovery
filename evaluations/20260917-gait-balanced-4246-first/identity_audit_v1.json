@@ -1,0 +1,204 @@
+{
+  "protocol": "balanced_gait_screen_identity_audit_v1",
+  "audit_passed": true,
+  "arm": "balanced",
+  "summary": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-gait-balanced-4246-first\\summary.json",
+  "summary_sha256": "213a6351d1f909fa8a800131c0cdd2eb75d02b328b0e6078200fbaad2a83d188",
+  "source_sha256": "f21c7872ea72d935a2eb458a4a25a6d44955a1938d222c2dc5f9d08815a1cc9f",
+  "unique_case_artifacts": 105,
+  "actual_control_records_checked": 18900,
+  "rows": [
+    {
+      "physics": "recovery",
+      "case": "normal",
+      "seed": 20260909,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "7d4fb4ddb21851fd4099b12fee523604b5c7f0e4f988d7a7f2967a6066711573",
+      "csv_sha256": "8554b025142bce52af11cd39172d01c0ff10110d41c0710c8bd7eff4af8ada97"
+    },
+    {
+      "physics": "recovery",
+      "case": "retained08",
+      "seed": 20260909,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "454ad7eae46b79c541503a3c19a50823e89322e6ec2f5644e21078e61fb178eb",
+      "csv_sha256": "2f8f8584d83077277f0af5210e005e2311a81a85f470d77434d4ede9a0479d78"
+    },
+    {
+      "physics": "recovery",
+      "case": "left",
+      "seed": 20260909,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "e2ca4ee0e7dbced20771265a7c6503eeca28fa1ffe416d0223135ffae3f0545c",
+      "csv_sha256": "cd8d2a1d2a93828f8baaedf74a841916dfd691505e9ef1ac972cde257dc972f2"
+    },
+    {
+      "physics": "recovery",
+      "case": "right",
+      "seed": 20260909,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "d53b651790c23f100eed38ba933b83977e04cbde8b47f6e1b60ac8dfe0228057",
+      "csv_sha256": "5b76ecd3165f5fdb4aead5822322f024d261864407cb44fbde69c3adbb59f6f8"
+    },
+    {
+      "physics": "recovery",
+      "case": "push05",
+      "seed": 20260909,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "fb896e4b7b8f5e9d93f3b0acd589ef9ceeb31305946d269859b26154e920f90f",
+      "csv_sha256": "24fd2f2bdf21f5dbc74c66f9eda58b5b5d806b8273772c2b01bcf9876a83deca"
+    },
+    {
+      "physics": "recovery",
+      "case": "target10",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "57ff01e5c6ec7411769bde3460d06b92c6321c02141e813cab8ceec4f779d041",
+      "csv_sha256": "a3696890f176b92a5b48beef1301bdc6f6faead62de430ce826e43ec1fa51da9"
+    },
+    {
+      "physics": "original",
+      "case": "normal",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "7a1d6369f063bded73a6eae95c21c22da4d8a4c1ae59719a84366817edd7540f",
+      "csv_sha256": "6baa62de85a31be1af69093d0f942cab83f2e52ef938d4ce2cde14cdc57c846f"
+    },
+    {
+      "physics": "original",
+      "case": "normal",
+      "seed": 20260910,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "4860ab6b3e79f607d2e750a9a1496401daf152f992188c3a69e2eb70d1f7370f",
+      "csv_sha256": "4a0a7adcc56c2e654b643594eed6f9bd9c20cbe3cf606386ddf3f6bf20cfc3e0"
+    },
+    {
+      "physics": "original",
+      "case": "normal",
+      "seed": 20260911,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "d66fa55d28ca4ec43b6d9c1f5dc1f9bce9b9a6b708096a18449410d812bb9d3d",
+      "csv_sha256": "4d63c6a0f16fe8776db105df003a67e5224fd642d7067e8dfa532d0427e7ad9e"
+    },
+    {
+      "physics": "original",
+      "case": "retained08",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "9e52d3319477eef366ca1dd94a8a8e0b27cd419c30f5040d1b1ee48e1e4c1fde",
+      "csv_sha256": "16ce6d5281f01f8a9b1fac5daa37217cd58df187332714cd4b57e4f9fd8e6fdd"
+    },
+    {
+      "physics": "original",
+      "case": "retained08",
+      "seed": 20260910,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "c3533a10463876c692680357e0a66ebfe63abcf3848a6c215cb2c8f3da90f1b0",
+      "csv_sha256": "c4ea60d07e28edc4d348147c6b1b37106b9a25f736ed7b086b3c03f57a94692d"
+    },
+    {
+      "physics": "original",
+      "case": "retained08",
+      "seed": 20260911,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "d7374988df2daf211d48d0b6d9dfeeb900662c96c76f35697aa522a4bde68b97",
+      "csv_sha256": "968378acc796ab518e2b8ee1ddbc41f11071944b25ffb2a7f4e46d152eb5c373"
+    },
+    {
+      "physics": "original",
+      "case": "left",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "d0b325d7e5b90866cec3b4a003c899c2b60900c3fc7867d0f07e243a9c8f9c15",
+      "csv_sha256": "3673a36c931d247a3f01f1d59801050e386e923d09123029c74f20cab9b3b6e0"
+    },
+    {
+      "physics": "original",
+      "case": "left",
+      "seed": 20260910,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "81356d3f88569bd097b625305c406061b40a829feb8dd05be6edc648e6de132b",
+      "csv_sha256": "86166a19403b50abd750a85cc6aa0265a7cea67928b427162e8f5cbb3bdc3de2"
+    },
+    {
+      "physics": "original",
+      "case": "left",
+      "seed": 20260911,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "552f152adae1cf7c3b231fcf8bc05f8720d3256fc81f2d3613b45f77b0837ef9",
+      "csv_sha256": "34604a2e50d81b0aeb972f2f548ecb4f75f7211875cdd150a89a9417a82cd146"
+    },
+    {
+      "physics": "original",
+      "case": "right",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "5f7adfefbe41e342755699e3e27e4e515cfdf96618f5796cba1743dcf592ab1e",
+      "csv_sha256": "b96931bcb8cf81843480435e9d208578f3826db1f70e802f39b8111a89d5f933"
+    },
+    {
+      "physics": "original",
+      "case": "right",
+      "seed": 20260910,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "40c0dbdc67eb5d451118be6906bb20dd6cfabedc9da2604c7b5d33c2239827e3",
+      "csv_sha256": "781fe30d3b654b860dc1c7a3e315accd8487be2f7b78d7f5dc0350fc5a72886b"
+    },
+    {
+      "physics": "original",
+      "case": "right",
+      "seed": 20260911,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "1b4c8b2b5e2afee93d7467841097b146798a003f944f56610ce5e2365ecb67ed",
+      "csv_sha256": "4fd72ce5bb475d70b122c2e6f911a8af02677b291bb0204e2338901af2ef8808"
+    },
+    {
+      "physics": "original",
+      "case": "push05",
+      "seed": 20260909,
+      "behavior_passed": false,
+      "actual_done_intervals": 0,
+      "report_sha256": "fc3eed9ee8bdfbd75b0d324826afed93419a91b128e4cd06bcf454783f22fabc",
+      "csv_sha256": "0049f7cef80aa86660292fdcb062fe43565ba0a8efde384bc055724e3fdd6658"
+    },
+    {
+      "physics": "original",
+      "case": "push05",
+      "seed": 20260910,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "a93f5d9d6ee13cb44eae4e89cf31bdb37363876d20737ae1178ed18d08a2b471",
+      "csv_sha256": "749adcaf74495aee71620e75b06d535d3d4509af44be72c7dac1fda945de046a"
+    },
+    {
+      "physics": "original",
+      "case": "push05",
+      "seed": 20260911,
+      "behavior_passed": true,
+      "actual_done_intervals": 0,
+      "report_sha256": "6c7f5654f9e878848e42659def15e72fc9f6222eed6e792261ca9d3da95d94b1",
+      "csv_sha256": "9752c2a2c58f11663c160f41b4c2158e092982ffb839ae0bf6219abe2c92f4e9"
+    }
+  ],
+  "promotion_performed": false,
+  "behavior_accepted": false,
+  "scope": "Identity, hashes and physical command binding only. Checkpoint tensor/config verification remains the pinned wrapper's responsibility; no new behavior, gait, visual or hardware acceptance."
+}

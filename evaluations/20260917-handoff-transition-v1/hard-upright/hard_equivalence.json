@@ -1,0 +1,32 @@
+{
+  "schema_version": "handoff_transition_baseline_comparison_v1",
+  "exact_baseline_equivalence": true,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "mismatches_truncated": false,
+  "checked_scalar_values": {
+    "result_values": 5328,
+    "metadata_values": 123
+  },
+  "allowed_top_level_relabels": [
+    "acceptance_eligible",
+    "controller_type",
+    "protocol_version"
+  ],
+  "baseline_protocol_version": "stance_geometry_v1_presettled_PD_v1_dual_policy_diagnostic_v1",
+  "candidate_protocol_version": "handoff_transition_experimental_v1",
+  "original_evaluator_sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+  "original_evaluator_file_verified": true,
+  "acceptance_eligible": false,
+  "training_collection_eligible": false,
+  "promotion_performed": false,
+  "notice": "Report equivalence only; NOT model acceptance, training-data approval, hardware/visual approval, or proof that independent simulator runs occurred. Synthetic cloned reports can test this comparator but cannot prove simulator equivalence.",
+  "baseline": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff1999-to3547-upright-control\\model_1999.pt_recovery_metrics.json",
+    "sha256": "2f3e3f6f5f2fae44883bf9a03a740404425f5bbfffb4710b60802801a125eeae"
+  },
+  "candidate": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-transition-v1\\hard-upright\\model_1999.pt_recovery_metrics.json",
+    "sha256": "df8a86ddddd89833ed764af7b5fe9d36aac28f57e6226a866c8dd212dc05a60b"
+  }
+}

@@ -18,7 +18,8 @@ CRITERION = (
     "(0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on "
     "correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s"
 )
-PROTOCOLS = {"stance_geometry_v1", "stance_geometry_v1_state_bank_PD_v1"}
+PROTOCOLS = {"stance_geometry_v1", "stance_geometry_v1_state_bank_PD_v1",
+             "stance_geometry_v1_presettled_PD_v1"}
 NOTICE = "Internal report consistency only; NOT model acceptance, provenance verification, or visual approval."
 
 
@@ -218,6 +219,35 @@ def audit_report(report):
         number(report.get("settle_requested_s"), "settle_requested_s", 1)
         number(report.get("settle_actual_s"), "settle_actual_s", 1)
         number(report.get("settle_control_steps"), "settle_control_steps", 1, integer=True)
+    elif protocol == "stance_geometry_v1_presettled_PD_v1":
+        require(bank is None, "state_bank", "pre-settled controlled drops must not declare a state bank")
+        require(report.get("start_protocol_id") == "pre_settled_nominal_pose_PD",
+                "start_protocol_id", "expected explicit pre-settled nominal-PD protocol")
+        number(report.get("angle_deg"), "angle_deg", 0)
+        require(report.get("settle_controller") == "direct nominal-position PD, not policy zero action; not zero torque",
+                "settle_controller", "unsupported pre-settling controller")
+        require(report.get("settle_execution") == (
+            "physics/action substeps only; termination checked each control step; auto-reset "
+            "prohibited; no learned policy, reward computation, curriculum or interval events"),
+            "settle_execution", "unsupported pre-settling execution or automatic reset")
+        requested = number(report.get("settle_requested_s"), "settle_requested_s", 0)
+        actual = number(report.get("settle_actual_s"), "settle_actual_s", 0)
+        steps = number(report.get("settle_control_steps"), "settle_control_steps", 1, integer=True)
+        require(requested > 0 and actual > 0, "settle_requested_s/settle_actual_s",
+                "pre-settled protocol requires positive preparation duration")
+        # Match the evaluator's ceiling rule at the observed 50-Hz control rate.
+        sample_period = .02
+        action = report.get("action_representation")
+        if action is not None:
+            require(type(action) is dict, "action_representation", "expected object")
+            if "sample_period_s" in action:
+                supplied_period = number(action["sample_period_s"], "action_representation.sample_period_s")
+                require(supplied_period == sample_period, "action_representation.sample_period_s",
+                        "pre-settled protocol requires the observed 0.02-s control period")
+        require(steps == math.ceil(requested / sample_period), "settle_control_steps",
+                "must equal ceil(settle_requested_s / 0.02)")
+        require(math.isclose(actual, steps * sample_period, rel_tol=1e-9, abs_tol=1e-12),
+                "settle_actual_s", "must equal settle_control_steps * 0.02")
     else:
         require(bank is None and report.get("start_protocol_id") == "controlled_drop", "start_protocol_id", "expected controlled drop without bank")
         number(report.get("angle_deg"), "angle_deg", 0)

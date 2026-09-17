@@ -1,0 +1,219 @@
+{
+  "protocol": "supported_startup_paired_trial0_v1",
+  "sources": [
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-upright20-front\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "9a5124c207f60db27bf7088727ddddb6a7f7f62d13c373e41dbd0756e1f632d3",
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-upright20-front\\model_1999.pt_upright.mp4",
+      "video_sha256": "84dd77dd73b146b3a9c489139d74f618d07cbad3531a6f6f3b1e2da0cc97945a",
+      "trace_csv_sha256": "91288126be3736640037efc21a814c3d16b5390bd24645b7f67f57af9d291baf",
+      "transition_trace_sha256": "fe3a6f0275cfb296d8ece7bdcae6cf949577172fbce52733b7d73737597c16d0",
+      "generated_source_sha256": "7ef458337e506036be5c431268620b7a386784b3a357012583a69d245824f377"
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-upright20-oblique\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "686a67a33a8f7b7c2a2d0a25d26d845fe34d869f218e0f4688046b10a7ec3c85",
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-upright20-oblique\\model_1999.pt_upright.mp4",
+      "video_sha256": "ab11440dc3b9205f5169720c689e28adc89e3db19ebc23dc88a013f2c18cc50a",
+      "trace_csv_sha256": "91288126be3736640037efc21a814c3d16b5390bd24645b7f67f57af9d291baf",
+      "transition_trace_sha256": "fe3a6f0275cfb296d8ece7bdcae6cf949577172fbce52733b7d73737597c16d0",
+      "generated_source_sha256": "7ef458337e506036be5c431268620b7a386784b3a357012583a69d245824f377"
+    }
+  ],
+  "source_properties": [
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    },
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    }
+  ],
+  "output": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-upright20-paired\\supported_startup_front_oblique.mp4",
+  "output_sha256": "57043886568c2869c3c3370e604a3a5e4d8f6ea3779d0831c7c4dc9bd03a7b78",
+  "output_properties": {
+    "frames": 276,
+    "fps": 25.0,
+    "width": 1920,
+    "height": 540
+  },
+  "duration_s": 11.04,
+  "pairing_script_sha256": "52be55d271bf0f8a5a79a63eb2d5661fb7ba47c4decf3219493eb068abc86d78",
+  "all_report_fields_except_view_exact": true,
+  "trial0_csv_exact": true,
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "stand_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "startup_experiment": {
+    "mode": "supported",
+    "predicate_protocol": "supported_nonfallen_startup_predicate_v1",
+    "decision_boundary": "once at actual policy start after unchanged 1s nominal-position PD",
+    "fixed_mask_per_episode": true,
+    "selected_actor_retained": true,
+    "selected_counts_as_handoff": false,
+    "selected_counts_as_success": false,
+    "unselected_original_hard_gate": true,
+    "mirror_enabled": false,
+    "ramp_enabled": false,
+    "retry_enabled": false,
+    "training_performed": false,
+    "physical_state_or_history_mutated": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "all_trial_first_actions_recorded": true,
+    "template_sha256": "c3a433568561fbe0893d61a570cf420304d44dcf986440e8d7efebd85ff7f10a",
+    "math_source_sha256": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93",
+    "adapter_sha256": "30e63d6f60261d3e163c212568613d0f8941da9ce2d8b50676ad6fc281800c60",
+    "generated_source_sha256": "7ef458337e506036be5c431268620b7a386784b3a357012583a69d245824f377",
+    "generated_source_file": "supported_startup_generated.py",
+    "transition_trace_file": "model_1999.pt_handoff_transition_trace.json",
+    "first_action_trace_key": "first_action_by_pose",
+    "ordinary_starts_are_not_fallen_recovery": true,
+    "development_data_not_fresh_generalization": true,
+    "transition_trace_sha256": "fe3a6f0275cfb296d8ece7bdcae6cf949577172fbce52733b7d73737597c16d0"
+  },
+  "note": "Left front, right oblique: independent matched-condition replays, NOT simultaneous cameras. Full untrimmed frames. Only trial 0 of each 20-environment development batch is filmed, after unchanged 1s nominal-PD preparation. This is ordinary supported startup, NOT fallen recovery, a continuous walk/recover/run demonstration, or promotion."
+}

@@ -1,0 +1,201 @@
+{
+  "source_and_inputs": [
+    {
+      "sha256": "809d90f8c2618e1ad961e2e8b5bfe33df358d20373ad85e341c26af249a342aa",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json"
+    },
+    {
+      "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz"
+    },
+    {
+      "sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_recovery.py"
+    },
+    {
+      "sha256": "9c49d687b9cb9bf0ab77dc69d663582e501eee81c7bf591bc1f711c8081b0b11",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.ps1"
+    },
+    {
+      "sha256": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.py"
+    },
+    {
+      "sha256": "cf2fbbdceae0e460727a969bf080e1e230ed716f00f914f47381a167df50ba95",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_mirror.py"
+    },
+    {
+      "sha256": "c3a433568561fbe0893d61a570cf420304d44dcf986440e8d7efebd85ff7f10a",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_transition.py"
+    },
+    {
+      "sha256": "2fbd670d819278caa19142d77bc65ecc74f960e4afc19e8142fee3e507cba41c",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py"
+    },
+    {
+      "sha256": "b66167039b4698d66f3cc412b19bacd0b1b2f37279f7ce0856ec6c09b196aa4e",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_transition_math.py"
+    },
+    {
+      "sha256": "df8a45a5e64ddc05a3062b73f769134fd3612aa4149f88eae51a67252699369b",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_handoff_math.py"
+    },
+    {
+      "sha256": "9e3edf7cd402c745242fa41e8dcf3d4ccb3818cb474344cff52c104c00426d91",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\roll_mirror_math.py"
+    },
+    {
+      "sha256": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93",
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\supported_startup_math.py"
+    },
+    {
+      "sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt"
+    },
+    {
+      "sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt"
+    },
+    {
+      "sha256": "3adac45c45374cf840adc5f441696a3a8f9c673e2ca9c6aa8370f6342402bb3d",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py"
+    },
+    {
+      "sha256": "8a87c5866d1e155ec46168847d6be890743a813681abe7882fea8f198fcb8802",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py"
+    },
+    {
+      "sha256": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py"
+    },
+    {
+      "sha256": "48d949b9b261ca9be335e4cd31b379179d8fa6011b120e7f9733131a62b45704",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py"
+    },
+    {
+      "sha256": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py"
+    },
+    {
+      "sha256": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py"
+    },
+    {
+      "sha256": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py"
+    },
+    {
+      "sha256": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py"
+    },
+    {
+      "sha256": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py"
+    },
+    {
+      "sha256": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py"
+    },
+    {
+      "sha256": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py"
+    },
+    {
+      "sha256": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py"
+    },
+    {
+      "sha256": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py"
+    },
+    {
+      "sha256": "8db2ccc466c1cb7ec1e7a4678b232903f2dba9ca717327a317dae006d9ca0ed9",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py"
+    },
+    {
+      "sha256": "edd6e0d71eb815d47f0ca76e97936046b3b16343b8a517d4d68aed6e0d3f7263",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py"
+    },
+    {
+      "sha256": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py"
+    },
+    {
+      "sha256": "3146a0265981b20fae39ba9059964e2e6535034b75b745e260ccf6cf63e40497",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py"
+    },
+    {
+      "sha256": "2ff13438054fb63eccf4fdf69ad799d4298077501de4142749202fec7ab3e08c",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py"
+    },
+    {
+      "sha256": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py"
+    },
+    {
+      "sha256": "6d31140968214ba96388a3094eb87877bdd9cdacdbae2c7ebdc4be0645093f40",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py"
+    },
+    {
+      "sha256": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901",
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py"
+    },
+    {
+      "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+      "path": "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd"
+    },
+    {
+      "sha256": "ba171c972b987d8c8fb7157ccad2ba9c0c1fed105755d2d8af46bef96cc11c6d",
+      "path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd"
+    }
+  ],
+  "mirror_mode": "initial_right",
+  "pose": "upright",
+  "seed": 20260918,
+  "trials": 20,
+  "notice": "SIMULATION DIAGNOSTIC ONLY; no training, promotion or hardware acceptance.",
+  "args": [
+    "-B",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.py",
+    "--task",
+    "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+    "--checkpoint",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "--stand_checkpoint",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "--output_dir",
+    "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-front",
+    "--startup_mode",
+    "supported",
+    "--mirror_mode",
+    "initial_right",
+    "--trials",
+    "20",
+    "--seed",
+    "20260918",
+    "--poses",
+    "upright",
+    "--angle_deg",
+    "0",
+    "--settle_s",
+    "1",
+    "--horizon_s",
+    "8",
+    "--hold_s",
+    "3",
+    "--min_contacts",
+    "4",
+    "--device",
+    "cuda:0",
+    "--headless",
+    "--kit_args=--/app/vulkan=false",
+    "--video_pose",
+    "all",
+    "--view",
+    "front"
+  ],
+  "started_at": "2026-09-17T14:03:39.2914727+08:00",
+  "schema": "handoff_combined_invocation_v1",
+  "ramp_seconds": 0,
+  "mode": "supported"
+}

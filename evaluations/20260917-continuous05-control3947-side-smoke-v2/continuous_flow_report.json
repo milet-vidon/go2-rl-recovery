@@ -1,0 +1,4138 @@
+{
+  "protocol_version": "continuous_recovery_flow_diagnostic_v2_quiet_ready",
+  "scope": "Single real-episode .5 command development diagnostic; not promotion, trot/run or deployment",
+  "passed": false,
+  "status": "smoke_complete_not_full_flow",
+  "smoke": true,
+  "refinement": "off",
+  "actors": {
+    "roll": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "locomotion": "3dfbe03e0ac332fee688c970b420167affcdb6e8cacee16e40fc12120751df3f"
+  },
+  "locomotion_selection": {
+    "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_03-10-21_20260917-speedretention128x300\\model_3947.pt",
+    "sha": "3dfbe03e0ac332fee688c970b420167affcdb6e8cacee16e40fc12120751df3f",
+    "selected_model": "control3947",
+    "interface_path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\retention_interface.json",
+    "actual_passed_interface_path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\retention_interface.json",
+    "screen_report_path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.json",
+    "screen_protocol": "locomotion_recovery_physics_retention_v1",
+    "prerequisite": {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.json",
+      "cmd_m_s": 0.5,
+      "unique_physical_trajectories": 1,
+      "vx_b": 0.610329111133303,
+      "vy_b": -0.1188954333721527,
+      "notice": "Bounded diagnostic prerequisite only; .8 drift FAILED. No complete compatibility/promotion/fast-run claim."
+    },
+    "verified_inputs": {
+      "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.json": "21c4415673267e6c248a404fd80ff3125577728e04b8fe8560ae7b812faf96fb",
+      "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.csv": "ba4a0eaf216b8ef822356b89e066bc09b5ce750936b70d67cdc1923b1a4136d4",
+      "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\retention_interface.json": "985c447375683a8ee174af78a0ee230b2b01db0c686ada367b6ab5db35a08343",
+      "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+      "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json": "809d90f8c2618e1ad961e2e8b5bfe33df358d20373ad85e341c26af249a342aa",
+      "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_03-10-21_20260917-speedretention128x300\\model_3947.pt": "3dfbe03e0ac332fee688c970b420167affcdb6e8cacee16e40fc12120751df3f"
+    }
+  },
+  "handoff_readiness": "150 consecutive original-strict AND3Dlinear<.06m/s AND3Dangular<.15rad/s; stronger separate readiness, no old gate change",
+  "task": "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+  "num_envs": 1,
+  "pose": "side",
+  "seed": 20260918,
+  "control_dt": 0.02,
+  "physics_dt": 0.005,
+  "decimation": 4,
+  "command_schedule": {
+    "preparation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "recovery": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "move": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "stop": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "policy_action_mode": "deterministic_mean",
+  "training_performed": false,
+  "promotion_performed": false,
+  "source_and_inputs": {
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_mirror.py": "cf2fbbdceae0e460727a969bf080e1e230ed716f00f914f47381a167df50ba95",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_handoff_combined.py": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_locomotion_recovery_physics.py": "cc2437ffb0d84da97eda5906333e54070f2d065ea475a148b6be7f1c6cfea4c8",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_stand_walk_stop.py": "bbba369177d95bc24163bdd2b5ba96506f5db7d4b1ce38875f8a8885c49e22e4",
+    "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_handoff_math.py": "df8a45a5e64ddc05a3062b73f769134fd3612aa4149f88eae51a67252699369b",
+    "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\roll_mirror_math.py": "9e3edf7cd402c745242fa41e8dcf3d4ccb3818cb474344cff52c104c00426d91",
+    "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\supported_startup_math.py": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93",
+    "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_env_cfg.py": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f",
+    "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_control_targets.py": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac",
+    "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+    "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json": "809d90f8c2618e1ad961e2e8b5bfe33df358d20373ad85e341c26af249a342aa",
+    "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.json": "21c4415673267e6c248a404fd80ff3125577728e04b8fe8560ae7b812faf96fb",
+    "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.csv": "ba4a0eaf216b8ef822356b89e066bc09b5ce750936b70d67cdc1923b1a4136d4",
+    "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\retention_interface.json": "985c447375683a8ee174af78a0ee230b2b01db0c686ada367b6ab5db35a08343",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_03-10-21_20260917-speedretention128x300\\model_3947.pt": "3dfbe03e0ac332fee688c970b420167affcdb6e8cacee16e40fc12120751df3f",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_uncrossed_intermediate_model2849.pt": "849abe1b0a6810d42433a86c284bc015c884a5f76497f2cfab87f691860703fe",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_stage30_model2200.pt": "bc9c74566fc3aae72d906198cd82686563b35b5fd3082f835f8451d702773d5d",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_rehearsal_model3900.pt": "70f1429040ebe3db1f8bdcbe246bff0c791f50c9739a46568932332e1ffe81aa",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_lift_model2300.pt": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_hard45_side_from2200_model2699.pt": "6261776c6ae571a31069115b680bd7635d4faccce23f053fec024d3a5d0124f1",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_hard45_side_cur1_model3699.pt": "f31aa7ad513dc768728fb6ae97304935d059d0164c269fd00cd7d101c6ebaa04",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_fourfeet_hard45_from2200_model3199.pt": "a5299bde3d530c97e2543d5ebc3a3164139b4038740d302578560b3585d420e1",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_condposture_model3498.pt": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_bank_rejected_model4899.pt": "a021ba7a25d5a9803f7f905b4a242df8582a4d2730de5843303e76beaa26b4e2",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_aligned_model3448.pt": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\standard_stance_model950.pt": "2b4f5be56f0cec18db125931619590ddec2ee1f35233c03c69f7ebd6fbc5df9c",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\robust_model799.pt": "a237ba7b5edfd854f42b57f96409cd97d6ef599c8dbb97da2f10261402229648",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_model1349.pt": "226e9a8df7e619a0430a17dbeef17f93ebbe7cc35fcc1f3be58305d790444403",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+    "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_model950.pt": "8f24061945e885ae435ce56ffc183d55037533fe150503f87d0f63e3bc71a040",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_continuous_recovery_flow.py": "6eca9ea0fd15fbb7ed15a5e6f4d373a2f41874f8a82d1981dd3aefba94f0c72f",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\continuous_flow_runtime.py": "3cb7fbe7bcc283703918c91101d0f326a2612d4182bcf73e94c254dfc673975d",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\continuous_flow_phase.py": "9cb68bb55540eeaf23fae6b21abee3f194ccabb48c9184627f364597eea2d373",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\continuous_flow_motion_metrics.py": "ce12a20d1b6f72d3c656445529afdfcf77b0a969ae7f9fce2f8ad635214c14b8",
+    "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\envs\\manager_based_rl_env.py": "81e899e33c62b1669d33a62c7510bc76c4910fd5a2f8c58e4e823fb19b38110b",
+    "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\scene\\interactive_scene.py": "e6685068c53cb6d2438c5c88d3bd99885980696d8abcf30a35773f4868fe55b0",
+    "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd": "ba171c972b987d8c8fb7157ccad2ba9c0c1fed105755d2d8af46bef96cc11c6d",
+    "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py": "48d949b9b261ca9be335e4cd31b379179d8fa6011b120e7f9733131a62b45704",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py": "8db2ccc466c1cb7ec1e7a4678b232903f2dba9ca717327a317dae006d9ca0ed9",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py": "edd6e0d71eb815d47f0ca76e97936046b3b16343b8a517d4d68aed6e0d3f7263",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py": "3146a0265981b20fae39ba9059964e2e6535034b75b745e260ccf6cf63e40497",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py": "2ff13438054fb63eccf4fdf69ad799d4298077501de4142749202fec7ab3e08c",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py": "6d31140968214ba96388a3094eb87877bdd9cdacdbae2c7ebdc4be0645093f40",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py": "3adac45c45374cf840adc5f441696a3a8f9c673e2ca9c6aa8370f6342402bb3d",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4",
+    "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py": "8a87c5866d1e155ec46168847d6be890743a813681abe7882fea8f198fcb8802",
+    "E:\\IsaacLab\\go2-rl-open-source\\configs\\overnight_preservation_20260917.json": "0250a8c60db31fb21df03ffd16591d8c8e9bfe61e1c0d85a76e91c2929648e55"
+  },
+  "prerequisite": {
+    "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-locomotion-recovery-retention-v1\\recovery-normal-seed20260909\\model_3947_stand_walk_stop.json",
+    "cmd_m_s": 0.5,
+    "unique_physical_trajectories": 1,
+    "vx_b": 0.610329111133303,
+    "vy_b": -0.1188954333721527,
+    "notice": "Bounded diagnostic prerequisite only; .8 drift FAILED. No complete compatibility/promotion/fast-run claim."
+  },
+  "post_initialization_reset_allowed": false,
+  "preparation_nominal_pd_intervals": 50,
+  "behavior": null,
+  "live_interface_continuity_passed": true,
+  "video_view": null,
+  "initialization": {
+    "wrapper_initial_reset": true,
+    "additional_env_reset": false,
+    "placement_before_recording": true,
+    "no_policy_history_reset_after_pd": true
+  },
+  "mirror_joint_contract": {
+    "native_joint_names": [
+      "FL_hip_joint",
+      "FR_hip_joint",
+      "RL_hip_joint",
+      "RR_hip_joint",
+      "FL_thigh_joint",
+      "FR_thigh_joint",
+      "RL_thigh_joint",
+      "RR_thigh_joint",
+      "FL_calf_joint",
+      "FR_calf_joint",
+      "RL_calf_joint",
+      "RR_calf_joint"
+    ],
+    "permutation": [
+      1,
+      0,
+      3,
+      2,
+      5,
+      4,
+      7,
+      6,
+      9,
+      8,
+      11,
+      10
+    ],
+    "signs": [
+      -1,
+      -1,
+      -1,
+      -1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "default_exactly_compatible": true,
+    "soft_limits_exactly_compatible": true,
+    "hard_limits_exactly_compatible": true,
+    "nominal_point25_soft_clamp_commutes_algebraically": true,
+    "physical_asset_symmetry_proven": false
+  },
+  "physical_interface_before": {
+    "roll": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "stand": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "locomotion": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    }
+  },
+  "physical_config_after_initialization": {
+    "robot": {
+      "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+      "prim_path": "/World/envs/env_.*/Robot",
+      "spawn": {
+        "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+        "visible": true,
+        "semantic_tags": null,
+        "copy_from_source": true,
+        "mass_props": null,
+        "deformable_props": null,
+        "rigid_props": {
+          "rigid_body_enabled": null,
+          "kinematic_enabled": null,
+          "disable_gravity": false,
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "max_linear_velocity": 1000.0,
+          "max_angular_velocity": 1000.0,
+          "max_depenetration_velocity": 1.0,
+          "max_contact_impulse": null,
+          "enable_gyroscopic_forces": null,
+          "retain_accelerations": false,
+          "solver_position_iteration_count": null,
+          "solver_velocity_iteration_count": null,
+          "sleep_threshold": null,
+          "stabilization_threshold": null
+        },
+        "collision_props": null,
+        "activate_contact_sensors": true,
+        "scale": null,
+        "articulation_props": {
+          "articulation_enabled": null,
+          "enabled_self_collisions": true,
+          "solver_position_iteration_count": 4,
+          "solver_velocity_iteration_count": 0,
+          "sleep_threshold": null,
+          "stabilization_threshold": null,
+          "fix_root_link": null
+        },
+        "fixed_tendons_props": null,
+        "spatial_tendons_props": null,
+        "joint_drive_props": null,
+        "visual_material_path": "material",
+        "visual_material": null,
+        "usd_path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+        "variants": null
+      },
+      "init_state": {
+        "pos": [
+          0.0,
+          0.0,
+          0.4
+        ],
+        "rot": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "lin_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ang_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_pos": {
+          ".*L_hip_joint": 0.1,
+          ".*R_hip_joint": -0.1,
+          "F[L,R]_thigh_joint": 0.8,
+          "R[L,R]_thigh_joint": 1.0,
+          ".*_calf_joint": -1.5
+        },
+        "joint_vel": {
+          ".*": 0.0
+        }
+      },
+      "collision_group": 0,
+      "debug_vis": false,
+      "articulation_root_prim_path": null,
+      "soft_joint_pos_limit_factor": 0.9,
+      "actuators": {
+        "base_legs": {
+          "class_type": "isaaclab.actuators.actuator_pd:DCMotor",
+          "joint_names_expr": [
+            ".*_hip_joint",
+            ".*_thigh_joint",
+            ".*_calf_joint"
+          ],
+          "effort_limit": 23.5,
+          "velocity_limit": 30.0,
+          "effort_limit_sim": null,
+          "velocity_limit_sim": null,
+          "stiffness": 25.0,
+          "damping": 0.5,
+          "armature": null,
+          "friction": 0.0,
+          "dynamic_friction": null,
+          "viscous_friction": null,
+          "saturation_effort": 23.5
+        }
+      },
+      "actuator_value_resolution_debug_print": false
+    },
+    "sim": {
+      "physics_prim_path": "/physicsScene",
+      "device": "cuda:0",
+      "dt": 0.005,
+      "render_interval": 4,
+      "gravity": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "enable_scene_query_support": false,
+      "use_fabric": true,
+      "physx": {
+        "solver_type": 1,
+        "solve_articulation_contact_last": false,
+        "min_position_iteration_count": 1,
+        "max_position_iteration_count": 255,
+        "min_velocity_iteration_count": 0,
+        "max_velocity_iteration_count": 255,
+        "enable_ccd": false,
+        "enable_stabilization": false,
+        "enable_external_forces_every_iteration": false,
+        "enable_enhanced_determinism": false,
+        "bounce_threshold_velocity": 0.5,
+        "friction_offset_threshold": 0.04,
+        "friction_correlation_distance": 0.025,
+        "gpu_max_rigid_contact_count": 8388608,
+        "gpu_max_rigid_patch_count": 327680,
+        "gpu_found_lost_pairs_capacity": 2097152,
+        "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+        "gpu_total_aggregate_pairs_capacity": 2097152,
+        "gpu_collision_stack_size": 67108864,
+        "gpu_heap_capacity": 67108864,
+        "gpu_temp_buffer_capacity": 16777216,
+        "gpu_max_num_partitions": 8,
+        "gpu_max_soft_body_contacts": 1048576,
+        "gpu_max_particle_contacts": 1048576
+      },
+      "physics_material": {
+        "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+        "static_friction": 1.0,
+        "dynamic_friction": 1.0,
+        "restitution": 0.0,
+        "friction_combine_mode": "multiply",
+        "restitution_combine_mode": "multiply",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      },
+      "render": {
+        "enable_translucency": null,
+        "enable_reflections": null,
+        "enable_global_illumination": null,
+        "antialiasing_mode": null,
+        "enable_dlssg": null,
+        "enable_dl_denoiser": null,
+        "dlss_mode": null,
+        "enable_direct_lighting": null,
+        "samples_per_pixel": null,
+        "enable_shadows": null,
+        "enable_ambient_occlusion": null,
+        "dome_light_upper_lower_strategy": null,
+        "carb_settings": null,
+        "rendering_mode": null
+      },
+      "create_stage_in_memory": false,
+      "logging_level": "WARNING",
+      "save_logs_to_file": true,
+      "log_dir": null
+    },
+    "terrain_physics_material": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": 1.0,
+      "dynamic_friction": 1.0,
+      "restitution": 0.0,
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0
+    },
+    "decimation": 4,
+    "action": {
+      "class_type": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_control_targets:ControlStepJointPositionAction",
+      "asset_name": "robot",
+      "debug_vis": false,
+      "clip": null,
+      "joint_names": [
+        ".*"
+      ],
+      "scale": 0.25,
+      "offset": 0.0,
+      "preserve_order": false,
+      "use_default_offset": false,
+      "reference": "nominal"
+    },
+    "events": {
+      "add_base_mass": null,
+      "base_com": null,
+      "physics_material": {
+        "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+        "params": {
+          "asset_cfg": {
+            "name": "robot",
+            "joint_names": null,
+            "joint_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "fixed_tendon_names": null,
+            "fixed_tendon_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "body_names": ".*",
+            "body_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "object_collection_names": null,
+            "object_collection_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "preserve_order": false
+          },
+          "static_friction_range": [
+            0.8,
+            0.8
+          ],
+          "dynamic_friction_range": [
+            0.6,
+            0.6
+          ],
+          "restitution_range": [
+            0.0,
+            0.0
+          ],
+          "num_buckets": 64
+        },
+        "mode": "startup",
+        "interval_range_s": null,
+        "is_global_time": false,
+        "min_step_count_between_reset": 0
+      },
+      "push_robot": null,
+      "base_external_force_torque": null
+    },
+    "reset_base": {
+      "func": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_bank_mdp:RecoveryBankReset",
+      "params": {
+        "bank_path": "",
+        "collection_mode": true,
+        "bank_fraction_start": 0.6,
+        "bank_fraction_end": 0.6,
+        "curriculum_steps": 12000
+      },
+      "mode": "reset",
+      "interval_range_s": null,
+      "is_global_time": false,
+      "min_step_count_between_reset": 0
+    },
+    "reset_robot_joints": null
+  },
+  "release_state": [
+    {
+      "trial": 0,
+      "projected_gravity_b": [
+        0.00017580389976501465,
+        0.9919764399528503,
+        0.12642574310302734
+      ],
+      "tilt_from_upright_deg": 97.26309967041016,
+      "gravity_error": 1.5009504556655884,
+      "height_m": 0.15423063933849335,
+      "root_position_w_m": [
+        -0.013832103461027145,
+        0.008625500835478306,
+        0.15423063933849335
+      ],
+      "root_quaternion_wxyz": [
+        0.6130415201187134,
+        -0.6961808800697327,
+        -0.2802588939666748,
+        0.24691607058048248
+      ],
+      "root_linear_velocity_w_m_s": [
+        -0.005228359252214432,
+        9.853623487288132e-05,
+        -0.0016854085261002183
+      ],
+      "root_angular_velocity_w_rad_s": [
+        0.055321428924798965,
+        0.039443451911211014,
+        -0.006441513542085886
+      ],
+      "joint_positions_rad": [
+        0.0967027097940445,
+        -0.08069601655006409,
+        0.09600690752267838,
+        -0.08470186591148376,
+        0.8063454031944275,
+        0.8038216829299927,
+        0.9969515800476074,
+        1.0051287412643433,
+        -1.5026577711105347,
+        -1.5015194416046143,
+        -1.5068522691726685,
+        -1.5012686252593994
+      ],
+      "max_joint_speed_rad_s": 0.08245109766721725,
+      "contacts_fresh_since_pose_write": false,
+      "foot_vertical_forces_N": null,
+      "vertical_foot_contacts": null,
+      "base_contact": null,
+      "any_body_contact": null,
+      "geometry_ok": true,
+      "quiet_supported_window_s": 0.0,
+      "settled": false,
+      "standing_at_policy_start": null,
+      "fallen_at_policy_start": null,
+      "eligible_settled_fallen_recovery": false,
+      "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+      "bank_state_id": 132,
+      "bank_saved_pose_class": "left",
+      "bank_requested_pose_class": "left",
+      "actual_pose_class": "left"
+    }
+  ],
+  "bank_selection": {
+    "available_unique_states": 16,
+    "selected_state_ids": [
+      132
+    ],
+    "selected_unique_state_count": 1,
+    "sampling_with_replacement": false,
+    "selected_actual_pose_classes": [
+      "left"
+    ],
+    "selected_requested_pose_classes": [
+      "left"
+    ],
+    "actual_pose_class_counts": {
+      "left": 1,
+      "right": 0
+    },
+    "yaw_augmentation_rad": 0.0
+  },
+  "simstep_origin": 0,
+  "termination_terms": [
+    "time_out"
+  ],
+  "policy_start_state": [
+    {
+      "trial": 0,
+      "projected_gravity_b": [
+        0.0001856386661529541,
+        0.9922640919685364,
+        0.12414336204528809
+      ],
+      "tilt_from_upright_deg": 97.13128662109375,
+      "gravity_error": 1.499428629875183,
+      "height_m": 0.15424448251724243,
+      "root_position_w_m": [
+        -0.013751871883869171,
+        0.008548823185265064,
+        0.15424448251724243
+      ],
+      "root_quaternion_wxyz": [
+        0.6138381958007812,
+        -0.6954742670059204,
+        -0.2799772322177887,
+        0.24724644422531128
+      ],
+      "root_linear_velocity_w_m_s": [
+        -0.0013638339005410671,
+        0.005486890207976103,
+        -0.0004484775708988309
+      ],
+      "root_angular_velocity_w_rad_s": [
+        0.05295662209391594,
+        0.06672953069210052,
+        -0.006135960109531879
+      ],
+      "joint_positions_rad": [
+        0.09439681470394135,
+        -0.07948947697877884,
+        0.09372055530548096,
+        -0.08368215709924698,
+        0.8063742518424988,
+        0.8035570979118347,
+        0.9970115423202515,
+        1.0048978328704834,
+        -1.50266432762146,
+        -1.5013537406921387,
+        -1.5069153308868408,
+        -1.5013571977615356
+      ],
+      "max_joint_speed_rad_s": 0.09584131836891174,
+      "contacts_fresh_since_pose_write": true,
+      "foot_vertical_forces_N": [
+        5.523209571838379,
+        0.0,
+        6.478534698486328,
+        0.0
+      ],
+      "vertical_foot_contacts": 2,
+      "base_contact": false,
+      "any_body_contact": true,
+      "geometry_ok": true,
+      "quiet_supported_window_s": 1.0,
+      "settled": true,
+      "standing_at_policy_start": false,
+      "fallen_at_policy_start": true,
+      "eligible_settled_fallen_recovery": true,
+      "classification": "settled_fallen_under_nominal_pose_PD",
+      "bank_state_id": 132,
+      "bank_saved_pose_class": "left",
+      "bank_requested_pose_class": "left",
+      "actual_pose_class": "left"
+    }
+  ],
+  "startup_selection": [
+    {
+      "protocol": "supported_nonfallen_startup_predicate_v1",
+      "valid": true,
+      "conditions": {
+        "fresh_contacts": true,
+        "four_current_feet_gt_5N": false,
+        "normal_geometry": true,
+        "no_base_contact": true,
+        "tilt_lt_20deg": false,
+        "height_in_closed_0p20_0p55m": false,
+        "linear_speed_lt_0p5m_s": true,
+        "angular_speed_lt_1rad_s": true,
+        "not_eligible_settled_fallen": false
+      },
+      "inputs": {
+        "contacts_fresh_since_pose_write": true,
+        "geometry_ok": true,
+        "base_contact": false,
+        "any_body_contact": true,
+        "settled": true,
+        "standing_at_policy_start": false,
+        "fallen_at_policy_start": true,
+        "eligible_settled_fallen_recovery": true,
+        "tilt_from_upright_deg": 97.13128662109375,
+        "height_m": 0.15424448251724243,
+        "quiet_supported_window_s": 1.0,
+        "gravity_error": 1.499428629875183,
+        "foot_vertical_forces_N": [
+          5.523209571838379,
+          0.0,
+          6.478534698486328,
+          0.0
+        ],
+        "root_linear_velocity_w_m_s": [
+          -0.0013638339005410671,
+          0.005486890207976103,
+          -0.0004484775708988309
+        ],
+        "root_angular_velocity_w_rad_s": [
+          0.05295662209391594,
+          0.06672953069210052,
+          -0.006135960109531879
+        ],
+        "vertical_foot_contacts": 2,
+        "root_linear_speed_m_s": 0.005671608166494616,
+        "root_angular_speed_rad_s": 0.08541009364502289
+      },
+      "invalid_reasons": [],
+      "selected_standing": false,
+      "selected_actor": "roll",
+      "standing_acceptance_assessed": false
+    }
+  ],
+  "mirror_selected": [
+    false
+  ],
+  "mirror_classified_once": true,
+  "flow_state": {
+    "config": {
+      "move_speed": 0.5,
+      "include_refinement": false
+    },
+    "initial_control_step": 50,
+    "phase": "recovery",
+    "completed_intervals": 2,
+    "premove_intervals": 2,
+    "move_intervals": 0,
+    "stop_intervals": 0,
+    "recovery_strict_count": 0,
+    "recovery_ready_count": 0,
+    "refinement_strict_count": 0,
+    "refinement_ready_count": 0,
+    "stop_strict_count": 0,
+    "old_stand_branch_latched": false,
+    "recovery_hold_completed_at": null,
+    "refinement_hold_completed_at": null,
+    "failure_reason": null
+  },
+  "physical_interface_after": {
+    "roll": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "stand": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    },
+    "locomotion": {
+      "observation_terms": [
+        "base_lin_vel",
+        "base_ang_vel",
+        "projected_gravity",
+        "velocity_commands",
+        "joint_pos",
+        "joint_vel",
+        "actions"
+      ],
+      "observation_dim": 48,
+      "native_joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "default_joint_velocities": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "soft_joint_limits": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "action_class": "ControlStepJointPositionAction",
+      "scale": 0.25,
+      "action_formula": "soft_clamp(default_q + .25 * real_raw_action)",
+      "history": "Native actual action manager action/prev_action only; checked before/after every step; never reset by adapter",
+      "actor_normalization": "identity",
+      "step_dt": 0.02,
+      "physics_dt": 0.005,
+      "body_names": [
+        "base",
+        "FL_hip",
+        "FR_hip",
+        "Head_upper",
+        "RL_hip",
+        "RR_hip",
+        "FL_thigh",
+        "FR_thigh",
+        "Head_lower",
+        "RL_thigh",
+        "RR_thigh",
+        "FL_calf",
+        "FR_calf",
+        "RL_calf",
+        "RR_calf",
+        "FL_foot",
+        "FR_foot",
+        "RL_foot",
+        "RR_foot"
+      ],
+      "actual_masses": [
+        [
+          6.9210004806518555,
+          0.6779999732971191,
+          0.6779999732971191,
+          0.0010000000474974513,
+          0.6779999732971191,
+          0.6779999732971191,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.0010000000474974513,
+          1.1519999504089355,
+          1.1519999504089355,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.15399999916553497,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033,
+          0.03999999910593033
+        ]
+      ],
+      "actual_coms": [
+        [
+          [
+            0.021111996844410896,
+            0.0,
+            -0.005365999881178141,
+            0.0016130266012623906,
+            0.008992232382297516,
+            -0.000844442518427968,
+            0.9999579787254333
+          ],
+          [
+            -0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.005400000140070915,
+            0.0019399999873712659,
+            -0.0001049999991664663,
+            -0.002496947767212987,
+            -0.004728215280920267,
+            -0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            0.005400000140070915,
+            -0.0019399999873712659,
+            -0.0001049999991664663,
+            0.002496947767212987,
+            -0.004728215280920267,
+            0.0037199105136096478,
+            0.99997878074646
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            -0.0037400000728666782,
+            -0.022299999371170998,
+            -0.03269999846816063,
+            0.07412359118461609,
+            0.04575013741850853,
+            -0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            -0.0037400000728666782,
+            0.022299999371170998,
+            -0.03269999846816063,
+            -0.07412359118461609,
+            0.04575013741850853,
+            0.196514293551445,
+            0.9766242504119873
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            -0.0009749999735504389,
+            -0.11500000208616257,
+            0.003973435144871473,
+            -0.00816112756729126,
+            -0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.00547999981790781,
+            0.0009749999735504389,
+            -0.11500000208616257,
+            -0.003973435144871473,
+            -0.00816112756729126,
+            0.011986798606812954,
+            0.9998869895935059
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      ],
+      "actual_material_properties": [
+        [
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ],
+          [
+            0.800000011920929,
+            0.6000000238418579,
+            0.0
+          ]
+        ]
+      ]
+    }
+  },
+  "physical_config_after_episode": {
+    "robot": {
+      "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+      "prim_path": "/World/envs/env_.*/Robot",
+      "spawn": {
+        "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+        "visible": true,
+        "semantic_tags": null,
+        "copy_from_source": true,
+        "mass_props": null,
+        "deformable_props": null,
+        "rigid_props": {
+          "rigid_body_enabled": null,
+          "kinematic_enabled": null,
+          "disable_gravity": false,
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "max_linear_velocity": 1000.0,
+          "max_angular_velocity": 1000.0,
+          "max_depenetration_velocity": 1.0,
+          "max_contact_impulse": null,
+          "enable_gyroscopic_forces": null,
+          "retain_accelerations": false,
+          "solver_position_iteration_count": null,
+          "solver_velocity_iteration_count": null,
+          "sleep_threshold": null,
+          "stabilization_threshold": null
+        },
+        "collision_props": null,
+        "activate_contact_sensors": true,
+        "scale": null,
+        "articulation_props": {
+          "articulation_enabled": null,
+          "enabled_self_collisions": true,
+          "solver_position_iteration_count": 4,
+          "solver_velocity_iteration_count": 0,
+          "sleep_threshold": null,
+          "stabilization_threshold": null,
+          "fix_root_link": null
+        },
+        "fixed_tendons_props": null,
+        "spatial_tendons_props": null,
+        "joint_drive_props": null,
+        "visual_material_path": "material",
+        "visual_material": null,
+        "usd_path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+        "variants": null
+      },
+      "init_state": {
+        "pos": [
+          0.0,
+          0.0,
+          0.4
+        ],
+        "rot": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "lin_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ang_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_pos": {
+          ".*L_hip_joint": 0.1,
+          ".*R_hip_joint": -0.1,
+          "F[L,R]_thigh_joint": 0.8,
+          "R[L,R]_thigh_joint": 1.0,
+          ".*_calf_joint": -1.5
+        },
+        "joint_vel": {
+          ".*": 0.0
+        }
+      },
+      "collision_group": 0,
+      "debug_vis": false,
+      "articulation_root_prim_path": null,
+      "soft_joint_pos_limit_factor": 0.9,
+      "actuators": {
+        "base_legs": {
+          "class_type": "isaaclab.actuators.actuator_pd:DCMotor",
+          "joint_names_expr": [
+            ".*_hip_joint",
+            ".*_thigh_joint",
+            ".*_calf_joint"
+          ],
+          "effort_limit": 23.5,
+          "velocity_limit": 30.0,
+          "effort_limit_sim": null,
+          "velocity_limit_sim": null,
+          "stiffness": 25.0,
+          "damping": 0.5,
+          "armature": null,
+          "friction": 0.0,
+          "dynamic_friction": null,
+          "viscous_friction": null,
+          "saturation_effort": 23.5
+        }
+      },
+      "actuator_value_resolution_debug_print": false
+    },
+    "sim": {
+      "physics_prim_path": "/physicsScene",
+      "device": "cuda:0",
+      "dt": 0.005,
+      "render_interval": 4,
+      "gravity": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "enable_scene_query_support": false,
+      "use_fabric": true,
+      "physx": {
+        "solver_type": 1,
+        "solve_articulation_contact_last": false,
+        "min_position_iteration_count": 1,
+        "max_position_iteration_count": 255,
+        "min_velocity_iteration_count": 0,
+        "max_velocity_iteration_count": 255,
+        "enable_ccd": false,
+        "enable_stabilization": false,
+        "enable_external_forces_every_iteration": false,
+        "enable_enhanced_determinism": false,
+        "bounce_threshold_velocity": 0.5,
+        "friction_offset_threshold": 0.04,
+        "friction_correlation_distance": 0.025,
+        "gpu_max_rigid_contact_count": 8388608,
+        "gpu_max_rigid_patch_count": 327680,
+        "gpu_found_lost_pairs_capacity": 2097152,
+        "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+        "gpu_total_aggregate_pairs_capacity": 2097152,
+        "gpu_collision_stack_size": 67108864,
+        "gpu_heap_capacity": 67108864,
+        "gpu_temp_buffer_capacity": 16777216,
+        "gpu_max_num_partitions": 8,
+        "gpu_max_soft_body_contacts": 1048576,
+        "gpu_max_particle_contacts": 1048576
+      },
+      "physics_material": {
+        "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+        "static_friction": 1.0,
+        "dynamic_friction": 1.0,
+        "restitution": 0.0,
+        "friction_combine_mode": "multiply",
+        "restitution_combine_mode": "multiply",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      },
+      "render": {
+        "enable_translucency": null,
+        "enable_reflections": null,
+        "enable_global_illumination": null,
+        "antialiasing_mode": null,
+        "enable_dlssg": null,
+        "enable_dl_denoiser": null,
+        "dlss_mode": null,
+        "enable_direct_lighting": null,
+        "samples_per_pixel": null,
+        "enable_shadows": null,
+        "enable_ambient_occlusion": null,
+        "dome_light_upper_lower_strategy": null,
+        "carb_settings": null,
+        "rendering_mode": null
+      },
+      "create_stage_in_memory": false,
+      "logging_level": "WARNING",
+      "save_logs_to_file": true,
+      "log_dir": null
+    },
+    "terrain_physics_material": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": 1.0,
+      "dynamic_friction": 1.0,
+      "restitution": 0.0,
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0
+    },
+    "decimation": 4,
+    "action": {
+      "class_type": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_control_targets:ControlStepJointPositionAction",
+      "asset_name": "robot",
+      "debug_vis": false,
+      "clip": null,
+      "joint_names": [
+        ".*"
+      ],
+      "scale": 0.25,
+      "offset": 0.0,
+      "preserve_order": false,
+      "use_default_offset": false,
+      "reference": "nominal"
+    },
+    "events": {
+      "add_base_mass": null,
+      "base_com": null,
+      "physics_material": {
+        "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+        "params": {
+          "asset_cfg": {
+            "name": "robot",
+            "joint_names": null,
+            "joint_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "fixed_tendon_names": null,
+            "fixed_tendon_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "body_names": ".*",
+            "body_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "object_collection_names": null,
+            "object_collection_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "preserve_order": false
+          },
+          "static_friction_range": [
+            0.8,
+            0.8
+          ],
+          "dynamic_friction_range": [
+            0.6,
+            0.6
+          ],
+          "restitution_range": [
+            0.0,
+            0.0
+          ],
+          "num_buckets": 64
+        },
+        "mode": "startup",
+        "interval_range_s": null,
+        "is_global_time": false,
+        "min_step_count_between_reset": 0
+      },
+      "push_robot": null,
+      "base_external_force_torque": null
+    },
+    "reset_base": {
+      "func": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_bank_mdp:RecoveryBankReset",
+      "params": {
+        "bank_path": "",
+        "collection_mode": true,
+        "bank_fraction_start": 0.6,
+        "bank_fraction_end": 0.6,
+        "curriculum_steps": 12000
+      },
+      "mode": "reset",
+      "interval_range_s": null,
+      "is_global_time": false,
+      "min_step_count_between_reset": 0
+    },
+    "reset_robot_joints": null
+  },
+  "reset_guard_attempts": [],
+  "actual_completed_intervals": 52,
+  "frame_count_written": 0,
+  "source_hashes_unchanged_at_end": true,
+  "artifact_sha256": {
+    "actual_config.json": "dac0dd6ce1a5ac8adf5afcfba4b1082ac2fd758405712b3318cc794b7dc43425",
+    "continuous_flow.csv": "b18f2f35cb396d00e7517bba13db1510eb3e0fc122ff8c994d04a422e74740fc",
+    "extracted_helpers.py": "dca99fdc43fc8949edd8187b6e8d6a3a36ede5393f4d694d8286d521ea49f115",
+    "full_trace.jsonl": "3be2156e6fdf78827fcb0b02a73392287a6a6aa44b0b4c112bdc4601432ad40c",
+    "initial_state.json": "5e5557274f574eacfc30fb3c539ae707b18b5a77901806d5127d344f322cddbf",
+    "invocation.json": "af1186f63b188707f2ef1b359077b769d7c5d9a9f20df0c9ae5a9c919752bcdb",
+    "measured_rows.json": "a1432d8d3c7817d9a63cb1d6c5b096cd674e0178611866cffe29e6f6f03d62ef",
+    "physical_configuration_comparison.json": "42a5a686bfd8e13964088df8d8c58d64331db20818591e219e7d1349ea5bffd1",
+    "video_frames.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  }
+}

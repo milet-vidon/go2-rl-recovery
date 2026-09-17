@@ -1,0 +1,358 @@
+{
+  "schema": "trained_balanced_gait_candidate_invocation_v1",
+  "status": "completed_screening_only",
+  "started_at": "2026-09-17T17:26:55.1551219+08:00",
+  "arm": "balanced",
+  "physics_mode": "original",
+  "seed": 20260909,
+  "args": [
+    "-B",
+    "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_balanced_gait_candidate.py",
+    "--arm",
+    "balanced",
+    "--candidate_training_result",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\common_physics_training_result.json",
+    "--physics_mode",
+    "original",
+    "--task",
+    "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+    "--checkpoint",
+    "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\model_4246.pt",
+    "--output_dir",
+    "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-gait-balanced-4246-first\\original-left-seed20260909",
+    "--seed",
+    "20260909",
+    "--stand_s",
+    "4",
+    "--walk_s",
+    "8",
+    "--stop_s",
+    "6",
+    "--walk_speed",
+    "0.5",
+    "--lateral_speed",
+    "0",
+    "--yaw_rate",
+    "0.5",
+    "--push_speed",
+    "0",
+    "--view",
+    "legacy",
+    "--device",
+    "cuda:0",
+    "--headless",
+    "--rendering_mode",
+    "performance",
+    "--kit_args=--/app/vulkan=false",
+    "--no_video"
+  ],
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\model_4246.pt",
+  "checkpoint_sha256": "882baefd00193c4b71bef2a47b5cb7382c37dd9e87b48f7f5863eaa364baebdc",
+  "source_and_inputs": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\balanced_gait_exposure.py",
+      "sha256": "dbfdc10aaf9d81c59d4a68014fa7b7eb451eeb447b842d4ff65205ad647e7bfa"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\balanced_gait_reward.py",
+      "sha256": "77800a2d3e8ec733eee5a345c0e0c0f231cc7f608a7f1c32457ae06c06c887c8"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_balanced_gait_candidate.ps1",
+      "sha256": "7cb9ba878f6bb7bfb89edd059aac2350453a70e6dbe21ba4090848dbe2e2751c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_balanced_gait_candidate.py",
+      "sha256": "e42f2f34f1968e1bf99f6c1dc13aa1b53463fa22893db485b23dcad75df4c8fe"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_common_physics_candidate.py",
+      "sha256": "f62f2230742b868c71f68b9241ef2ea9a9099a699c233303a5c4983051857ce1"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_stand_walk_stop.py",
+      "sha256": "bbba369177d95bc24163bdd2b5ba96506f5db7d4b1ce38875f8a8885c49e22e4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_locomotion_recovery_physics.py",
+      "sha256": "cc2437ffb0d84da97eda5906333e54070f2d065ea475a148b6be7f1c6cfea4c8"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_speed_candidate.ps1",
+      "sha256": "2c3e8a5f4175320d13c7f3c112246e3b7c8d2bc3d8a40155eed8d20ef6a1394c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_stand_walk_stop.ps1",
+      "sha256": "601c7223218fec4c925a06cfded2e21a8bbc244135276db19bf4ec10fd9d4926"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\test_balanced_gait_candidate.py",
+      "sha256": "9d44f0db8a81d8743e72f21bb3e6b70c82c173371319cb961c0ecaaff1b30b06"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\test_locomotion_recovery_physics.py",
+      "sha256": "34f1de7f00c714cd790126d104aeb02b2499eaec2e003612e732f3f93edd111a"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\train_balanced_gait_adaptation.py",
+      "sha256": "574e9cac8a5413293df898b6802fe5c0d1a3da9d34a00c0bb084b7e396dc79c5"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py",
+      "sha256": "2fbd670d819278caa19142d77bc65ecc74f960e4afc19e8142fee3e507cba41c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\go2_ppo_snapshot.py",
+      "sha256": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\go2_registry_snapshot.py",
+      "sha256": "3adac45c45374cf840adc5f441696a3a8f9c673e2ca9c6aa8370f6342402bb3d"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_action_restore.py",
+      "sha256": "4ba289446d2b2e11b5b2fd8e9282b152c628538ce26285ad717d051e5e7b5352"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_env_cfg.py",
+      "sha256": "68565e9c809ccae979e12977543ee94eb9f9b1bad676f0ea062db0cc9080bc70"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_reset_env.py",
+      "sha256": "15ba7024566759ed4c677aba687089cf94e882ead55be4617af9aa2c309fee4c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\handoff_transition_math.py",
+      "sha256": "b66167039b4698d66f3cc412b19bacd0b1b2f37279f7ce0856ec6c09b196aa4e"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_env_cfg.py",
+      "sha256": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_robust_env_cfg.py",
+      "sha256": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\natural_stop_env_cfg.py",
+      "sha256": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_back_exploration.py",
+      "sha256": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_bank_mdp.py",
+      "sha256": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_control_targets.py",
+      "sha256": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_env_cfg.py",
+      "sha256": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_handoff_math.py",
+      "sha256": "df8a45a5e64ddc05a3062b73f769134fd3612aa4149f88eae51a67252699369b"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_math.py",
+      "sha256": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_mdp.py",
+      "sha256": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_smith_math.py",
+      "sha256": "8db2ccc466c1cb7ec1e7a4678b232903f2dba9ca717327a317dae006d9ca0ed9"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_smith_mdp.py",
+      "sha256": "edd6e0d71eb815d47f0ca76e97936046b3b16343b8a517d4d68aed6e0d3f7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_state_bank.py",
+      "sha256": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_supported_math.py",
+      "sha256": "3146a0265981b20fae39ba9059964e2e6535034b75b745e260ccf6cf63e40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\recovery_supported_mdp.py",
+      "sha256": "2ff13438054fb63eccf4fdf69ad799d4298077501de4142749202fec7ab3e08c"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\robust_env_cfg.py",
+      "sha256": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\roll_mirror_math.py",
+      "sha256": "9e3edf7cd402c745242fa41e8dcf3d4ccb3818cb474344cff52c104c00426d91"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\speed_gate_math.py",
+      "sha256": "aa05e2aa4013a8a19a2ca139bd2b56468b7d455af0a76ff8745850d0154c0d94"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\standard_env_cfg.py",
+      "sha256": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\src\\go2_recovery\\supported_startup_math.py",
+      "sha256": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\common_physics_invocation.json",
+      "sha256": "87688c77c75b91b848c13126a50399abf79ab09c2c0e9c4d6c1a603782198a18"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\common_physics_pretrain_guard.json",
+      "sha256": "bc4db05256fb93ec814081903f5c0bad05c0e91b3b9f0353814955721e4368e5"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\common_physics_training_result.json",
+      "sha256": "299b45ea7c89e10107c4273e1d4867e546c3017bb8e18ee48cc9664427c91b9e"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\model_4246.pt",
+      "sha256": "882baefd00193c4b71bef2a47b5cb7382c37dd9e87b48f7f5863eaa364baebdc"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\params\\agent.yaml",
+      "sha256": "dac3c38f41352b65eb627b1f0a0a2e3ac479455a4bbd55f623d0ababf91ffd4e"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_16-33-35_20260917-gait-balanced-128x300-first\\params\\env.yaml",
+      "sha256": "7345a2df4932258222c4cd4d8848d65623d9fb6844f082063db6e18cda7f273c"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_assets\\isaaclab_assets\\robots\\unitree.py",
+      "sha256": "0211154aeb65a73a0d1e1093df051e1878bf9b112d657c59b3008b62e328a5b2"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_rl\\isaaclab_rl\\rsl_rl\\vecenv_wrapper.py",
+      "sha256": "fbd71e80818fc711594963e2beb78de9ae72b2ef4916ac2f92038cd169b7472d"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py",
+      "sha256": "3adac45c45374cf840adc5f441696a3a8f9c673e2ca9c6aa8370f6342402bb3d"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py",
+      "sha256": "8a87c5866d1e155ec46168847d6be890743a813681abe7882fea8f198fcb8802"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py",
+      "sha256": "498e15670aab92aa8e9616b5c82a5277e6f7a519762da3295e4b2fc4ce7f16f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py",
+      "sha256": "48d949b9b261ca9be335e4cd31b379179d8fa6011b120e7f9733131a62b45704"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py",
+      "sha256": "a6cfdbfe8ebc62ad8e74f48fe8e24f7ca6588f024c8a11fdd54bebec30bccaf3"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py",
+      "sha256": "49316079d0b65334a9b2676377f37514a0140beddf834eac49586c20acdd9d20"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py",
+      "sha256": "02a04a057297e3574fad0e142c886654b3edce3ee9dd23147d03a2bc0029dd55"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py",
+      "sha256": "c39eda11f96ed6b6cefa177c31b905bd9d408b78769c9a48ec8e3df4a0bcd082"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py",
+      "sha256": "1b824c4ac1ca0761c37297f481a5d173f2343185fa01dd1f165129faaa2126f4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py",
+      "sha256": "5220033d6b0f76bc313527dce017bb37f67f19a192034a15ac2a9eb7abd6ecac"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py",
+      "sha256": "45836efa79a4aded4b9a8cb3f46ca5ac0a0d9c9a0f7d4609884ff65059a7865f"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py",
+      "sha256": "fba46228c3a46eec4231614f9cd1280a0dfce15e486af13e3cc810d7b56f6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py",
+      "sha256": "ede261709a60f9953bcf637ccc700cca2665631d9767568d4a0cdeebfc5e26ce"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py",
+      "sha256": "8db2ccc466c1cb7ec1e7a4678b232903f2dba9ca717327a317dae006d9ca0ed9"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py",
+      "sha256": "edd6e0d71eb815d47f0ca76e97936046b3b16343b8a517d4d68aed6e0d3f7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py",
+      "sha256": "8839bb2658bcfe87fcca32bdfc8f903290d57edb52585eb9764e681043c26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py",
+      "sha256": "3146a0265981b20fae39ba9059964e2e6535034b75b745e260ccf6cf63e40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py",
+      "sha256": "2ff13438054fb63eccf4fdf69ad799d4298077501de4142749202fec7ab3e08c"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py",
+      "sha256": "a9dabe626515c73693b9f90d98ac9a5189d8356b78ff466641f24382b991f7ba"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py",
+      "sha256": "6d31140968214ba96388a3094eb87877bdd9cdacdbae2c7ebdc4be0645093f40"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py",
+      "sha256": "cd57b11c69747296938e15b5487b0a185c29f45244b20cfb0c71bf57979af901"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\envs\\manager_based_rl_env.py",
+      "sha256": "81e899e33c62b1669d33a62c7510bc76c4910fd5a2f8c58e4e823fb19b38110b"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\envs\\mdp\\actions\\joint_actions.py",
+      "sha256": "833b7e3bf829a4f18d8de016b54c8f67eacc344b15ca2298f4963cbcb7a38233"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab\\isaaclab\\managers\\action_manager.py",
+      "sha256": "4f8cb81c076b6449b8a9a13edbf98ee1d2fa3fb1ae6e30dc41c74c0057b648bf"
+    },
+    {
+      "path": "E:\\IsaacLab\\userdata\\assets\\Environments\\Grid\\default_environment.usd",
+      "sha256": "8a21c317d638d33a4e6c20c958a7ed8f4d8c5195efd7e20f1b85178b4a15638a"
+    },
+    {
+      "path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+      "sha256": "ba171c972b987d8c8fb7157ccad2ba9c0c1fed105755d2d8af46bef96cc11c6d"
+    }
+  ],
+  "original_baseline_equivalence_verified": false,
+  "promotion_performed": false,
+  "notice": "Trained candidate diagnostic only. Original-mode equivalence requires separate baseline comparison; no full-flow or fast-running claim.",
+  "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-gait-balanced-4246-first\\original-left-seed20260909\\model_4246_stand_walk_stop.json",
+  "report_sha256": "d0b325d7e5b90866cec3b4a003c899c2b60900c3fc7867d0f07e243a9c8f9c15",
+  "report_passed": false,
+  "failed_criteria": [
+    "walk_tracking",
+    "yaw_tracking"
+  ],
+  "straight_drift_passed": null,
+  "retention_passed": false,
+  "finished_at": "2026-09-17T17:27:49.8512003+08:00"
+}

@@ -1,0 +1,439 @@
+{
+  "schema_version": "overnight_speed_baselines_v1",
+  "run_tag": "20260917-speed-baselines",
+  "status": "completed_diagnostic_only",
+  "started_at": "2026-09-17T00:32:37.2364254+08:00",
+  "diagnostic_only": true,
+  "training_performed": false,
+  "promotion_performed": false,
+  "acceptance_eligible": false,
+  "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "seeds": [
+    20260909,
+    20260910,
+    20260911
+  ],
+  "commanded_speeds_m_s": [
+    "0.5",
+    "0.8",
+    "1.0",
+    "1.5",
+    "2.0"
+  ],
+  "models": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "relative": "models/locomotion/natural_stop_diagonal_model2250.pt",
+      "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "id": "locomotion2250"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "relative": "models/locomotion/natural_robust_push_model3648.pt",
+      "sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "id": "robust3648"
+    }
+  ],
+  "source_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_stand_walk_stop.ps1",
+      "sha256": "601C7223218FEC4C925A06CFDED2E21A8BBC244135276DB19BF4EC10FD9D4926"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_stand_walk_stop.py",
+      "sha256": "BBBA369177D95BC24163BDD2B5BA96506F5DB7D4B1CE38875F8A8885C49E22E4"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py",
+      "sha256": "2FBD670D819278CAA19142D77BC65ECC74F960E4AFC19E8142FEE3E507CBA41C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\run_overnight_speed_baselines.ps1",
+      "sha256": "204E674B40A1F01569E147782C9879469083809D9A92E62B38C3FE5A82E3852A"
+    }
+  ],
+  "speed_advance_rule": "All three seeds must pass the unchanged report.passed at the previous speed. Failure skips higher speeds for that model.",
+  "separate_drift_rule": "abs(settled_phase_stats.walk.vy_b_mean) < 0.12 m/s and abs(settled_phase_stats.walk.yaw_rate_mean) < 0.15 rad/s. Failed drift blocks any promotion claim, not diagnostic speed escalation.",
+  "limitations": "Simulation baseline probes only; no recovered walking or integrated controller test; commanded 2.0 m/s is not evidence of actual fast running. Every actual speed and failure remains in the reports.",
+  "completed_rollouts": [
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260909,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.5501291567087173,
+      "measured_vy_b_mean_m_s": -0.09282606373408012,
+      "measured_yaw_rate_mean_rad_s": 0.048967269935029825,
+      "max_walk_tilt_deg": 4.773761364234012,
+      "mean_contact_slip_m_s": 0.05382079650127312,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260909\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "AC650CABBFF63A5BFCE7348DB7689FB40D612C576FF88F6AEAAD83DB48F2D61A",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260909.log"
+    },
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260910,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.5777919505323682,
+      "measured_vy_b_mean_m_s": -0.0786879134776869,
+      "measured_yaw_rate_mean_rad_s": 0.08525014244918046,
+      "max_walk_tilt_deg": 4.918378240191162,
+      "mean_contact_slip_m_s": 0.06802507456377498,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260910\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "E5B8C79D0CE623F70CF57F74782CCD6C95A5B58268B0F60CCC30364580C8F085",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260910.log"
+    },
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260911,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.57015498314585,
+      "measured_vy_b_mean_m_s": -0.06326918106991798,
+      "measured_yaw_rate_mean_rad_s": 0.09098253295041754,
+      "max_walk_tilt_deg": 5.0462513342848485,
+      "mean_contact_slip_m_s": 0.0660189773667411,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260911\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "FA043C9408E8B8C489CC4A28B09C94581A857B1F03C9F4B2E0EE194BE0719277",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p5-seed20260911.log"
+    },
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260909,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.7681933830465589,
+      "measured_vy_b_mean_m_s": -0.06597529242580225,
+      "measured_yaw_rate_mean_rad_s": 0.04702012701237566,
+      "max_walk_tilt_deg": 6.193528027568822,
+      "mean_contact_slip_m_s": 0.0682967233785719,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260909\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "6DF7A7F228E9DAAD5BB86B265BAC682EEA8AEB85C930F05D398A1F93DCE60F5B",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260909.log"
+    },
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260910,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.8229715376240867,
+      "measured_vy_b_mean_m_s": -0.07224591737080897,
+      "measured_yaw_rate_mean_rad_s": 0.08443857871445029,
+      "max_walk_tilt_deg": 5.523529158672884,
+      "mean_contact_slip_m_s": 0.1264203028395298,
+      "report_passed": false,
+      "report_failed_criteria": [
+        "limited_slip"
+      ],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": false,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260910\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "B7BC7859D6AE2FE80B0BCA43F5DBA15A713365686A999800F06F88175F707A0C",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260910.log"
+    },
+    {
+      "model": "locomotion2250",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_stop_diagonal_model2250.pt",
+      "checkpoint_sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "seed": 20260911,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.8147603006022317,
+      "measured_vy_b_mean_m_s": -0.06568953469329114,
+      "measured_yaw_rate_mean_rad_s": 0.07970399147182304,
+      "max_walk_tilt_deg": 5.6513036419104274,
+      "mean_contact_slip_m_s": 0.11453962457029152,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260911\\natural_stop_diagonal_model2250_stand_walk_stop.json",
+      "report_sha256": "372A52060A44F3B4F20AE4CB2D76D1691B91998EC84DDC9AF3BB90A035B7A65F",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\locomotion2250-speed0p8-seed20260911.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260909,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.4669724804162979,
+      "measured_vy_b_mean_m_s": 0.002183623196989564,
+      "measured_yaw_rate_mean_rad_s": -0.02417241157830826,
+      "max_walk_tilt_deg": 3.835977244964908,
+      "mean_contact_slip_m_s": 0.0382914359705568,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p5-seed20260909\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "BBF3872A230BC79AAD4437C26A8E016BFEC83A2A01875DC68C113422569C22F2",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p5-seed20260909.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260910,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.5461468478611538,
+      "measured_vy_b_mean_m_s": -0.04956608758732078,
+      "measured_yaw_rate_mean_rad_s": 0.008957791177755487,
+      "max_walk_tilt_deg": 3.5593959916012348,
+      "mean_contact_slip_m_s": 0.04913938617210334,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p5-seed20260910\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "9328DA6AD4E4C314BC90A060347D4D4130194CF859FE5205EAF1D17F6F4565EC",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p5-seed20260910.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260911,
+      "commanded_speed_m_s": 0.5,
+      "measured_vx_b_mean_m_s": 0.5374220319305147,
+      "measured_vy_b_mean_m_s": -0.04480441532438687,
+      "measured_yaw_rate_mean_rad_s": 0.0037912186903122347,
+      "max_walk_tilt_deg": 3.1189446262272043,
+      "mean_contact_slip_m_s": 0.04926523951154324,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p5-seed20260911\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "3B9E249428870CB66137B820B5FDC87E076D3B1AF4482A6F18C053CAE8CF006E",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p5-seed20260911.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260909,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.7349619526522501,
+      "measured_vy_b_mean_m_s": -0.04649510769256657,
+      "measured_yaw_rate_mean_rad_s": -0.04479966392341469,
+      "max_walk_tilt_deg": 3.771066542187692,
+      "mean_contact_slip_m_s": 0.07974258299601227,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p8-seed20260909\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "ABBD43B6D354CB4374F1FEE9A4F626EDE88F8CDB88E3B67AC607F199130EA618",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p8-seed20260909.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260910,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.7694756914888109,
+      "measured_vy_b_mean_m_s": -0.03237128906933192,
+      "measured_yaw_rate_mean_rad_s": 0.0003696507445524081,
+      "max_walk_tilt_deg": 3.756502444443109,
+      "mean_contact_slip_m_s": 0.10507342599902751,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p8-seed20260910\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "7D1574BC749D5A85C1DF1080715E6CFE6A961239844548DEF7109EE647F316F3",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p8-seed20260910.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260911,
+      "commanded_speed_m_s": 0.8,
+      "measured_vx_b_mean_m_s": 0.7612768486567906,
+      "measured_vy_b_mean_m_s": -0.02803829855589096,
+      "measured_yaw_rate_mean_rad_s": -0.005361519283448745,
+      "max_walk_tilt_deg": 4.134166655541563,
+      "mean_contact_slip_m_s": 0.10651185369136446,
+      "report_passed": true,
+      "report_failed_criteria": [],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": true,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed0p8-seed20260911\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "5013178544086F7A7C2C8F8F9DF0B66F14B9FFC5356BF33DD151DEF84AFC8F0D",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed0p8-seed20260911.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260909,
+      "commanded_speed_m_s": 1.0,
+      "measured_vx_b_mean_m_s": 0.8431180330685207,
+      "measured_vy_b_mean_m_s": 0.00023903444575678026,
+      "measured_yaw_rate_mean_rad_s": -0.04513140459678003,
+      "max_walk_tilt_deg": 4.463460747598456,
+      "mean_contact_slip_m_s": 0.10024213763043922,
+      "report_passed": false,
+      "report_failed_criteria": [
+        "walk_tracking"
+      ],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": false,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed1p0-seed20260909\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "839BFC6F29339AD0081C77E04688E4A3265A333B560CEB7A93C9FE47923601D2",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed1p0-seed20260909.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260910,
+      "commanded_speed_m_s": 1.0,
+      "measured_vx_b_mean_m_s": 0.8888165632316044,
+      "measured_vy_b_mean_m_s": -0.02440816112860505,
+      "measured_yaw_rate_mean_rad_s": -0.001107715501815879,
+      "max_walk_tilt_deg": 5.392553878035542,
+      "mean_contact_slip_m_s": 0.13137084934606322,
+      "report_passed": false,
+      "report_failed_criteria": [
+        "limited_slip"
+      ],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": false,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed1p0-seed20260910\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "247535F2CC29FDCDC5BBBD8AFECC893EFEDB9189FEF199F51571297E5532D502",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed1p0-seed20260910.log"
+    },
+    {
+      "model": "robust3648",
+      "checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\locomotion\\natural_robust_push_model3648.pt",
+      "checkpoint_sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "seed": 20260911,
+      "commanded_speed_m_s": 1.0,
+      "measured_vx_b_mean_m_s": 0.8888685604504176,
+      "measured_vy_b_mean_m_s": -0.02996597665133387,
+      "measured_yaw_rate_mean_rad_s": -0.010425347516388035,
+      "max_walk_tilt_deg": 4.508898581051966,
+      "mean_contact_slip_m_s": 0.1280454865019452,
+      "report_passed": false,
+      "report_failed_criteria": [
+        "limited_slip"
+      ],
+      "separate_lateral_drift_passed": true,
+      "separate_yaw_drift_passed": true,
+      "report_and_separate_drift_passed": false,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-baselines\\robust3648-speed1p0-seed20260911\\natural_robust_push_model3648_stand_walk_stop.json",
+      "report_sha256": "F3F8F35C556FA479C62C55E4F97A9B399AB66A4A629EB67347C45C641A6BD2CE",
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-baselines\\robust3648-speed1p0-seed20260911.log"
+    }
+  ],
+  "completed_levels": [
+    {
+      "model": "locomotion2250",
+      "seeds_completed": 3,
+      "higher_speed_allowed_by_existing_report_gate": true,
+      "all_report_passed": true,
+      "commanded_speed_m_s": 0.5,
+      "all_report_and_separate_drift_passed": true
+    },
+    {
+      "model": "locomotion2250",
+      "seeds_completed": 3,
+      "higher_speed_allowed_by_existing_report_gate": false,
+      "all_report_passed": false,
+      "commanded_speed_m_s": 0.8,
+      "all_report_and_separate_drift_passed": false
+    },
+    {
+      "model": "robust3648",
+      "seeds_completed": 3,
+      "higher_speed_allowed_by_existing_report_gate": true,
+      "all_report_passed": true,
+      "commanded_speed_m_s": 0.5,
+      "all_report_and_separate_drift_passed": true
+    },
+    {
+      "model": "robust3648",
+      "seeds_completed": 3,
+      "higher_speed_allowed_by_existing_report_gate": true,
+      "all_report_passed": true,
+      "commanded_speed_m_s": 0.8,
+      "all_report_and_separate_drift_passed": true
+    },
+    {
+      "model": "robust3648",
+      "seeds_completed": 3,
+      "higher_speed_allowed_by_existing_report_gate": false,
+      "all_report_passed": false,
+      "commanded_speed_m_s": 1.0,
+      "all_report_and_separate_drift_passed": false
+    }
+  ],
+  "skipped_levels": [
+    {
+      "reason": "Previous speed failed unchanged report.passed in at least one seed.",
+      "commanded_speed_m_s": 1.0,
+      "model": "locomotion2250"
+    },
+    {
+      "reason": "Previous speed failed unchanged report.passed in at least one seed.",
+      "commanded_speed_m_s": 1.5,
+      "model": "locomotion2250"
+    },
+    {
+      "reason": "Previous speed failed unchanged report.passed in at least one seed.",
+      "commanded_speed_m_s": 2.0,
+      "model": "locomotion2250"
+    },
+    {
+      "reason": "Previous speed failed unchanged report.passed in at least one seed.",
+      "commanded_speed_m_s": 1.5,
+      "model": "robust3648"
+    },
+    {
+      "reason": "Previous speed failed unchanged report.passed in at least one seed.",
+      "commanded_speed_m_s": 2.0,
+      "model": "robust3648"
+    }
+  ],
+  "baseline_files_unchanged_after": true,
+  "finished_at": "2026-09-17T00:44:50.6050458+08:00"
+}

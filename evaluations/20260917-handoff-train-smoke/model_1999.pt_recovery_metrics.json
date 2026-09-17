@@ -1,0 +1,973 @@
+{
+  "angle_deg": null,
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+  "checkpoint_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+  "task": "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260917,
+  "start_protocol": "Complete measured fallen root-link pose, CoM world velocity and joint state replayed from the explicit bank split; only environment-origin translation, no yaw augmentation, root lifting or new joint noise; at least 1 s nominal-PD handover precedes policy time; actual settled-fallen eligibility rechecked",
+  "start_protocol_id": "state_bank_train_nominal_pose_PD",
+  "settle_requested_s": 1.0,
+  "settle_actual_s": 1.0,
+  "settle_control_steps": 50,
+  "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+  "settle_execution": "physics/action substeps only; termination checked each control step; auto-reset prohibited; no learned policy, reward computation, curriculum or interval events",
+  "settled_definition": "at least 0.25 s continuous any-body contact >1 N, root speed <0.10 m/s, angular speed <0.20 rad/s, every joint speed <0.50 rad/s before policy starts",
+  "fallen_start_definition": "current any-body contact >1 N and either tilt from upright >=60 deg or base contact >1 N with height <0.26 m; eligible only if settled and not already standing",
+  "success_count_definition": "DUAL-POLICY diagnostic counts, NOT performance of the roll checkpoint alone. successes counts valid stand acquisition/retention from all starts; only settled_fallen_recovery_successes counts confirmed settled-fallen starts; already-standing starts are never counted as fallen recovery",
+  "time_definition": "policy time starts AFTER optional settling; onset of the first stable interval held for hold_s; policy simulation includes hold_s after horizon_s; settling is excluded",
+  "protocol_version": "stance_geometry_v1_state_bank_PD_v1_dual_policy_diagnostic_v1",
+  "joint_names": [
+    "FL_hip_joint",
+    "FR_hip_joint",
+    "RL_hip_joint",
+    "RR_hip_joint",
+    "FL_thigh_joint",
+    "FR_thigh_joint",
+    "RL_thigh_joint",
+    "RR_thigh_joint",
+    "FL_calf_joint",
+    "FR_calf_joint",
+    "RL_calf_joint",
+    "RR_calf_joint"
+  ],
+  "video_view": null,
+  "self_collisions_enabled": true,
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 2,
+      "successes": 1,
+      "legacy_contact_height_successes": 1,
+      "final_valid_stands": 1,
+      "final_geometry_passes": 2,
+      "release_state_before_settling": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.00016170740127563477,
+            0.9922459125518799,
+            0.12429237365722656
+          ],
+          "tilt_from_upright_deg": 97.139892578125,
+          "gravity_error": 1.4995282888412476,
+          "height_m": 0.1542191505432129,
+          "root_position_w_m": [
+            0.9993412494659424,
+            -0.023790843784809113,
+            0.1542191505432129
+          ],
+          "root_quaternion_wxyz": [
+            0.3098682463169098,
+            -0.3512129783630371,
+            -0.6624165177345276,
+            0.5846671462059021
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0019966689869761467,
+            -0.0024027603212743998,
+            -0.0008510409970767796
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.044803641736507416,
+            0.062174420803785324,
+            -0.0232906024903059
+          ],
+          "joint_positions_rad": [
+            0.094579316675663,
+            -0.07961336523294449,
+            0.09434638172388077,
+            -0.08441011607646942,
+            0.7504932284355164,
+            0.8037376999855042,
+            0.9174804091453552,
+            1.0053118467330933,
+            -1.4983042478561401,
+            -1.5011571645736694,
+            -1.4995447397232056,
+            -1.5015136003494263
+          ],
+          "max_joint_speed_rad_s": 0.08897518366575241,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 24,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            0.00021097064018249512,
+            -0.9923877716064453,
+            0.12315666675567627
+          ],
+          "tilt_from_upright_deg": 97.0743179321289,
+          "gravity_error": 1.4987709522247314,
+          "height_m": 0.1542503982782364,
+          "root_position_w_m": [
+            -1.0156528949737549,
+            -0.005927074700593948,
+            0.1542503982782364
+          ],
+          "root_quaternion_wxyz": [
+            0.35891443490982056,
+            0.40634316205978394,
+            -0.6296535134315491,
+            -0.5564194321632385
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0028655938804149628,
+            0.0032528226729482412,
+            -0.0012677853228524327
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.018999220803380013,
+            0.06882375478744507,
+            0.006075885146856308
+          ],
+          "joint_positions_rad": [
+            0.07933919131755829,
+            -0.09344714134931564,
+            0.08316092938184738,
+            -0.0926317647099495,
+            0.8035440444946289,
+            0.7914091944694519,
+            1.0047740936279297,
+            1.0163873434066772,
+            -1.5013645887374878,
+            -1.4992461204528809,
+            -1.5012248754501343,
+            -1.5030564069747925
+          ],
+          "max_joint_speed_rad_s": 0.08515675365924835,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 213,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        }
+      ],
+      "policy_start_state": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.00016358494758605957,
+            0.9923421144485474,
+            0.12351953983306885
+          ],
+          "tilt_from_upright_deg": 97.09527587890625,
+          "gravity_error": 1.4990127086639404,
+          "height_m": 0.154222771525383,
+          "root_position_w_m": [
+            0.9993714094161987,
+            -0.02376849204301834,
+            0.154222771525383
+          ],
+          "root_quaternion_wxyz": [
+            0.3100055158138275,
+            -0.35109418630599976,
+            -0.6621877551078796,
+            0.5849246382713318
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.002435942180454731,
+            -0.00293979630805552,
+            -0.00029566235025413334
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.03502620756626129,
+            0.049472399055957794,
+            -0.022892555221915245
+          ],
+          "joint_positions_rad": [
+            0.09380008280277252,
+            -0.07936936616897583,
+            0.09357332438230515,
+            -0.08418873697519302,
+            0.7505075335502625,
+            0.8036482334136963,
+            0.9174803495407104,
+            1.0052118301391602,
+            -1.4983237981796265,
+            -1.5010823011398315,
+            -1.4995392560958862,
+            -1.5014793872833252
+          ],
+          "max_joint_speed_rad_s": 0.08872880786657333,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            2.1160850524902344,
+            0.0,
+            7.865023612976074,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 24,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            0.00021091103553771973,
+            -0.9922856092453003,
+            0.12397325038909912
+          ],
+          "tilt_from_upright_deg": 97.12146759033203,
+          "gravity_error": 1.4993153810501099,
+          "height_m": 0.1542452722787857,
+          "root_position_w_m": [
+            -1.0156853199005127,
+            -0.005909711122512817,
+            0.1542452722787857
+          ],
+          "root_quaternion_wxyz": [
+            0.3587489724159241,
+            0.4064929485321045,
+            -0.6298810243606567,
+            -0.5561587810516357
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0028378779534250498,
+            0.003252549795433879,
+            -0.0012490646913647652
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.016912592574954033,
+            0.06389312446117401,
+            0.005522845778614283
+          ],
+          "joint_positions_rad": [
+            0.07976280897855759,
+            -0.09427335113286972,
+            0.08355705440044403,
+            -0.09345438331365585,
+            0.8036384582519531,
+            0.7914079427719116,
+            1.0048980712890625,
+            1.016373872756958,
+            -1.5013991594314575,
+            -1.499264121055603,
+            -1.5012421607971191,
+            -1.5030643939971924
+          ],
+          "max_joint_speed_rad_s": 0.07947799563407898,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            5.022684574127197,
+            0.0,
+            5.630486965179443
+          ],
+          "vertical_foot_contacts": 2,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 213,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        }
+      ],
+      "standing_starts_not_fallen_recovery": 0,
+      "settled_fallen_trials": 2,
+      "settled_fallen_recovery_successes": 1,
+      "settled_fallen_final_valid_stands": 1,
+      "settled_fallen_recovery_rate": 0.5,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": true,
+          "stable_hold_s": 9.66,
+          "height_m": 0.3300192654132843,
+          "gravity_error": 0.022383853793144226,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.1601855605840683,
+            -0.09799689054489136,
+            0.10187071561813354,
+            -0.1212671548128128
+          ],
+          "knees_y_b": [
+            0.15215472877025604,
+            -0.11774460971355438,
+            0.12558025121688843,
+            -0.1338333636522293
+          ],
+          "max_joint_offset_rad": 0.24748441576957703,
+          "bank_state_id": 24
+        },
+        {
+          "trial": 1,
+          "geometry_ok": true,
+          "stable_hold_s": 0.0,
+          "height_m": 0.05699983611702919,
+          "gravity_error": 2.000000238418579,
+          "vertical_foot_contacts": 0,
+          "feet_y_b": [
+            0.17891965806484222,
+            -0.0911552757024765,
+            0.10337693989276886,
+            -0.09988145530223846
+          ],
+          "knees_y_b": [
+            0.1627662181854248,
+            -0.11664695292711258,
+            0.13080021739006042,
+            -0.12502336502075195
+          ],
+          "max_joint_offset_rad": 0.323576956987381,
+          "bank_state_id": 213
+        }
+      ],
+      "success_rate": 0.5,
+      "median_recovery_s": 1.340000033378601,
+      "p90_recovery_s": 1.340000033378601,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0,
+      "handoff_diagnostic": {
+        "triggered_trials": 2,
+        "untriggered_trials": 0,
+        "final_valid_after_trigger": 1,
+        "total_success_denominator_includes_untriggered": true,
+        "switch_records": [
+          {
+            "trial": 0,
+            "policy_time_s": 1.0,
+            "root_position_local_m": [
+              0.22122645378112793,
+              0.04476689174771309,
+              0.15914757549762726
+            ],
+            "root_quaternion_wxyz": [
+              0.19254273176193237,
+              -0.062127579003572464,
+              0.009578118100762367,
+              0.9792730212211609
+            ],
+            "root_linear_velocity_w_m_s": [
+              0.19593368470668793,
+              0.0013320069992914796,
+              -0.015154500491917133
+            ],
+            "root_angular_velocity_w_rad_s": [
+              0.029603440314531326,
+              -0.06736423075199127,
+              -0.14936387538909912
+            ],
+            "joint_positions_rad": [
+              -1.0477139949798584,
+              -0.5661635994911194,
+              -0.8387869000434875,
+              0.9527085423469543,
+              2.0118184089660645,
+              0.006071537267416716,
+              0.657841145992279,
+              0.9258828163146973,
+              -2.677748918533325,
+              -2.624962329864502,
+              -2.622729539871216,
+              -2.684288501739502
+            ],
+            "joint_velocities_rad_s": [
+              0.021428465843200684,
+              -0.08328256011009216,
+              0.04350084811449051,
+              0.3750794529914856,
+              0.01469598338007927,
+              -0.18112829327583313,
+              0.14008194208145142,
+              0.22032058238983154,
+              -0.8571025729179382,
+              -0.040754880756139755,
+              0.01815447025001049,
+              -0.4547298848628998
+            ],
+            "policy_observation": [
+              -0.1774929016828537,
+              -0.0752752423286438,
+              -0.0380963534116745,
+              -0.033777616918087006,
+              0.05192982405424118,
+              -0.15455171465873718,
+              0.1253681182861328,
+              0.0051652416586875916,
+              -0.9920968413352966,
+              0.0,
+              0.0,
+              0.0,
+              -1.1477140188217163,
+              -0.46616360545158386,
+              -0.9387869238853455,
+              1.0527085065841675,
+              1.2118184566497803,
+              -0.7939285039901733,
+              -0.34215885400772095,
+              -0.07411718368530273,
+              -1.1777489185333252,
+              -1.124962329864502,
+              -1.1227295398712158,
+              -1.184288501739502,
+              0.021428465843200684,
+              -0.08328256011009216,
+              0.04350084811449051,
+              0.3750794529914856,
+              0.01469598338007927,
+              -0.18112829327583313,
+              0.14008194208145142,
+              0.22032058238983154,
+              -0.8571025729179382,
+              -0.040754880756139755,
+              0.01815447025001049,
+              -0.4547298848628998,
+              -5.91644287109375,
+              -1.84771728515625,
+              -7.088748455047607,
+              6.144650936126709,
+              4.348029136657715,
+              -3.0721781253814697,
+              -0.7921667695045471,
+              -1.2822093963623047,
+              -5.597707748413086,
+              -6.496939659118652,
+              -7.617527484893799,
+              -7.885384559631348
+            ],
+            "previous_raw_action": [
+              -5.91644287109375,
+              -1.84771728515625,
+              -7.088748455047607,
+              6.144650936126709,
+              4.348029136657715,
+              -3.0721781253814697,
+              -0.7921667695045471,
+              -1.2822093963623047,
+              -5.597707748413086,
+              -6.496939659118652,
+              -7.617527484893799,
+              -7.885384559631348
+            ],
+            "previous_previous_raw_action": [
+              -5.887808322906494,
+              -1.8475044965744019,
+              -7.0929484367370605,
+              6.132868766784668,
+              4.331324577331543,
+              -3.076458215713501,
+              -0.800263524055481,
+              -1.2809895277023315,
+              -5.591009616851807,
+              -6.474125862121582,
+              -7.601426124572754,
+              -7.871390342712402
+            ],
+            "velocity_command_b": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "previous_executed_joint_target_rad": [
+              -0.9424798488616943,
+              -0.5619293451309204,
+              -0.9424798488616943,
+              0.9424798488616943,
+              1.887007236480713,
+              0.03195548057556152,
+              0.8019583225250244,
+              0.6794476509094238,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128
+            ],
+            "stand_actor_raw_action": [
+              -2.4352645874023438,
+              -4.415221691131592,
+              0.8606513738632202,
+              0.2983464002609253,
+              -0.5659944415092468,
+              0.36511534452438354,
+              0.5982997417449951,
+              -1.1628241539001465,
+              0.16623950004577637,
+              -1.205850601196289,
+              -3.8941338062286377,
+              0.9598879814147949
+            ],
+            "roll_actor_raw_action": [
+              -5.912760257720947,
+              -1.8326072692871094,
+              -7.08278226852417,
+              6.151485919952393,
+              4.340123653411865,
+              -3.076777458190918,
+              -0.788607120513916,
+              -1.291659951210022,
+              -5.601775169372559,
+              -6.497442245483398,
+              -7.615012168884277,
+              -7.879711151123047
+            ],
+            "action_linf_jump": 8.845272064208984,
+            "clamped_joint_target_linf_jump_rad": 1.3684250116348267,
+            "two_actor_action_linf_difference": 8.839599609375
+          },
+          {
+            "trial": 1,
+            "policy_time_s": 0.54,
+            "root_position_local_m": [
+              0.03567004203796387,
+              0.014983411878347397,
+              0.13808907568454742
+            ],
+            "root_quaternion_wxyz": [
+              0.694047212600708,
+              0.1734698861837387,
+              -0.16204659640789032,
+              -0.6796672940254211
+            ],
+            "root_linear_velocity_w_m_s": [
+              -0.057766109704971313,
+              -0.03119882196187973,
+              0.0022773630917072296
+            ],
+            "root_angular_velocity_w_rad_s": [
+              0.1229826807975769,
+              0.04698921740055084,
+              -0.27959370613098145
+            ],
+            "joint_positions_rad": [
+              0.929290235042572,
+              1.0055842399597168,
+              -0.08663240820169449,
+              1.0438947677612305,
+              -1.2317882776260376,
+              -1.3764675855636597,
+              -0.29142799973487854,
+              -0.267971932888031,
+              -2.6296467781066895,
+              -2.6282248497009277,
+              -2.626676559448242,
+              -2.584322214126587
+            ],
+            "joint_velocities_rad_s": [
+              0.18053264915943146,
+              1.0325201749801636,
+              -0.11409328877925873,
+              -0.09157174825668335,
+              -0.8053934574127197,
+              0.26877135038375854,
+              0.42825108766555786,
+              0.42543768882751465,
+              -0.019033528864383698,
+              0.004556411877274513,
+              0.01793828047811985,
+              0.031227152794599533
+            ],
+            "policy_observation": [
+              0.02980104833841324,
+              -0.050698064267635345,
+              0.029275940731167793,
+              -0.041034117341041565,
+              -0.019050687551498413,
+              -0.3057100772857666,
+              0.010867640376091003,
+              -0.46106812357902527,
+              -0.8872982263565063,
+              0.0,
+              0.0,
+              0.0,
+              0.8292902112007141,
+              1.1055842638015747,
+              -0.1866324096918106,
+              1.1438947916030884,
+              -2.0317883491516113,
+              -2.1764676570892334,
+              -1.2914279699325562,
+              -1.2679719924926758,
+              -1.1296467781066895,
+              -1.1282248497009277,
+              -1.1266765594482422,
+              -1.084322214126587,
+              0.18053264915943146,
+              1.0325201749801636,
+              -0.11409328877925873,
+              -0.09157174825668335,
+              -0.8053934574127197,
+              0.26877135038375854,
+              0.42825108766555786,
+              0.42543768882751465,
+              -0.019033528864383698,
+              0.004556411877274513,
+              0.01793828047811985,
+              0.031227152794599533,
+              8.153103828430176,
+              21.066871643066406,
+              -0.9768139123916626,
+              20.616455078125,
+              -8.16298770904541,
+              -21.806713104248047,
+              -8.05396842956543,
+              -17.233121871948242,
+              -19.102067947387695,
+              -15.233521461486816,
+              -11.163387298583984,
+              -18.2619571685791
+            ],
+            "previous_raw_action": [
+              8.153103828430176,
+              21.066871643066406,
+              -0.9768139123916626,
+              20.616455078125,
+              -8.16298770904541,
+              -21.806713104248047,
+              -8.05396842956543,
+              -17.233121871948242,
+              -19.102067947387695,
+              -15.233521461486816,
+              -11.163387298583984,
+              -18.2619571685791
+            ],
+            "previous_previous_raw_action": [
+              8.092018127441406,
+              20.911306381225586,
+              -0.9605775475502014,
+              20.45888900756836,
+              -8.085531234741211,
+              -21.64730453491211,
+              -7.9860615730285645,
+              -17.10099983215332,
+              -18.935688018798828,
+              -15.10293197631836,
+              -11.061201095581055,
+              -18.117265701293945
+            ],
+            "velocity_command_b": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "previous_executed_joint_target_rad": [
+              0.9424798488616943,
+              0.9424798488616943,
+              -0.14420348405838013,
+              0.9424798488616943,
+              -1.2407469749450684,
+              -1.3177247047424316,
+              -0.2705249786376953,
+              -0.2705249786376953,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128,
+              -2.628453016281128
+            ],
+            "stand_actor_raw_action": [
+              0.06956611573696136,
+              0.4924963712692261,
+              -1.0393414497375488,
+              0.9875428080558777,
+              2.0500621795654297,
+              -0.6968331933021545,
+              1.0800135135650635,
+              -1.4667681455612183,
+              2.934565544128418,
+              6.5681071281433105,
+              -4.656370162963867,
+              -0.06534866988658905
+            ],
+            "roll_actor_raw_action": [
+              8.18583869934082,
+              21.16972541809082,
+              -0.9802018404006958,
+              20.720129013061523,
+              -8.21303653717041,
+              -21.90908432006836,
+              -8.099849700927734,
+              -17.322498321533203,
+              -19.21196746826172,
+              -15.319660186767578,
+              -11.226762771606445,
+              -18.363039016723633
+            ],
+            "action_linf_jump": 22.036632537841797,
+            "clamped_joint_target_linf_jump_rad": 2.55326247215271,
+            "two_actor_action_linf_difference": 22.146533966064453
+          }
+        ],
+        "clamped_target_fraction_per_joint": [
+          [
+            0.06363636255264282,
+            0.0490909107029438,
+            0.08363636583089828,
+            0.07090909034013748,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.06727273017168045,
+            0.0490909107029438,
+            0.05454545468091965,
+            0.07999999821186066
+          ],
+          [
+            0.03818181902170181,
+            0.03818181902170181,
+            0.003636363660916686,
+            0.03818181902170181,
+            0.0,
+            0.03272727131843567,
+            0.02181818149983883,
+            0.03454545512795448,
+            0.03999999910593033,
+            0.03454545512795448,
+            0.03272727131843567,
+            0.03818181902170181
+          ]
+        ],
+        "clamp_sample_period_s": 0.02
+      },
+      "state_bank_selection": {
+        "available_unique_states": 114,
+        "selected_state_ids": [
+          24,
+          213
+        ],
+        "selected_unique_state_count": 2,
+        "sampling_with_replacement": false,
+        "selected_actual_pose_classes": [
+          "left",
+          "right"
+        ],
+        "selected_requested_pose_classes": [
+          "left",
+          "right"
+        ],
+        "actual_pose_class_counts": {
+          "left": 1,
+          "right": 1
+        },
+        "yaw_augmentation_rad": 0.0
+      },
+      "settled_fallen_unique_state_count": 2,
+      "settled_fallen_median_recovery_s": 1.340000033378601
+    }
+  },
+  "diagnostic_trial": 0,
+  "state_bank": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz",
+    "manifest_path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json",
+    "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+    "schema_version": "nominal_pd_fallen_v1",
+    "split": "train",
+    "available_split_states": 214,
+    "selected_state_ids": [
+      24,
+      213
+    ],
+    "selected_unique_state_count": 2,
+    "selection_protocol": "per-class CPU seed; actual class, sorted IDs, random permutation without replacement then extra draws only if trials exceed available states",
+    "comparison_requirement": "Compare checkpoints under the same Bank Play task, bank SHA-256, heldout split, selected IDs/order, seed, trial count and handover duration; repeated draws are not additional independent source states; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation",
+    "fixed_material": {
+      "static_friction": 0.8,
+      "dynamic_friction": 0.6,
+      "restitution": 0.0
+    },
+    "physics": {
+      "dt": 0.005,
+      "decimation": 4
+    },
+    "diagnostic_train_split_only": true
+  },
+  "policy_action_mode": "deterministic_mean",
+  "acceptance_eligible": true,
+  "controller_type": "two_policy_fixed_one_way_handoff_diagnostic",
+  "single_policy_acceptance_eligible": false,
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\go2-rl-open-source\\models\\recovery\\recovery_aligned_model3448.pt",
+    "stand_sha256": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "action_representation": {
+    "reference": "nominal",
+    "scale": 0.25,
+    "target": "q_reference + scale * action, soft-joint-limit clamped",
+    "sample_period_s": 0.02,
+    "held_over_physics_substeps": 4,
+    "pre_policy_handover": "direct nominal-position PD, not policy zero action"
+  },
+  "trace_csv": "model_1999.pt_recovery_trace.csv"
+}

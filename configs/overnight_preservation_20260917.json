@@ -1,0 +1,88 @@
+{
+  "schema_version": "overnight_preservation_v1",
+  "created_local": "2026-09-17",
+  "scope": "Existing exported checkpoints; byte preservation is not behavioral regression acceptance",
+  "never_overwrite": true,
+  "files": [
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_uncrossed_intermediate_model2849.pt",
+      "sha256": "849abe1b0a6810d42433a86c284bc015c884a5f76497f2cfab87f691860703fe",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_stage30_model2200.pt",
+      "sha256": "bc9c74566fc3aae72d906198cd82686563b35b5fd3082f835f8451d702773d5d",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_rehearsal_model3900.pt",
+      "sha256": "70f1429040ebe3db1f8bdcbe246bff0c791f50c9739a46568932332e1ffe81aa",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_lift_model2300.pt",
+      "sha256": "ecb1c328e34ebc44ed82275e2769536b4a9d1dd20880dd695c5288e575148d4e",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_hard45_side_from2200_model2699.pt",
+      "sha256": "6261776c6ae571a31069115b680bd7635d4faccce23f053fec024d3a5d0124f1",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_hard45_side_cur1_model3699.pt",
+      "sha256": "f31aa7ad513dc768728fb6ae97304935d059d0164c269fd00cd7d101c6ebaa04",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_fourfeet_hard45_from2200_model3199.pt",
+      "sha256": "a5299bde3d530c97e2543d5ebc3a3164139b4038740d302578560b3585d420e1",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_condposture_model3498.pt",
+      "sha256": "b823eefb610a43b4740839d04451ba1d4632ed2b04bb3e9a28e600ddb6ef95bb",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_bank_rejected_model4899.pt",
+      "sha256": "a021ba7a25d5a9803f7f905b4a242df8582a4d2730de5843303e76beaa26b4e2",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/recovery/recovery_aligned_model3448.pt",
+      "sha256": "1f546523baa57c7997ad2883689667d6e738eac098f14fb5fa595aae778a2de2",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/standard_stance_model950.pt",
+      "sha256": "2b4f5be56f0cec18db125931619590ddec2ee1f35233c03c69f7ebd6fbc5df9c",
+      "bytes": 983851
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/robust_model799.pt",
+      "sha256": "a237ba7b5edfd854f42b57f96409cd97d6ef599c8dbb97da2f10261402229648",
+      "bytes": 983851
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/natural_stop_model1349.pt",
+      "sha256": "226e9a8df7e619a0430a17dbeef17f93ebbe7cc35fcc1f3be58305d790444403",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/natural_stop_diagonal_model2250.pt",
+      "sha256": "33be609b3daab4a2f773d70aeeb41bc42c5cbc843780efc963ed04d5dd368417",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/natural_robust_push_model3648.pt",
+      "sha256": "475f07bf0b05101dd4157212b4e3fd48a04731d452d7a349fe467c508dbaaac8",
+      "bytes": 983925
+    },
+    {
+      "path": "E:/IsaacLab/go2-rl-open-source/models/locomotion/natural_model950.pt",
+      "sha256": "8f24061945e885ae435ce56ffc183d55037533fe150503f87d0f63e3bc71a040",
+      "bytes": 983851
+    }
+  ]
+}

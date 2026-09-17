@@ -1,0 +1,617 @@
+{
+  "actual": {
+    "robot": {
+      "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+      "prim_path": "{ENV_REGEX_NS}/Robot",
+      "spawn": {
+        "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+        "visible": true,
+        "semantic_tags": null,
+        "copy_from_source": true,
+        "mass_props": null,
+        "deformable_props": null,
+        "rigid_props": {
+          "rigid_body_enabled": null,
+          "kinematic_enabled": null,
+          "disable_gravity": false,
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "max_linear_velocity": 1000.0,
+          "max_angular_velocity": 1000.0,
+          "max_depenetration_velocity": 1.0,
+          "max_contact_impulse": null,
+          "enable_gyroscopic_forces": null,
+          "retain_accelerations": false,
+          "solver_position_iteration_count": null,
+          "solver_velocity_iteration_count": null,
+          "sleep_threshold": null,
+          "stabilization_threshold": null
+        },
+        "collision_props": null,
+        "activate_contact_sensors": true,
+        "scale": null,
+        "articulation_props": {
+          "articulation_enabled": null,
+          "enabled_self_collisions": true,
+          "solver_position_iteration_count": 4,
+          "solver_velocity_iteration_count": 0,
+          "sleep_threshold": null,
+          "stabilization_threshold": null,
+          "fix_root_link": null
+        },
+        "fixed_tendons_props": null,
+        "spatial_tendons_props": null,
+        "joint_drive_props": null,
+        "visual_material_path": "material",
+        "visual_material": null,
+        "usd_path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+        "variants": null
+      },
+      "init_state": {
+        "pos": [
+          0.0,
+          0.0,
+          0.4
+        ],
+        "rot": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "lin_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ang_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_pos": {
+          ".*L_hip_joint": 0.1,
+          ".*R_hip_joint": -0.1,
+          "F[L,R]_thigh_joint": 0.8,
+          "R[L,R]_thigh_joint": 1.0,
+          ".*_calf_joint": -1.5
+        },
+        "joint_vel": {
+          ".*": 0.0
+        }
+      },
+      "collision_group": 0,
+      "debug_vis": false,
+      "articulation_root_prim_path": null,
+      "soft_joint_pos_limit_factor": 0.9,
+      "actuators": {
+        "base_legs": {
+          "class_type": "isaaclab.actuators.actuator_pd:DCMotor",
+          "joint_names_expr": [
+            ".*_hip_joint",
+            ".*_thigh_joint",
+            ".*_calf_joint"
+          ],
+          "effort_limit": 23.5,
+          "velocity_limit": 30.0,
+          "effort_limit_sim": null,
+          "velocity_limit_sim": null,
+          "stiffness": 25.0,
+          "damping": 0.5,
+          "armature": null,
+          "friction": 0.0,
+          "dynamic_friction": null,
+          "viscous_friction": null,
+          "saturation_effort": 23.5
+        }
+      },
+      "actuator_value_resolution_debug_print": false
+    },
+    "sim": {
+      "physics_prim_path": "/physicsScene",
+      "device": "cuda:0",
+      "dt": 0.005,
+      "render_interval": 4,
+      "gravity": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "enable_scene_query_support": false,
+      "use_fabric": true,
+      "physx": {
+        "solver_type": 1,
+        "solve_articulation_contact_last": false,
+        "min_position_iteration_count": 1,
+        "max_position_iteration_count": 255,
+        "min_velocity_iteration_count": 0,
+        "max_velocity_iteration_count": 255,
+        "enable_ccd": false,
+        "enable_stabilization": false,
+        "enable_external_forces_every_iteration": false,
+        "enable_enhanced_determinism": false,
+        "bounce_threshold_velocity": 0.5,
+        "friction_offset_threshold": 0.04,
+        "friction_correlation_distance": 0.025,
+        "gpu_max_rigid_contact_count": 8388608,
+        "gpu_max_rigid_patch_count": 327680,
+        "gpu_found_lost_pairs_capacity": 2097152,
+        "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+        "gpu_total_aggregate_pairs_capacity": 2097152,
+        "gpu_collision_stack_size": 67108864,
+        "gpu_heap_capacity": 67108864,
+        "gpu_temp_buffer_capacity": 16777216,
+        "gpu_max_num_partitions": 8,
+        "gpu_max_soft_body_contacts": 1048576,
+        "gpu_max_particle_contacts": 1048576
+      },
+      "physics_material": {
+        "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+        "static_friction": 1.0,
+        "dynamic_friction": 1.0,
+        "restitution": 0.0,
+        "friction_combine_mode": "multiply",
+        "restitution_combine_mode": "multiply",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      },
+      "render": {
+        "enable_translucency": null,
+        "enable_reflections": null,
+        "enable_global_illumination": null,
+        "antialiasing_mode": null,
+        "enable_dlssg": null,
+        "enable_dl_denoiser": null,
+        "dlss_mode": null,
+        "enable_direct_lighting": null,
+        "samples_per_pixel": null,
+        "enable_shadows": null,
+        "enable_ambient_occlusion": null,
+        "dome_light_upper_lower_strategy": null,
+        "carb_settings": null,
+        "rendering_mode": null
+      },
+      "create_stage_in_memory": false,
+      "logging_level": "WARNING",
+      "save_logs_to_file": true,
+      "log_dir": null
+    },
+    "terrain_physics_material": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": 1.0,
+      "dynamic_friction": 1.0,
+      "restitution": 0.0,
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0
+    },
+    "decimation": 4,
+    "action": {
+      "class_type": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_control_targets:ControlStepJointPositionAction",
+      "asset_name": "robot",
+      "debug_vis": false,
+      "clip": null,
+      "joint_names": [
+        ".*"
+      ],
+      "scale": 0.25,
+      "offset": 0.0,
+      "preserve_order": false,
+      "use_default_offset": false,
+      "reference": "nominal"
+    },
+    "events": {
+      "add_base_mass": null,
+      "base_com": null,
+      "physics_material": {
+        "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+        "params": {
+          "asset_cfg": {
+            "name": "robot",
+            "joint_names": null,
+            "joint_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "fixed_tendon_names": null,
+            "fixed_tendon_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "body_names": ".*",
+            "body_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "object_collection_names": null,
+            "object_collection_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "preserve_order": false
+          },
+          "static_friction_range": [
+            0.8,
+            0.8
+          ],
+          "dynamic_friction_range": [
+            0.6,
+            0.6
+          ],
+          "restitution_range": [
+            0.0,
+            0.0
+          ],
+          "num_buckets": 64
+        },
+        "mode": "startup",
+        "interval_range_s": null,
+        "is_global_time": false,
+        "min_step_count_between_reset": 0
+      },
+      "push_robot": null,
+      "base_external_force_torque": null
+    },
+    "reset_base": {
+      "func": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_bank_mdp:RecoveryBankReset",
+      "params": {
+        "bank_path": "",
+        "collection_mode": true,
+        "bank_fraction_start": 0.6,
+        "bank_fraction_end": 0.6,
+        "curriculum_steps": 12000
+      },
+      "mode": "reset",
+      "interval_range_s": null,
+      "is_global_time": false,
+      "min_step_count_between_reset": 0
+    },
+    "reset_robot_joints": null
+  },
+  "screened_reference": {
+    "robot": {
+      "class_type": "isaaclab.assets.articulation.articulation:Articulation",
+      "prim_path": "{ENV_REGEX_NS}/Robot",
+      "spawn": {
+        "func": "isaaclab.sim.spawners.from_files.from_files:spawn_from_usd",
+        "visible": true,
+        "semantic_tags": null,
+        "copy_from_source": true,
+        "mass_props": null,
+        "deformable_props": null,
+        "rigid_props": {
+          "rigid_body_enabled": null,
+          "kinematic_enabled": null,
+          "disable_gravity": false,
+          "linear_damping": 0.0,
+          "angular_damping": 0.0,
+          "max_linear_velocity": 1000.0,
+          "max_angular_velocity": 1000.0,
+          "max_depenetration_velocity": 1.0,
+          "max_contact_impulse": null,
+          "enable_gyroscopic_forces": null,
+          "retain_accelerations": false,
+          "solver_position_iteration_count": null,
+          "solver_velocity_iteration_count": null,
+          "sleep_threshold": null,
+          "stabilization_threshold": null
+        },
+        "collision_props": null,
+        "activate_contact_sensors": true,
+        "scale": null,
+        "articulation_props": {
+          "articulation_enabled": null,
+          "enabled_self_collisions": true,
+          "solver_position_iteration_count": 4,
+          "solver_velocity_iteration_count": 0,
+          "sleep_threshold": null,
+          "stabilization_threshold": null,
+          "fix_root_link": null
+        },
+        "fixed_tendons_props": null,
+        "spatial_tendons_props": null,
+        "joint_drive_props": null,
+        "visual_material_path": "material",
+        "visual_material": null,
+        "usd_path": "E:\\IsaacLab\\userdata\\assets\\Robots\\Unitree\\Go2\\go2.usd",
+        "variants": null
+      },
+      "init_state": {
+        "pos": [
+          0.0,
+          0.0,
+          0.4
+        ],
+        "rot": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "lin_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "ang_vel": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "joint_pos": {
+          ".*L_hip_joint": 0.1,
+          ".*R_hip_joint": -0.1,
+          "F[L,R]_thigh_joint": 0.8,
+          "R[L,R]_thigh_joint": 1.0,
+          ".*_calf_joint": -1.5
+        },
+        "joint_vel": {
+          ".*": 0.0
+        }
+      },
+      "collision_group": 0,
+      "debug_vis": false,
+      "articulation_root_prim_path": null,
+      "soft_joint_pos_limit_factor": 0.9,
+      "actuators": {
+        "base_legs": {
+          "class_type": "isaaclab.actuators.actuator_pd:DCMotor",
+          "joint_names_expr": [
+            ".*_hip_joint",
+            ".*_thigh_joint",
+            ".*_calf_joint"
+          ],
+          "effort_limit": 23.5,
+          "velocity_limit": 30.0,
+          "effort_limit_sim": null,
+          "velocity_limit_sim": null,
+          "stiffness": 25.0,
+          "damping": 0.5,
+          "armature": null,
+          "friction": 0.0,
+          "dynamic_friction": null,
+          "viscous_friction": null,
+          "saturation_effort": 23.5
+        }
+      },
+      "actuator_value_resolution_debug_print": false
+    },
+    "sim": {
+      "physics_prim_path": "/physicsScene",
+      "device": "cuda:0",
+      "dt": 0.005,
+      "render_interval": 4,
+      "gravity": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "enable_scene_query_support": false,
+      "use_fabric": true,
+      "physx": {
+        "solver_type": 1,
+        "solve_articulation_contact_last": false,
+        "min_position_iteration_count": 1,
+        "max_position_iteration_count": 255,
+        "min_velocity_iteration_count": 0,
+        "max_velocity_iteration_count": 255,
+        "enable_ccd": false,
+        "enable_stabilization": false,
+        "enable_external_forces_every_iteration": false,
+        "enable_enhanced_determinism": false,
+        "bounce_threshold_velocity": 0.5,
+        "friction_offset_threshold": 0.04,
+        "friction_correlation_distance": 0.025,
+        "gpu_max_rigid_contact_count": 8388608,
+        "gpu_max_rigid_patch_count": 327680,
+        "gpu_found_lost_pairs_capacity": 2097152,
+        "gpu_found_lost_aggregate_pairs_capacity": 33554432,
+        "gpu_total_aggregate_pairs_capacity": 2097152,
+        "gpu_collision_stack_size": 67108864,
+        "gpu_heap_capacity": 67108864,
+        "gpu_temp_buffer_capacity": 16777216,
+        "gpu_max_num_partitions": 8,
+        "gpu_max_soft_body_contacts": 1048576,
+        "gpu_max_particle_contacts": 1048576
+      },
+      "physics_material": {
+        "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+        "static_friction": 1.0,
+        "dynamic_friction": 1.0,
+        "restitution": 0.0,
+        "friction_combine_mode": "multiply",
+        "restitution_combine_mode": "multiply",
+        "compliant_contact_stiffness": 0.0,
+        "compliant_contact_damping": 0.0
+      },
+      "render": {
+        "enable_translucency": null,
+        "enable_reflections": null,
+        "enable_global_illumination": null,
+        "antialiasing_mode": null,
+        "enable_dlssg": null,
+        "enable_dl_denoiser": null,
+        "dlss_mode": null,
+        "enable_direct_lighting": null,
+        "samples_per_pixel": null,
+        "enable_shadows": null,
+        "enable_ambient_occlusion": null,
+        "dome_light_upper_lower_strategy": null,
+        "carb_settings": null,
+        "rendering_mode": null
+      },
+      "create_stage_in_memory": false,
+      "logging_level": "WARNING",
+      "save_logs_to_file": true,
+      "log_dir": null
+    },
+    "terrain_physics_material": {
+      "func": "isaaclab.sim.spawners.materials.physics_materials:spawn_rigid_body_material",
+      "static_friction": 1.0,
+      "dynamic_friction": 1.0,
+      "restitution": 0.0,
+      "friction_combine_mode": "multiply",
+      "restitution_combine_mode": "multiply",
+      "compliant_contact_stiffness": 0.0,
+      "compliant_contact_damping": 0.0
+    },
+    "decimation": 4,
+    "action": {
+      "class_type": "isaaclab_tasks.manager_based.locomotion.velocity.config.go2.recovery_control_targets:ControlStepJointPositionAction",
+      "asset_name": "robot",
+      "debug_vis": false,
+      "clip": null,
+      "joint_names": [
+        ".*"
+      ],
+      "scale": 0.25,
+      "offset": 0.0,
+      "preserve_order": false,
+      "use_default_offset": false,
+      "reference": "nominal"
+    },
+    "events": {
+      "add_base_mass": null,
+      "base_com": null,
+      "physics_material": {
+        "func": "isaaclab.envs.mdp.events:randomize_rigid_body_material",
+        "params": {
+          "asset_cfg": {
+            "name": "robot",
+            "joint_names": null,
+            "joint_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "fixed_tendon_names": null,
+            "fixed_tendon_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "body_names": ".*",
+            "body_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "object_collection_names": null,
+            "object_collection_ids": {
+              "configuration_slice": [
+                null,
+                null,
+                null
+              ]
+            },
+            "preserve_order": false
+          },
+          "static_friction_range": [
+            0.8,
+            0.8
+          ],
+          "dynamic_friction_range": [
+            0.6,
+            0.6
+          ],
+          "restitution_range": [
+            0.0,
+            0.0
+          ],
+          "num_buckets": 64
+        },
+        "mode": "startup",
+        "interval_range_s": null,
+        "is_global_time": false,
+        "min_step_count_between_reset": 0
+      },
+      "push_robot": null,
+      "base_external_force_torque": null
+    },
+    "reset_base": {
+      "func": "isaaclab.envs.mdp.events:reset_root_state_uniform",
+      "params": {
+        "pose_range": {
+          "x": [
+            0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            0.0
+          ],
+          "yaw": [
+            0.0,
+            0.0
+          ]
+        },
+        "velocity_range": {
+          "x": [
+            0.0,
+            0.0
+          ],
+          "y": [
+            0.0,
+            0.0
+          ],
+          "z": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "yaw": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "mode": "reset",
+      "interval_range_s": null,
+      "is_global_time": false,
+      "min_step_count_between_reset": 0
+    },
+    "reset_robot_joints": {
+      "func": "isaaclab.envs.mdp.events:reset_joints_by_scale",
+      "params": {
+        "position_range": [
+          1.0,
+          1.0
+        ],
+        "velocity_range": [
+          0.0,
+          0.0
+        ]
+      },
+      "mode": "reset",
+      "interval_range_s": null,
+      "is_global_time": false,
+      "min_step_count_between_reset": 0
+    }
+  }
+}

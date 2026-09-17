@@ -1,0 +1,193 @@
+{
+  "note": "Left: front; right: oblique. Independent matched-condition replays, NOT synchronized cameras; full duration without time cropping. Conditions, source order, start eligibility and discrete outcomes checked; physical trajectories need not be bitwise identical.",
+  "checkpoint_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+  "source_reports": [
+    "../20260917-handoff-hard-right153-front/model_1999.pt_recovery_metrics.json",
+    "../20260917-handoff-hard-right153-oblique/model_1999.pt_recovery_metrics.json"
+  ],
+  "artifacts": {
+    "side": {
+      "video": "model_1999_side_front_oblique.mp4",
+      "frames": 276.0,
+      "fps": 25.0
+    }
+  },
+  "diagnostic_only": true,
+  "selection_note": "Preselected left/right development cases; NOT a success-rate or integrated-function demo.",
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "stand_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "transition_experiment": {
+    "mode": "hard",
+    "ramp_seconds": 0.0,
+    "step_dt": 0.02,
+    "ramp_steps": 0,
+    "horizon_s": 8.0,
+    "hold_s": 3.0,
+    "min_contacts": 4,
+    "policy_control_steps": 550,
+    "policy_duration_including_hold_s": 11.0,
+    "unchanged_one_way_gate": true,
+    "state_or_history_reset_at_switch": false,
+    "hidden_pd_at_switch": false,
+    "retry_enabled": false,
+    "equation": "k=1..N: (1-k/N)*previous-issued-raw-at-edge + (k/N)*current-stand-actor; exact stand after N",
+    "hard_zero_semantics": "exact original torch.where(switched[:,None], stand_action, roll_action)",
+    "actual_action_and_history_asserted_every_step": true,
+    "actual_joint_target_asserted_every_step_atol_rad": 1e-06,
+    "evaluator_source_sha256": "c3a433568561fbe0893d61a570cf420304d44dcf986440e8d7efebd85ff7f10a",
+    "math_source_sha256": "b66167039b4698d66f3cc412b19bacd0b1b2f37279f7ce0856ec6c09b196aa4e",
+    "baseline_evaluator_path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_recovery.py",
+    "baseline_evaluator_sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+    "transition_trace_file": "model_1999.pt_handoff_transition_trace.json",
+    "engineering_diagnostic_not_paper_reproduction": true,
+    "no_standing_retention_acceptance": true,
+    "known_baseline_caveat": "Stand3547-only upright20/20 is NOT dual-policy upright. Frozen old dual1999-to3547 cold controls were upright12/20, side9/20, upside_down20/20; hard equivalence must be measured, never assumed.",
+    "heldout_reuse_caveat": "Repeatedly inspected bank cases are development evidence, not a fresh generalization test.",
+    "transition_trace_sha256": "15aed29f9c625f1e31aa291e065e8a22755e6cfc963348cc64608ba6532f6a76"
+  },
+  "source_report_sha256": [
+    "bd6c47205626663532b9f82bcc4239ef5016efd75ac0bce3e160f7a861a8b758",
+    "4160a8370f2602965c9a41e1e35b43b48cfabc0cb927bda8ce97340a231996e6"
+  ],
+  "pairing_source_sha256": "538a1e055d34d2d7e219a9f67c1a1a57ca7ddd1d05eda7bcf9c5e42ab940da00"
+}

@@ -1,0 +1,3254 @@
+{
+  "angle_deg": null,
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-17_00-11-38_20260917-denseposture128x600\\model_2598.pt",
+  "checkpoint_sha256": "4f4003621ecb2b9e443255fb51673ca3652fbc6d86f790091627e3a028c78602",
+  "task": "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260918,
+  "start_protocol": "Complete measured fallen root-link pose, CoM world velocity and joint state replayed from the explicit bank split; only environment-origin translation, no yaw augmentation, root lifting or new joint noise; at least 1 s nominal-PD handover precedes policy time; actual settled-fallen eligibility rechecked",
+  "start_protocol_id": "state_bank_heldout_nominal_pose_PD",
+  "settle_requested_s": 1.0,
+  "settle_actual_s": 1.0,
+  "settle_control_steps": 50,
+  "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+  "settle_execution": "physics/action substeps only; termination checked each control step; auto-reset prohibited; no learned policy, reward computation, curriculum or interval events",
+  "settled_definition": "at least 0.25 s continuous any-body contact >1 N, root speed <0.10 m/s, angular speed <0.20 rad/s, every joint speed <0.50 rad/s before policy starts",
+  "fallen_start_definition": "current any-body contact >1 N and either tilt from upright >=60 deg or base contact >1 N with height <0.26 m; eligible only if settled and not already standing",
+  "success_count_definition": "successes counts valid stand acquisition/retention from all starts; only settled_fallen_recovery_successes counts confirmed settled-fallen starts; already-standing starts are never counted as fallen recovery",
+  "time_definition": "policy time starts AFTER optional settling; onset of the first stable interval held for hold_s; policy simulation includes hold_s after horizon_s; settling is excluded",
+  "protocol_version": "stance_geometry_v1_state_bank_PD_v1",
+  "joint_names": [
+    "FL_hip_joint",
+    "FR_hip_joint",
+    "RL_hip_joint",
+    "RR_hip_joint",
+    "FL_thigh_joint",
+    "FR_thigh_joint",
+    "RL_thigh_joint",
+    "RR_thigh_joint",
+    "FL_calf_joint",
+    "FR_calf_joint",
+    "RL_calf_joint",
+    "RR_calf_joint"
+  ],
+  "video_view": null,
+  "self_collisions_enabled": true,
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "side": {
+      "trials": 20,
+      "successes": 0,
+      "legacy_contact_height_successes": 0,
+      "final_valid_stands": 0,
+      "final_geometry_passes": 0,
+      "release_state_before_settling": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.00017580389976501465,
+            0.9919764399528503,
+            0.12642574310302734
+          ],
+          "tilt_from_upright_deg": 97.26309967041016,
+          "gravity_error": 1.5009504556655884,
+          "height_m": 0.15423063933849335,
+          "root_position_w_m": [
+            3.9861679077148438,
+            -2.9913744926452637,
+            0.15423063933849335
+          ],
+          "root_quaternion_wxyz": [
+            0.6130415201187134,
+            -0.6961808800697327,
+            -0.2802588939666748,
+            0.24691607058048248
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.005228359252214432,
+            9.853623487288132e-05,
+            -0.0016854085261002183
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.055321428924798965,
+            0.039443451911211014,
+            -0.006441513542085886
+          ],
+          "joint_positions_rad": [
+            0.0967027097940445,
+            -0.08069601655006409,
+            0.09600690752267838,
+            -0.08470186591148376,
+            0.8063454031944275,
+            0.8038216829299927,
+            0.9969515800476074,
+            1.0051287412643433,
+            -1.5026577711105347,
+            -1.5015194416046143,
+            -1.5068522691726685,
+            -1.5012686252593994
+          ],
+          "max_joint_speed_rad_s": 0.08245109766721725,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 132,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            0.0008071064949035645,
+            0.9329962134361267,
+            0.35988736152648926
+          ],
+          "tilt_from_upright_deg": 111.0932846069336,
+          "gravity_error": 1.6491743326187134,
+          "height_m": 0.151290625333786,
+          "root_position_w_m": [
+            3.9636340141296387,
+            -1.04045832157135,
+            0.151290625333786
+          ],
+          "root_quaternion_wxyz": [
+            0.1364535093307495,
+            -0.19957974553108215,
+            -0.8000697493553162,
+            0.5490330457687378
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.00016519329801667482,
+            -0.0018528972286731005,
+            -0.00016613684420008212
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.04172104224562645,
+            0.026213767006993294,
+            -0.003522961400449276
+          ],
+          "joint_positions_rad": [
+            0.1432107388973236,
+            -0.09094912558794022,
+            0.12891246378421783,
+            -0.0948895812034607,
+            0.8014204502105713,
+            0.8071413040161133,
+            1.0006883144378662,
+            1.0095568895339966,
+            -1.5014535188674927,
+            -1.502851128578186,
+            -1.5014917850494385,
+            -1.502350091934204
+          ],
+          "max_joint_speed_rad_s": 0.0984150841832161,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 152,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 2,
+          "projected_gravity_b": [
+            0.0001678764820098877,
+            0.9922472238540649,
+            0.1242837905883789
+          ],
+          "tilt_from_upright_deg": 97.13939666748047,
+          "gravity_error": 1.4995228052139282,
+          "height_m": 0.15422406792640686,
+          "root_position_w_m": [
+            4.006260871887207,
+            1.0170855522155762,
+            0.15422406792640686
+          ],
+          "root_quaternion_wxyz": [
+            0.549675464630127,
+            -0.6227491497993469,
+            0.4175229072570801,
+            -0.36839577555656433
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.002935584634542465,
+            0.00237410981208086,
+            -0.0013059423072263598
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.031523678451776505,
+            -0.08191715180873871,
+            -0.021719075739383698
+          ],
+          "joint_positions_rad": [
+            0.09457778930664062,
+            -0.07919418066740036,
+            0.09426673501729965,
+            -0.08398693799972534,
+            0.7645940184593201,
+            0.8037577867507935,
+            0.9415832757949829,
+            1.0053915977478027,
+            -1.4989105463027954,
+            -1.5011307001113892,
+            -1.4966280460357666,
+            -1.5015867948532104
+          ],
+          "max_joint_speed_rad_s": 0.0945977196097374,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 128,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 3,
+          "projected_gravity_b": [
+            0.0001901388168334961,
+            -0.9928982257843018,
+            0.11896896362304688
+          ],
+          "tilt_from_upright_deg": 96.83260345458984,
+          "gravity_error": 1.495974063873291,
+          "height_m": 0.1542837917804718,
+          "root_position_w_m": [
+            4.015533447265625,
+            3.0012998580932617,
+            0.1542837917804718
+          ],
+          "root_quaternion_wxyz": [
+            0.4176894724369049,
+            0.47061318159103394,
+            0.5813843011856079,
+            0.5158016085624695
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.00524450559169054,
+            -9.922272874973714e-05,
+            -0.0005626669153571129
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.014496167190372944,
+            -0.07445031404495239,
+            -0.0031213932670652866
+          ],
+          "joint_positions_rad": [
+            0.07777807116508484,
+            -0.08917024731636047,
+            0.08164926618337631,
+            -0.08835094422101974,
+            0.8026676177978516,
+            0.8214502334594727,
+            1.003382921218872,
+            1.0256004333496094,
+            -1.5014762878417969,
+            -1.5034844875335693,
+            -1.5007694959640503,
+            -1.5023388862609863
+          ],
+          "max_joint_speed_rad_s": 0.08410300314426422,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 157,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 4,
+          "projected_gravity_b": [
+            0.00014708936214447021,
+            -0.9923763275146484,
+            0.12324678897857666
+          ],
+          "tilt_from_upright_deg": 97.07952117919922,
+          "gravity_error": 1.4988309144973755,
+          "height_m": 0.15423685312271118,
+          "root_position_w_m": [
+            1.9886629581451416,
+            -3.0033249855041504,
+            0.15423685312271118
+          ],
+          "root_quaternion_wxyz": [
+            0.6489893794059753,
+            0.734597384929657,
+            -0.1482905149459839,
+            -0.13110925257205963
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0021648546680808067,
+            -0.003104770090430975,
+            -0.000854266807436943
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.07422728836536407,
+            0.030397120863199234,
+            0.030347956344485283
+          ],
+          "joint_positions_rad": [
+            0.07935189455747604,
+            -0.09357361495494843,
+            0.08370885998010635,
+            -0.09316756576299667,
+            0.8036782741546631,
+            0.7859489321708679,
+            1.0051530599594116,
+            0.9381697177886963,
+            -1.5012133121490479,
+            -1.4965643882751465,
+            -1.501459002494812,
+            -1.503071665763855
+          ],
+          "max_joint_speed_rad_s": 0.08630277216434479,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 149,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 5,
+          "projected_gravity_b": [
+            0.00019997358322143555,
+            0.9928674101829529,
+            0.1192251443862915
+          ],
+          "tilt_from_upright_deg": 96.84738159179688,
+          "gravity_error": 1.496145248413086,
+          "height_m": 0.15427562594413757,
+          "root_position_w_m": [
+            1.9599461555480957,
+            -0.9962830543518066,
+            0.15427562594413757
+          ],
+          "root_quaternion_wxyz": [
+            0.6118830442428589,
+            -0.6898128986358643,
+            -0.28943175077438354,
+            0.25687888264656067
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.002609935123473406,
+            0.006298382300883532,
+            -0.0006743101985193789
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.047981131821870804,
+            0.06607569754123688,
+            -0.004859401844441891
+          ],
+          "joint_positions_rad": [
+            0.08943220227956772,
+            -0.07748474925756454,
+            0.0886855348944664,
+            -0.08170684427022934,
+            0.8074187636375427,
+            0.8029317259788513,
+            1.0126038789749146,
+            1.0039745569229126,
+            -1.503394603729248,
+            -1.5012272596359253,
+            -1.5051512718200684,
+            -1.5010737180709839
+          ],
+          "max_joint_speed_rad_s": 0.10079684853553772,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 144,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 6,
+          "projected_gravity_b": [
+            0.0001920163631439209,
+            -0.9929726123809814,
+            0.11834585666656494
+          ],
+          "tilt_from_upright_deg": 96.79664611816406,
+          "gravity_error": 1.495557427406311,
+          "height_m": 0.15427808463573456,
+          "root_position_w_m": [
+            1.9795198440551758,
+            0.9801614284515381,
+            0.15427808463573456
+          ],
+          "root_quaternion_wxyz": [
+            0.5028471350669861,
+            0.5664312839508057,
+            -0.48818904161453247,
+            -0.433557391166687
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.003471868811175227,
+            0.00033526262268424034,
+            3.299554737168364e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.002420641714707017,
+            0.05074875429272652,
+            -0.004929928109049797
+          ],
+          "joint_positions_rad": [
+            0.07757102698087692,
+            -0.08856619149446487,
+            0.08169163018465042,
+            -0.08787619322538376,
+            0.8026431202888489,
+            0.8042072057723999,
+            1.0034207105636597,
+            1.005296230316162,
+            -1.5013737678527832,
+            -1.502285122871399,
+            -1.5008418560028076,
+            -1.5017774105072021
+          ],
+          "max_joint_speed_rad_s": 0.0554460734128952,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 129,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 7,
+          "projected_gravity_b": [
+            0.00017717480659484863,
+            0.9920364618301392,
+            0.1259530782699585
+          ],
+          "tilt_from_upright_deg": 97.23579406738281,
+          "gravity_error": 1.5006353855133057,
+          "height_m": 0.15423430502414703,
+          "root_position_w_m": [
+            2.0190629959106445,
+            2.9816715717315674,
+            0.15423430502414703
+          ],
+          "root_quaternion_wxyz": [
+            0.46989569067955017,
+            -0.5332334041595459,
+            0.5278623700141907,
+            -0.4649965167045593
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.002674456685781479,
+            0.0010187191655859351,
+            -6.263548857532442e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.003173037664964795,
+            -0.0398995578289032,
+            -0.0015540472231805325
+          ],
+          "joint_positions_rad": [
+            0.09617312252521515,
+            -0.08124102652072906,
+            0.09553015977144241,
+            -0.08509881794452667,
+            0.8100591897964478,
+            0.8038030862808228,
+            0.9986048340797424,
+            1.0050996541976929,
+            -1.5061203241348267,
+            -1.5014722347259521,
+            -1.5063989162445068,
+            -1.5012056827545166
+          ],
+          "max_joint_speed_rad_s": 0.043552376329898834,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 136,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 8,
+          "projected_gravity_b": [
+            0.0008205175399780273,
+            0.9329255819320679,
+            0.36006903648376465
+          ],
+          "tilt_from_upright_deg": 111.10443115234375,
+          "gravity_error": 1.6492842435836792,
+          "height_m": 0.15128308534622192,
+          "root_position_w_m": [
+            -0.05352187901735306,
+            -3.004112958908081,
+            0.15128308534622192
+          ],
+          "root_quaternion_wxyz": [
+            0.4169999063014984,
+            -0.6084144711494446,
+            -0.5566564202308655,
+            0.38219985365867615
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0021843824069947004,
+            -0.0003948014054913074,
+            -0.00017745897639542818
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.007024334277957678,
+            0.03309230878949165,
+            -0.004575042519718409
+          ],
+          "joint_positions_rad": [
+            0.1436593383550644,
+            -0.09117265045642853,
+            0.12906506657600403,
+            -0.09511297941207886,
+            0.7986870408058167,
+            0.8071845173835754,
+            1.0002927780151367,
+            1.009630799293518,
+            -1.5016987323760986,
+            -1.5028464794158936,
+            -1.5016239881515503,
+            -1.5023679733276367
+          ],
+          "max_joint_speed_rad_s": 0.08137449622154236,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 140,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 9,
+          "projected_gravity_b": [
+            0.00016394257545471191,
+            -0.9920688271522522,
+            0.12569725513458252
+          ],
+          "tilt_from_upright_deg": 97.22102355957031,
+          "gravity_error": 1.5004647970199585,
+          "height_m": 0.15422916412353516,
+          "root_position_w_m": [
+            -0.016949661076068878,
+            -1.0092110633850098,
+            0.15422916412353516
+          ],
+          "root_quaternion_wxyz": [
+            0.6429827213287354,
+            0.7296192646026611,
+            -0.1746550351381302,
+            -0.15402847528457642
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0053112744353711605,
+            -0.004584616515785456,
+            -0.002374760340899229
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.0613262914121151,
+            0.011212353594601154,
+            0.022613368928432465
+          ],
+          "joint_positions_rad": [
+            0.08034618943929672,
+            -0.09601759910583496,
+            0.08419112116098404,
+            -0.09550617635250092,
+            0.8039959073066711,
+            0.8013221025466919,
+            1.0054550170898438,
+            0.9786136150360107,
+            -1.5013569593429565,
+            -1.4985051155090332,
+            -1.501400113105774,
+            -1.4948729276657104
+          ],
+          "max_joint_speed_rad_s": 0.12347110360860825,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 133,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 10,
+          "projected_gravity_b": [
+            0.0001448988914489746,
+            -0.9924037456512451,
+            0.12302803993225098
+          ],
+          "tilt_from_upright_deg": 97.06689453125,
+          "gravity_error": 1.4986851215362549,
+          "height_m": 0.15423691272735596,
+          "root_position_w_m": [
+            -0.017841339111328125,
+            0.9982099533081055,
+            0.15423691272735596
+          ],
+          "root_quaternion_wxyz": [
+            0.23732627928256989,
+            0.2686662971973419,
+            -0.6995230317115784,
+            -0.6181930899620056
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.002034515840932727,
+            0.004505642224103212,
+            -0.001559948199428618
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.057221852242946625,
+            0.062075622379779816,
+            0.015067307278513908
+          ],
+          "joint_positions_rad": [
+            0.07942218333482742,
+            -0.09330424666404724,
+            0.08360665291547775,
+            -0.09292189031839371,
+            0.8035863637924194,
+            0.7892351746559143,
+            1.004951000213623,
+            0.9413349032402039,
+            -1.5012413263320923,
+            -1.5004230737686157,
+            -1.50132417678833,
+            -1.5036011934280396
+          ],
+          "max_joint_speed_rad_s": 0.1024085208773613,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 141,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 11,
+          "projected_gravity_b": [
+            0.0008104443550109863,
+            -0.9329319000244141,
+            0.3600536584854126
+          ],
+          "tilt_from_upright_deg": 111.1034927368164,
+          "gravity_error": 1.6492751836776733,
+          "height_m": 0.1512834131717682,
+          "root_position_w_m": [
+            0.05261373147368431,
+            2.994992733001709,
+            0.1512834131717682
+          ],
+          "root_quaternion_wxyz": [
+            0.4312378764152527,
+            0.6282063126564026,
+            0.534213125705719,
+            0.36607035994529724
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0012365399161353707,
+            -0.000718409544788301,
+            0.00012778094969689846
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.005229417700320482,
+            -0.05839964374899864,
+            0.004458199720829725
+          ],
+          "joint_positions_rad": [
+            0.09117057919502258,
+            -0.1437145322561264,
+            0.09511454403400421,
+            -0.12914195656776428,
+            0.8071824312210083,
+            0.7984497547149658,
+            1.009639024734497,
+            0.9984338879585266,
+            -1.5028437376022339,
+            -1.5018454790115356,
+            -1.5023796558380127,
+            -1.501521110534668
+          ],
+          "max_joint_speed_rad_s": 0.10612451285123825,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 153,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 12,
+          "projected_gravity_b": [
+            0.00014506280422210693,
+            0.9923532605171204,
+            0.12343239784240723
+          ],
+          "tilt_from_upright_deg": 97.09024047851562,
+          "gravity_error": 1.4989547729492188,
+          "height_m": 0.15425696969032288,
+          "root_position_w_m": [
+            -2.0167312622070312,
+            -3.0250864028930664,
+            0.15425696969032288
+          ],
+          "root_quaternion_wxyz": [
+            0.15565547347068787,
+            -0.17610937356948853,
+            0.7284927368164062,
+            -0.6434714198112488
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.003349816892296076,
+            -0.001247967011295259,
+            -0.0010819461895152926
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.03821946308016777,
+            -0.010615675710141659,
+            0.01438092440366745
+          ],
+          "joint_positions_rad": [
+            0.09363453835248947,
+            -0.07922150194644928,
+            0.09305839240550995,
+            -0.08301909267902374,
+            0.8431640863418579,
+            0.8035212159156799,
+            1.0035876035690308,
+            1.0046979188919067,
+            -1.5033422708511353,
+            -1.5014399290084839,
+            -1.494513988494873,
+            -1.5012155771255493
+          ],
+          "max_joint_speed_rad_s": 0.05633385479450226,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 156,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 13,
+          "projected_gravity_b": [
+            0.00018372386693954468,
+            -0.9920884370803833,
+            0.12554121017456055
+          ],
+          "tilt_from_upright_deg": 97.2120132446289,
+          "gravity_error": 1.5003607273101807,
+          "height_m": 0.15424209833145142,
+          "root_position_w_m": [
+            -2.0009665489196777,
+            -0.9858226776123047,
+            0.15424209833145142
+          ],
+          "root_quaternion_wxyz": [
+            0.06226968765258789,
+            0.0707843229174614,
+            -0.7468334436416626,
+            -0.6582947373390198
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0013780853478237987,
+            0.004124335944652557,
+            -0.00019134818285237998
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.017359215766191483,
+            -0.003372890641912818,
+            -0.010740472003817558
+          ],
+          "joint_positions_rad": [
+            0.08107711374759674,
+            -0.09579433500766754,
+            0.0847378596663475,
+            -0.09501355141401291,
+            0.8034164905548096,
+            0.8209503889083862,
+            1.0043503046035767,
+            1.0194768905639648,
+            -1.501774549484253,
+            -1.5034353733062744,
+            -1.5009115934371948,
+            -1.502156138420105
+          ],
+          "max_joint_speed_rad_s": 0.058479100465774536,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 137,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 14,
+          "projected_gravity_b": [
+            0.0001853257417678833,
+            -0.9922256469726562,
+            0.12445366382598877
+          ],
+          "tilt_from_upright_deg": 97.14920806884766,
+          "gravity_error": 1.499635934829712,
+          "height_m": 0.15424667298793793,
+          "root_position_w_m": [
+            -1.9896831512451172,
+            0.9990506172180176,
+            0.15424667298793793
+          ],
+          "root_quaternion_wxyz": [
+            -0.171796977519989,
+            -0.19482657313346863,
+            0.7240645289421082,
+            0.6389516592025757
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0002782268275041133,
+            0.006501973140984774,
+            -0.001805381732992828
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.08292505145072937,
+            0.05915231630206108,
+            -0.0018118417356163263
+          ],
+          "joint_positions_rad": [
+            0.08007562160491943,
+            -0.0946994423866272,
+            0.08393271267414093,
+            -0.09393435716629028,
+            0.8035808801651001,
+            0.8059790134429932,
+            1.004753828048706,
+            1.005139946937561,
+            -1.5014691352844238,
+            -1.50435471534729,
+            -1.5011341571807861,
+            -1.5108071565628052
+          ],
+          "max_joint_speed_rad_s": 0.12708121538162231,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 159,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "random",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 15,
+          "projected_gravity_b": [
+            0.00019074231386184692,
+            0.992866039276123,
+            0.11923825740814209
+          ],
+          "tilt_from_upright_deg": 96.84814453125,
+          "gravity_error": 1.4961541891098022,
+          "height_m": 0.1542765498161316,
+          "root_position_w_m": [
+            -1.9825571775436401,
+            2.977375030517578,
+            0.1542765498161316
+          ],
+          "root_quaternion_wxyz": [
+            0.04473387449979782,
+            -0.05028422176837921,
+            0.7463850378990173,
+            -0.6621027588844299
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0018814982613548636,
+            -0.003985879942774773,
+            -0.0005252027185633779
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.041735827922821045,
+            0.0011060647666454315,
+            -0.005880913697183132
+          ],
+          "joint_positions_rad": [
+            0.0893929973244667,
+            -0.07750695198774338,
+            0.08866021782159805,
+            -0.08174630999565125,
+            0.8037872314453125,
+            0.803021252155304,
+            1.0129814147949219,
+            1.004190444946289,
+            -1.508137583732605,
+            -1.5011156797409058,
+            -1.507411003112793,
+            -1.5011826753616333
+          ],
+          "max_joint_speed_rad_s": 0.08086369931697845,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 148,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 16,
+          "projected_gravity_b": [
+            0.00017717480659484863,
+            0.9920364618301392,
+            0.1259530782699585
+          ],
+          "tilt_from_upright_deg": 97.23579406738281,
+          "gravity_error": 1.5006353855133057,
+          "height_m": 0.15423430502414703,
+          "root_position_w_m": [
+            -3.9809370040893555,
+            -3.0183284282684326,
+            0.15423430502414703
+          ],
+          "root_quaternion_wxyz": [
+            0.46989569067955017,
+            -0.5332334041595459,
+            0.5278623700141907,
+            -0.4649965167045593
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.002674456685781479,
+            0.0010187191655859351,
+            -6.263548857532442e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.003173037664964795,
+            -0.0398995578289032,
+            -0.0015540472231805325
+          ],
+          "joint_positions_rad": [
+            0.09617312252521515,
+            -0.08124102652072906,
+            0.09553015977144241,
+            -0.08509881794452667,
+            0.8100591897964478,
+            0.8038030862808228,
+            0.9986048340797424,
+            1.0050996541976929,
+            -1.5061203241348267,
+            -1.5014722347259521,
+            -1.5063989162445068,
+            -1.5012056827545166
+          ],
+          "max_joint_speed_rad_s": 0.043552376329898834,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 136,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 17,
+          "projected_gravity_b": [
+            0.0001853257417678833,
+            -0.9922256469726562,
+            0.12445366382598877
+          ],
+          "tilt_from_upright_deg": 97.14920806884766,
+          "gravity_error": 1.499635934829712,
+          "height_m": 0.15424667298793793,
+          "root_position_w_m": [
+            -3.989683151245117,
+            -1.0009493827819824,
+            0.15424667298793793
+          ],
+          "root_quaternion_wxyz": [
+            -0.171796977519989,
+            -0.19482657313346863,
+            0.7240645289421082,
+            0.6389516592025757
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0002782268275041133,
+            0.006501973140984774,
+            -0.001805381732992828
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.08292505145072937,
+            0.05915231630206108,
+            -0.0018118417356163263
+          ],
+          "joint_positions_rad": [
+            0.08007562160491943,
+            -0.0946994423866272,
+            0.08393271267414093,
+            -0.09393435716629028,
+            0.8035808801651001,
+            0.8059790134429932,
+            1.004753828048706,
+            1.005139946937561,
+            -1.5014691352844238,
+            -1.50435471534729,
+            -1.5011341571807861,
+            -1.5108071565628052
+          ],
+          "max_joint_speed_rad_s": 0.12708121538162231,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 159,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "random",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 18,
+          "projected_gravity_b": [
+            0.00018372386693954468,
+            -0.9920884370803833,
+            0.12554121017456055
+          ],
+          "tilt_from_upright_deg": 97.2120132446289,
+          "gravity_error": 1.5003607273101807,
+          "height_m": 0.15424209833145142,
+          "root_position_w_m": [
+            -4.000966548919678,
+            1.0141773223876953,
+            0.15424209833145142
+          ],
+          "root_quaternion_wxyz": [
+            0.06226968765258789,
+            0.0707843229174614,
+            -0.7468334436416626,
+            -0.6582947373390198
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0013780853478237987,
+            0.004124335944652557,
+            -0.00019134818285237998
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.017359215766191483,
+            -0.003372890641912818,
+            -0.010740472003817558
+          ],
+          "joint_positions_rad": [
+            0.08107711374759674,
+            -0.09579433500766754,
+            0.0847378596663475,
+            -0.09501355141401291,
+            0.8034164905548096,
+            0.8209503889083862,
+            1.0043503046035767,
+            1.0194768905639648,
+            -1.501774549484253,
+            -1.5034353733062744,
+            -1.5009115934371948,
+            -1.502156138420105
+          ],
+          "max_joint_speed_rad_s": 0.058479100465774536,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 137,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 19,
+          "projected_gravity_b": [
+            0.0001920163631439209,
+            -0.9929726123809814,
+            0.11834585666656494
+          ],
+          "tilt_from_upright_deg": 96.79664611816406,
+          "gravity_error": 1.495557427406311,
+          "height_m": 0.15427808463573456,
+          "root_position_w_m": [
+            -4.020480155944824,
+            2.980161428451538,
+            0.15427808463573456
+          ],
+          "root_quaternion_wxyz": [
+            0.5028471350669861,
+            0.5664312839508057,
+            -0.48818904161453247,
+            -0.433557391166687
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.003471868811175227,
+            0.00033526262268424034,
+            3.299554737168364e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.002420641714707017,
+            0.05074875429272652,
+            -0.004929928109049797
+          ],
+          "joint_positions_rad": [
+            0.07757102698087692,
+            -0.08856619149446487,
+            0.08169163018465042,
+            -0.08787619322538376,
+            0.8026431202888489,
+            0.8042072057723999,
+            1.0034207105636597,
+            1.005296230316162,
+            -1.5013737678527832,
+            -1.502285122871399,
+            -1.5008418560028076,
+            -1.5017774105072021
+          ],
+          "max_joint_speed_rad_s": 0.0554460734128952,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid",
+          "bank_state_id": 129,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        }
+      ],
+      "policy_start_state": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.00018540024757385254,
+            0.9922624230384827,
+            0.12415802478790283
+          ],
+          "tilt_from_upright_deg": 97.13213348388672,
+          "gravity_error": 1.4994385242462158,
+          "height_m": 0.15424394607543945,
+          "root_position_w_m": [
+            3.98624849319458,
+            -2.991450309753418,
+            0.15424394607543945
+          ],
+          "root_quaternion_wxyz": [
+            0.6138334274291992,
+            -0.6954790353775024,
+            -0.279978483915329,
+            0.2472437620162964
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0013327050255611539,
+            0.005518999882042408,
+            -0.00048038538079708815
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0533251017332077,
+            0.06708858162164688,
+            -0.006080237217247486
+          ],
+          "joint_positions_rad": [
+            0.09441100805997849,
+            -0.07949477434158325,
+            0.09373671561479568,
+            -0.08368408679962158,
+            0.806372880935669,
+            0.8035596609115601,
+            0.9970085024833679,
+            1.0049024820327759,
+            -1.5026650428771973,
+            -1.501354694366455,
+            -1.506912350654602,
+            -1.50136137008667
+          ],
+          "max_joint_speed_rad_s": 0.09760782867670059,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.509330749511719,
+            0.0,
+            6.462071895599365,
+            0.0
+          ],
+          "vertical_foot_contacts": 2,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 132,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            0.0008082985877990723,
+            0.9317829012870789,
+            0.3630155324935913
+          ],
+          "tilt_from_upright_deg": 111.28550720214844,
+          "gravity_error": 1.6510697603225708,
+          "height_m": 0.15123268961906433,
+          "root_position_w_m": [
+            3.9635636806488037,
+            -1.040588140487671,
+            0.15123268961906433
+          ],
+          "root_quaternion_wxyz": [
+            0.1361214518547058,
+            -0.19981379806995392,
+            -0.8009882569313049,
+            0.5476890802383423
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0003611843567341566,
+            -0.0024002317804843187,
+            -0.000309332855977118
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.023478785529732704,
+            0.017115823924541473,
+            -0.003471289062872529
+          ],
+          "joint_positions_rad": [
+            0.14654777944087982,
+            -0.0926576778292656,
+            0.13223117589950562,
+            -0.09645704925060272,
+            0.8013554215431213,
+            0.8075894713401794,
+            1.0006996393203735,
+            1.0101428031921387,
+            -1.501447081565857,
+            -1.502974510192871,
+            -1.5014698505401611,
+            -1.5024373531341553
+          ],
+          "max_joint_speed_rad_s": 0.07558576762676239,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 152,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 2,
+          "projected_gravity_b": [
+            0.00016644597053527832,
+            0.992332398891449,
+            0.12359952926635742
+          ],
+          "tilt_from_upright_deg": 97.09989166259766,
+          "gravity_error": 1.4990662336349487,
+          "height_m": 0.1542292833328247,
+          "root_position_w_m": [
+            4.006230354309082,
+            1.0170730352401733,
+            0.1542292833328247
+          ],
+          "root_quaternion_wxyz": [
+            0.5498883724212646,
+            -0.6225583553314209,
+            0.41739770770072937,
+            -0.36854201555252075
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0038258503191173077,
+            0.003237569471821189,
+            -0.0008980015409179032
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.027320945635437965,
+            -0.07785648107528687,
+            -0.02332266978919506
+          ],
+          "joint_positions_rad": [
+            0.09389188140630722,
+            -0.07944606989622116,
+            0.09357747435569763,
+            -0.08405043184757233,
+            0.7645987272262573,
+            0.803618311882019,
+            0.9415813088417053,
+            1.005082607269287,
+            -1.4989250898361206,
+            -1.501182198524475,
+            -1.4966264963150024,
+            -1.5013920068740845
+          ],
+          "max_joint_speed_rad_s": 0.09452986717224121,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            3.3456180095672607,
+            0.0,
+            8.079370498657227,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 128,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 3,
+          "projected_gravity_b": [
+            0.00018736720085144043,
+            -0.9923194646835327,
+            0.12370157241821289
+          ],
+          "tilt_from_upright_deg": 97.10578155517578,
+          "gravity_error": 1.4991341829299927,
+          "height_m": 0.1542542278766632,
+          "root_position_w_m": [
+            4.015748977661133,
+            3.0013458728790283,
+            0.1542542278766632
+          ],
+          "root_quaternion_wxyz": [
+            0.41655904054641724,
+            0.47160103917121887,
+            0.5826175808906555,
+            0.5144198536872864
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0030586449429392815,
+            0.0011370702413842082,
+            -0.0003260689845774323
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0017266395734623075,
+            -0.0389910489320755,
+            -0.016512984409928322
+          ],
+          "joint_positions_rad": [
+            0.08014503121376038,
+            -0.0939357802271843,
+            0.08381197601556778,
+            -0.09311066567897797,
+            0.8031787276268005,
+            0.821445882320404,
+            1.0040091276168823,
+            1.0255539417266846,
+            -1.5017250776290894,
+            -1.5035154819488525,
+            -1.500842809677124,
+            -1.5023059844970703
+          ],
+          "max_joint_speed_rad_s": 0.04997311532497406,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            5.855340957641602,
+            0.0,
+            3.5377461910247803
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 157,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 4,
+          "projected_gravity_b": [
+            0.00014835596084594727,
+            -0.9923259615898132,
+            0.12364780902862549
+          ],
+          "tilt_from_upright_deg": 97.10267639160156,
+          "gravity_error": 1.4990981817245483,
+          "height_m": 0.1542324721813202,
+          "root_position_w_m": [
+            1.9886618852615356,
+            -3.003326177597046,
+            0.1542324721813202
+          ],
+          "root_quaternion_wxyz": [
+            0.6488359570503235,
+            0.7347234487533569,
+            -0.14834211766719818,
+            -0.13110221922397614
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0011703866766765714,
+            -0.0003790056216530502,
+            -0.00014286107034422457
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.003983601927757263,
+            0.004465393256396055,
+            -0.0026127626188099384
+          ],
+          "joint_positions_rad": [
+            0.07956846058368683,
+            -0.09397485852241516,
+            0.08386364579200745,
+            -0.09356333315372467,
+            0.8037160634994507,
+            0.7860393524169922,
+            1.0052146911621094,
+            0.9383766651153564,
+            -1.5012067556381226,
+            -1.4965893030166626,
+            -1.50149667263031,
+            -1.503306269645691
+          ],
+          "max_joint_speed_rad_s": 0.030166205018758774,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            2.9071145057678223,
+            0.0,
+            4.204434394836426
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 149,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 5,
+          "projected_gravity_b": [
+            0.0001939237117767334,
+            0.9922748804092407,
+            0.12406003475189209
+          ],
+          "tilt_from_upright_deg": 97.12648010253906,
+          "gravity_error": 1.4993733167648315,
+          "height_m": 0.15424761176109314,
+          "root_position_w_m": [
+            1.9597846269607544,
+            -0.996124804019928,
+            0.15424761176109314
+          ],
+          "root_quaternion_wxyz": [
+            0.6102051138877869,
+            -0.6913038492202759,
+            -0.2900499999523163,
+            0.25616368651390076
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.004354231059551239,
+            0.0010554391192272305,
+            -0.0010812636464834213
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.03744400665163994,
+            0.03466682881116867,
+            0.002855136524885893
+          ],
+          "joint_positions_rad": [
+            0.09430577605962753,
+            -0.07976312190294266,
+            0.09354458749294281,
+            -0.0837293416261673,
+            0.8073963522911072,
+            0.8034206628799438,
+            1.012556552886963,
+            1.004503846168518,
+            -1.5034011602401733,
+            -1.5015373229980469,
+            -1.5051182508468628,
+            -1.5010818243026733
+          ],
+          "max_joint_speed_rad_s": 0.06056443601846695,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.622365474700928,
+            0.0,
+            3.188049077987671,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 144,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 6,
+          "projected_gravity_b": [
+            0.00019019842147827148,
+            -0.9923508763313293,
+            0.1234513521194458
+          ],
+          "tilt_from_upright_deg": 97.0913314819336,
+          "gravity_error": 1.4989674091339111,
+          "height_m": 0.15424905717372894,
+          "root_position_w_m": [
+            1.9792895317077637,
+            0.980125904083252,
+            0.15424905717372894
+          ],
+          "root_quaternion_wxyz": [
+            0.5013905167579651,
+            0.5677235126495361,
+            -0.48930123448371887,
+            -0.4322986304759979
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.003171843010932207,
+            -0.00014403104432858527,
+            -8.921056723920628e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0004667433677241206,
+            0.03919953852891922,
+            -0.005290397442877293
+          ],
+          "joint_positions_rad": [
+            0.08009572327136993,
+            -0.09370524436235428,
+            0.08402208238840103,
+            -0.09301457554101944,
+            0.8032944202423096,
+            0.8042333126068115,
+            1.004254937171936,
+            1.0053108930587769,
+            -1.5015851259231567,
+            -1.5023311376571655,
+            -1.5009266138076782,
+            -1.5018000602722168
+          ],
+          "max_joint_speed_rad_s": 0.044496338814496994,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            5.160435199737549,
+            0.0,
+            4.830411434173584
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 129,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 7,
+          "projected_gravity_b": [
+            0.0001755356788635254,
+            0.9923387765884399,
+            0.12354576587677002
+          ],
+          "tilt_from_upright_deg": 97.0967788696289,
+          "gravity_error": 1.4990301132202148,
+          "height_m": 0.15424902737140656,
+          "root_position_w_m": [
+            2.018946886062622,
+            2.98167085647583,
+            0.15424902737140656
+          ],
+          "root_quaternion_wxyz": [
+            0.47054004669189453,
+            -0.5326615571975708,
+            0.5272992849349976,
+            -0.4656383991241455
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0025353075470775366,
+            0.000995222246274352,
+            -7.838656165404245e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.003066264558583498,
+            -0.04482574015855789,
+            -0.001677025924436748
+          ],
+          "joint_positions_rad": [
+            0.09375005960464478,
+            -0.08006302267313004,
+            0.09310276806354523,
+            -0.08401484787464142,
+            0.8100773096084595,
+            0.8034905195236206,
+            0.9986042976379395,
+            1.0046937465667725,
+            -1.506160855293274,
+            -1.5013829469680786,
+            -1.5064085721969604,
+            -1.5011457204818726
+          ],
+          "max_joint_speed_rad_s": 0.04853185638785362,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.104391574859619,
+            0.0,
+            4.857221603393555,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 136,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 8,
+          "projected_gravity_b": [
+            0.0008209645748138428,
+            0.9318114519119263,
+            0.36294233798980713
+          ],
+          "tilt_from_upright_deg": 111.281005859375,
+          "gravity_error": 1.6510255336761475,
+          "height_m": 0.15123140811920166,
+          "root_position_w_m": [
+            -0.05365729331970215,
+            -3.004101514816284,
+            0.15123140811920166
+          ],
+          "root_quaternion_wxyz": [
+            0.4160608947277069,
+            -0.6090551018714905,
+            -0.5572459697723389,
+            0.38134273886680603
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0022128717973828316,
+            -0.000386636471375823,
+            -0.00021813572675455362
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0064772372134029865,
+            0.027874799445271492,
+            -0.0041826809756457806
+          ],
+          "joint_positions_rad": [
+            0.14669901132583618,
+            -0.09270118921995163,
+            0.13214261829853058,
+            -0.09651067107915878,
+            0.7986596822738647,
+            0.8075802326202393,
+            1.000329613685608,
+            1.010143518447876,
+            -1.5017340183258057,
+            -1.502969741821289,
+            -1.501623511314392,
+            -1.5024467706680298
+          ],
+          "max_joint_speed_rad_s": 0.07304196059703827,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 140,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 9,
+          "projected_gravity_b": [
+            0.00016373395919799805,
+            -0.9922518134117126,
+            0.12424290180206299
+          ],
+          "tilt_from_upright_deg": 97.13703918457031,
+          "gravity_error": 1.4994951486587524,
+          "height_m": 0.15423855185508728,
+          "root_position_w_m": [
+            -0.016921155154705048,
+            -1.0091496706008911,
+            0.15423855185508728
+          ],
+          "root_quaternion_wxyz": [
+            0.6435174942016602,
+            0.7291481494903564,
+            -0.17454062402248383,
+            -0.154154971241951
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.004890112206339836,
+            -0.003173951292410493,
+            -0.0024507020134478807
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.09416302293539047,
+            0.027655968442559242,
+            0.022686326876282692
+          ],
+          "joint_positions_rad": [
+            0.0795745700597763,
+            -0.0945509746670723,
+            0.0835397019982338,
+            -0.09403989464044571,
+            0.8037727475166321,
+            0.8013182878494263,
+            1.0051647424697876,
+            0.9786096215248108,
+            -1.5013304948806763,
+            -1.4985215663909912,
+            -1.5013657808303833,
+            -1.4948668479919434
+          ],
+          "max_joint_speed_rad_s": 0.12858405709266663,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            4.185215950012207,
+            0.0,
+            7.572407245635986
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 133,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 10,
+          "projected_gravity_b": [
+            0.00014442205429077148,
+            -0.9923255443572998,
+            0.12365281581878662
+          ],
+          "tilt_from_upright_deg": 97.10296630859375,
+          "gravity_error": 1.4991016387939453,
+          "height_m": 0.1542336642742157,
+          "root_position_w_m": [
+            -0.0178598091006279,
+            0.9982306361198425,
+            0.1542336642742157
+          ],
+          "root_quaternion_wxyz": [
+            0.2372441589832306,
+            0.2687435746192932,
+            -0.6997165679931641,
+            -0.6179715394973755
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.001981529174372554,
+            0.004584015812724829,
+            -0.0015590586699545383
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.05651020258665085,
+            0.06163298711180687,
+            0.01474097277969122
+          ],
+          "joint_positions_rad": [
+            0.07970762252807617,
+            -0.09393433481454849,
+            0.083875872194767,
+            -0.09355220943689346,
+            0.8036620616912842,
+            0.7892345190048218,
+            1.0050525665283203,
+            0.9413201808929443,
+            -1.5012699365615845,
+            -1.5004351139068604,
+            -1.5013442039489746,
+            -1.5035860538482666
+          ],
+          "max_joint_speed_rad_s": 0.10167531669139862,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            4.195991039276123,
+            0.0,
+            8.013025283813477
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 141,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 11,
+          "projected_gravity_b": [
+            0.0008149147033691406,
+            -0.931883692741394,
+            0.3627563714981079
+          ],
+          "tilt_from_upright_deg": 111.26957702636719,
+          "gravity_error": 1.6509126424789429,
+          "height_m": 0.15123343467712402,
+          "root_position_w_m": [
+            0.0527421273291111,
+            2.99497127532959,
+            0.15123343467712402
+          ],
+          "root_quaternion_wxyz": [
+            0.4303310513496399,
+            0.6288344860076904,
+            0.5347386002540588,
+            0.3652903437614441
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.002084654290229082,
+            -0.0008988105691969395,
+            -0.00022000414901413023
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -3.736389771802351e-05,
+            -0.028185030445456505,
+            0.004185840021818876
+          ],
+          "joint_positions_rad": [
+            0.09262365102767944,
+            -0.1465429961681366,
+            0.09644880145788193,
+            -0.1320267915725708,
+            0.8075680732727051,
+            0.7985195517539978,
+            1.0101407766342163,
+            0.9984142184257507,
+            -1.502952218055725,
+            -1.5017911195755005,
+            -1.5024553537368774,
+            -1.5014952421188354
+          ],
+          "max_joint_speed_rad_s": 0.0704244077205658,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 153,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 12,
+          "projected_gravity_b": [
+            0.00014710426330566406,
+            0.9922661781311035,
+            0.12412786483764648
+          ],
+          "tilt_from_upright_deg": 97.1303939819336,
+          "gravity_error": 1.4994183778762817,
+          "height_m": 0.15425196290016174,
+          "root_position_w_m": [
+            -2.016716241836548,
+            -3.0251152515411377,
+            0.15425196290016174
+          ],
+          "root_quaternion_wxyz": [
+            0.15558825433254242,
+            -0.17615626752376556,
+            0.7287200689315796,
+            -0.643217146396637
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0033503174781799316,
+            -0.0013308400521054864,
+            -0.0010600386885926127
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.036411676555871964,
+            -0.009930404834449291,
+            0.0145270312204957
+          ],
+          "joint_positions_rad": [
+            0.09433387219905853,
+            -0.07968121767044067,
+            0.09376149624586105,
+            -0.08340176939964294,
+            0.8431628942489624,
+            0.8035752773284912,
+            1.0035476684570312,
+            1.0047494173049927,
+            -1.503367304801941,
+            -1.501491904258728,
+            -1.4944846630096436,
+            -1.5012097358703613
+          ],
+          "max_joint_speed_rad_s": 0.055249497294425964,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            6.084728240966797,
+            0.0,
+            1.7503019571304321,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 156,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 13,
+          "projected_gravity_b": [
+            0.0001862645149230957,
+            -0.9923027753829956,
+            0.12383520603179932
+          ],
+          "tilt_from_upright_deg": 97.11349487304688,
+          "gravity_error": 1.499223232269287,
+          "height_m": 0.15425293147563934,
+          "root_position_w_m": [
+            -2.000953197479248,
+            -0.9859070181846619,
+            0.15425293147563934
+          ],
+          "root_quaternion_wxyz": [
+            0.06232905760407448,
+            0.0707310289144516,
+            -0.7462671995162964,
+            -0.658936619758606
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0015040870057418942,
+            0.0023916633799672127,
+            -8.961325511336327e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.044100407510995865,
+            0.00021708586427848786,
+            -0.012434358708560467
+          ],
+          "joint_positions_rad": [
+            0.08014311641454697,
+            -0.0940685048699379,
+            0.0838586762547493,
+            -0.0932968482375145,
+            0.8032503724098206,
+            0.8209841847419739,
+            1.0041366815567017,
+            1.0195115804672241,
+            -1.501683235168457,
+            -1.503477692604065,
+            -1.5008829832077026,
+            -1.5021910667419434
+          ],
+          "max_joint_speed_rad_s": 0.049580737948417664,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            5.613381862640381,
+            0.0,
+            4.2556843757629395
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 137,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 14,
+          "projected_gravity_b": [
+            0.0001853853464126587,
+            -0.9923198223114014,
+            0.12369704246520996
+          ],
+          "tilt_from_upright_deg": 97.10551452636719,
+          "gravity_error": 1.4991309642791748,
+          "height_m": 0.15424871444702148,
+          "root_position_w_m": [
+            -1.9896637201309204,
+            0.9990187287330627,
+            0.15424871444702148
+          ],
+          "root_quaternion_wxyz": [
+            -0.17187003791332245,
+            -0.19475984573364258,
+            0.723821222782135,
+            0.6392276287078857
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0005603759782388806,
+            0.0023528721649199724,
+            5.764048546552658e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.029809048399329185,
+            0.01948106847703457,
+            -0.00021319621009752154
+          ],
+          "joint_positions_rad": [
+            0.0800132229924202,
+            -0.09392599016427994,
+            0.08383281528949738,
+            -0.09316712617874146,
+            0.8034300804138184,
+            0.805993378162384,
+            1.0044745206832886,
+            1.0051618814468384,
+            -1.501529574394226,
+            -1.5043741464614868,
+            -1.5010039806365967,
+            -1.510839581489563
+          ],
+          "max_joint_speed_rad_s": 0.03848716989159584,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            4.28846549987793,
+            0.0,
+            4.7041215896606445
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 159,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "random",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 15,
+          "projected_gravity_b": [
+            0.0001959875226020813,
+            0.9923089742660522,
+            0.12378621101379395
+          ],
+          "tilt_from_upright_deg": 97.11066436767578,
+          "gravity_error": 1.4991905689239502,
+          "height_m": 0.15424934029579163,
+          "root_position_w_m": [
+            -1.9825286865234375,
+            2.9771676063537598,
+            0.15424934029579163
+          ],
+          "root_quaternion_wxyz": [
+            0.04461902379989624,
+            -0.05038316920399666,
+            0.7479001879692078,
+            -0.6603908538818359
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0015645617386326194,
+            -0.0028564336244016886,
+            -0.00038085386040620506
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.04073796048760414,
+            0.0002877225342672318,
+            -0.0017010612646117806
+          ],
+          "joint_positions_rad": [
+            0.09396803379058838,
+            -0.08001837879419327,
+            0.09324633330106735,
+            -0.08395030349493027,
+            0.8038036823272705,
+            0.8035668134689331,
+            1.0129538774490356,
+            1.004822850227356,
+            -1.5081835985183716,
+            -1.5013651847839355,
+            -1.5074180364608765,
+            -1.50121009349823
+          ],
+          "max_joint_speed_rad_s": 0.07008397579193115,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.308945655822754,
+            0.0,
+            4.6128950119018555,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 148,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 16,
+          "projected_gravity_b": [
+            0.00017660856246948242,
+            0.9923392534255981,
+            0.1235419511795044
+          ],
+          "tilt_from_upright_deg": 97.09656524658203,
+          "gravity_error": 1.4990276098251343,
+          "height_m": 0.1542498916387558,
+          "root_position_w_m": [
+            -3.981053590774536,
+            -3.018329381942749,
+            0.1542498916387558
+          ],
+          "root_quaternion_wxyz": [
+            0.4705415964126587,
+            -0.5326606631278992,
+            0.5272983908653259,
+            -0.4656388759613037
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0025165940169245005,
+            0.0010063727386295795,
+            -6.838904664618894e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.003043909091502428,
+            -0.04468317702412605,
+            -0.0016575752524659038
+          ],
+          "joint_positions_rad": [
+            0.09374526888132095,
+            -0.08005884289741516,
+            0.09310067445039749,
+            -0.08401087671518326,
+            0.8100783228874207,
+            0.8034966588020325,
+            0.9986060261726379,
+            1.004698395729065,
+            -1.5061618089675903,
+            -1.501381516456604,
+            -1.506409764289856,
+            -1.5011428594589233
+          ],
+          "max_joint_speed_rad_s": 0.04829145967960358,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            5.092355728149414,
+            0.0,
+            4.869097709655762,
+            0.0
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 136,
+          "bank_saved_pose_class": "left",
+          "bank_requested_pose_class": "left",
+          "actual_pose_class": "left"
+        },
+        {
+          "trial": 17,
+          "projected_gravity_b": [
+            0.00018744170665740967,
+            -0.9923146367073059,
+            0.12373960018157959
+          ],
+          "tilt_from_upright_deg": 97.10797882080078,
+          "gravity_error": 1.4991594552993774,
+          "height_m": 0.1542488932609558,
+          "root_position_w_m": [
+            -3.9896657466888428,
+            -1.000980257987976,
+            0.1542488932609558
+          ],
+          "root_quaternion_wxyz": [
+            -0.1718655675649643,
+            -0.194764643907547,
+            0.7238345742225647,
+            0.6392123103141785
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0008144425228238106,
+            0.0015254121972247958,
+            0.0003684901457745582
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.02023276686668396,
+            0.009310036897659302,
+            -0.006243313197046518
+          ],
+          "joint_positions_rad": [
+            0.07997439801692963,
+            -0.09396955370903015,
+            0.08376624435186386,
+            -0.09321287274360657,
+            0.803422212600708,
+            0.8059952259063721,
+            1.0044682025909424,
+            1.0051584243774414,
+            -1.5015379190444946,
+            -1.5043792724609375,
+            -1.501030683517456,
+            -1.5108366012573242
+          ],
+          "max_joint_speed_rad_s": 0.03153924643993378,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            4.139753818511963,
+            0.0,
+            4.182405948638916
+          ],
+          "vertical_foot_contacts": 0,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 159,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "random",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 18,
+          "projected_gravity_b": [
+            0.0001850426197052002,
+            -0.9923055171966553,
+            0.12381315231323242
+          ],
+          "tilt_from_upright_deg": 97.11222839355469,
+          "gravity_error": 1.4992085695266724,
+          "height_m": 0.15425433218479156,
+          "root_position_w_m": [
+            -4.000952243804932,
+            1.0140941143035889,
+            0.15425433218479156
+          ],
+          "root_quaternion_wxyz": [
+            0.06233510375022888,
+            0.0707353726029396,
+            -0.7462593913078308,
+            -0.6589444279670715
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.00023146461171563715,
+            0.003739636857062578,
+            -9.14463380468078e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.06007329002022743,
+            0.00957790482789278,
+            -0.008668041788041592
+          ],
+          "joint_positions_rad": [
+            0.08017805963754654,
+            -0.09405108541250229,
+            0.08387458324432373,
+            -0.09327607601881027,
+            0.8032355308532715,
+            0.8209689855575562,
+            1.0041018724441528,
+            1.0194683074951172,
+            -1.5016999244689941,
+            -1.5034831762313843,
+            -1.5008587837219238,
+            -1.5021580457687378
+          ],
+          "max_joint_speed_rad_s": 0.06393343955278397,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            6.076507091522217,
+            0.0,
+            4.2119669914245605
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 137,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        },
+        {
+          "trial": 19,
+          "projected_gravity_b": [
+            0.00018972158432006836,
+            -0.9923501014709473,
+            0.12345659732818604
+          ],
+          "tilt_from_upright_deg": 97.09163665771484,
+          "gravity_error": 1.4989707469940186,
+          "height_m": 0.15424999594688416,
+          "root_position_w_m": [
+            -4.020710468292236,
+            2.980126142501831,
+            0.15424999594688416
+          ],
+          "root_quaternion_wxyz": [
+            0.5013888478279114,
+            0.5677244663238525,
+            -0.4893028140068054,
+            -0.4322974383831024
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.0031752369832247496,
+            -0.0001335785345872864,
+            -9.146762022282928e-05
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0004644766158889979,
+            0.039425574243068695,
+            -0.005314133130013943
+          ],
+          "joint_positions_rad": [
+            0.08009239286184311,
+            -0.09371199458837509,
+            0.08401970565319061,
+            -0.09302017837762833,
+            0.8032968044281006,
+            0.8042346239089966,
+            1.004257321357727,
+            1.005314588546753,
+            -1.5015848875045776,
+            -1.5023324489593506,
+            -1.5009264945983887,
+            -1.501803994178772
+          ],
+          "max_joint_speed_rad_s": 0.044754210859537125,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            0.0,
+            5.180181980133057,
+            0.0,
+            4.856924533843994
+          ],
+          "vertical_foot_contacts": 1,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 1.0,
+          "settled": true,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": true,
+          "eligible_settled_fallen_recovery": true,
+          "classification": "settled_fallen_under_nominal_pose_PD",
+          "bank_state_id": 129,
+          "bank_saved_pose_class": "right",
+          "bank_requested_pose_class": "right",
+          "actual_pose_class": "right"
+        }
+      ],
+      "standing_starts_not_fallen_recovery": 0,
+      "settled_fallen_trials": 20,
+      "settled_fallen_recovery_successes": 0,
+      "settled_fallen_final_valid_stands": 0,
+      "settled_fallen_recovery_rate": 0.0,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.15869726240634918,
+          "gravity_error": 0.09300441294908524,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.12050613760948181,
+            -0.1986284852027893,
+            0.1160333976149559,
+            -0.08351685851812363
+          ],
+          "knees_y_b": [
+            0.1319052278995514,
+            -0.20525428652763367,
+            0.11409550160169601,
+            -0.07521344721317291
+          ],
+          "max_joint_offset_rad": 1.1731345653533936,
+          "bank_state_id": 132
+        },
+        {
+          "trial": 1,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.20744918286800385,
+          "gravity_error": 0.08291729539632797,
+          "vertical_foot_contacts": 2,
+          "feet_y_b": [
+            0.13845983147621155,
+            -0.24128571152687073,
+            0.09166160225868225,
+            -0.13351298868656158
+          ],
+          "knees_y_b": [
+            0.13986673951148987,
+            -0.20299974083900452,
+            0.10020297765731812,
+            -0.13719791173934937
+          ],
+          "max_joint_offset_rad": 0.8776066303253174,
+          "bank_state_id": 152
+        },
+        {
+          "trial": 2,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.2097819596529007,
+          "gravity_error": 0.13195596635341644,
+          "vertical_foot_contacts": 4,
+          "feet_y_b": [
+            0.15606531500816345,
+            -0.17600946128368378,
+            0.1373976171016693,
+            -0.09109486639499664
+          ],
+          "knees_y_b": [
+            0.15146295726299286,
+            -0.1687115728855133,
+            0.1379670649766922,
+            -0.09024843573570251
+          ],
+          "max_joint_offset_rad": 0.8094966411590576,
+          "bank_state_id": 128
+        },
+        {
+          "trial": 3,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13765667378902435,
+          "gravity_error": 0.4723755121231079,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.02758064866065979,
+            -0.177444726228714,
+            0.10348647832870483,
+            -0.09727753698825836
+          ],
+          "knees_y_b": [
+            0.14670908451080322,
+            -0.05395659804344177,
+            0.2675820589065552,
+            0.08248735964298248
+          ],
+          "max_joint_offset_rad": 2.1388089656829834,
+          "bank_state_id": 157
+        },
+        {
+          "trial": 4,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13776962459087372,
+          "gravity_error": 0.4717939794063568,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.02760019339621067,
+            -0.17849838733673096,
+            0.10347666591405869,
+            -0.09469535946846008
+          ],
+          "knees_y_b": [
+            0.14672525227069855,
+            -0.05752435699105263,
+            0.2675924003124237,
+            0.08389149606227875
+          ],
+          "max_joint_offset_rad": 2.1549806594848633,
+          "bank_state_id": 149
+        },
+        {
+          "trial": 5,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13839341700077057,
+          "gravity_error": 0.46990635991096497,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027795694768428802,
+            -0.17764967679977417,
+            0.10360458493232727,
+            -0.08882871270179749
+          ],
+          "knees_y_b": [
+            0.14678950607776642,
+            -0.054601721465587616,
+            0.26752525568008423,
+            0.08390511572360992
+          ],
+          "max_joint_offset_rad": 2.1270222663879395,
+          "bank_state_id": 144
+        },
+        {
+          "trial": 6,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.1377747654914856,
+          "gravity_error": 0.47205498814582825,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027581043541431427,
+            -0.17740333080291748,
+            0.10349634289741516,
+            -0.09593772888183594
+          ],
+          "knees_y_b": [
+            0.14670348167419434,
+            -0.053802505135536194,
+            0.2675766944885254,
+            0.0829995721578598
+          ],
+          "max_joint_offset_rad": 2.1353418827056885,
+          "bank_state_id": 129
+        },
+        {
+          "trial": 7,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.138836070895195,
+          "gravity_error": 0.4680896997451782,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027672648429870605,
+            -0.17868570983409882,
+            0.1035560667514801,
+            -0.08166134357452393
+          ],
+          "knees_y_b": [
+            0.14672699570655823,
+            -0.05859684944152832,
+            0.2675477862358093,
+            0.08578021824359894
+          ],
+          "max_joint_offset_rad": 2.13975191116333,
+          "bank_state_id": 136
+        },
+        {
+          "trial": 8,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13866525888442993,
+          "gravity_error": 0.4685697555541992,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027696609497070312,
+            -0.17890413105487823,
+            0.10356254130601883,
+            -0.08355461061000824
+          ],
+          "knees_y_b": [
+            0.14673995971679688,
+            -0.05956655740737915,
+            0.26754486560821533,
+            0.08561533689498901
+          ],
+          "max_joint_offset_rad": 2.147941827774048,
+          "bank_state_id": 140
+        },
+        {
+          "trial": 9,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13788342475891113,
+          "gravity_error": 0.47103992104530334,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027652937918901443,
+            -0.17948706448078156,
+            0.10347099602222443,
+            -0.0922861248254776
+          ],
+          "knees_y_b": [
+            0.1467699110507965,
+            -0.06122768297791481,
+            0.2676055133342743,
+            0.08479107171297073
+          ],
+          "max_joint_offset_rad": 2.1721184253692627,
+          "bank_state_id": 133
+        },
+        {
+          "trial": 10,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.1378697007894516,
+          "gravity_error": 0.47124963998794556,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027608782052993774,
+            -0.17932304739952087,
+            0.10345935821533203,
+            -0.09264650195837021
+          ],
+          "knees_y_b": [
+            0.1467435359954834,
+            -0.06060543656349182,
+            0.2676079273223877,
+            0.08476787805557251
+          ],
+          "max_joint_offset_rad": 2.1687686443328857,
+          "bank_state_id": 141
+        },
+        {
+          "trial": 11,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13800810277462006,
+          "gravity_error": 0.4711037278175354,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027707785367965698,
+            -0.17807091772556305,
+            0.10356397926807404,
+            -0.09316977113485336
+          ],
+          "knees_y_b": [
+            0.14675259590148926,
+            -0.05663439631462097,
+            0.26754358410835266,
+            0.08345849066972733
+          ],
+          "max_joint_offset_rad": 2.145092248916626,
+          "bank_state_id": 153
+        },
+        {
+          "trial": 12,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.21830035746097565,
+          "gravity_error": 0.0601203516125679,
+          "vertical_foot_contacts": 2,
+          "feet_y_b": [
+            0.12869372963905334,
+            -0.15606383979320526,
+            0.1247374638915062,
+            -0.08216129243373871
+          ],
+          "knees_y_b": [
+            0.1336631178855896,
+            -0.15427620708942413,
+            0.12777625024318695,
+            -0.0806121826171875
+          ],
+          "max_joint_offset_rad": 0.8643221855163574,
+          "bank_state_id": 156
+        },
+        {
+          "trial": 13,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13760970532894135,
+          "gravity_error": 0.4726286232471466,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027545973658561707,
+            -0.17714563012123108,
+            0.10347490012645721,
+            -0.09752508252859116
+          ],
+          "knees_y_b": [
+            0.14668861031532288,
+            -0.052912354469299316,
+            0.2675853371620178,
+            0.08273699134588242
+          ],
+          "max_joint_offset_rad": 2.1342430114746094,
+          "bank_state_id": 137
+        },
+        {
+          "trial": 14,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13802550733089447,
+          "gravity_error": 0.4708493947982788,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027655839920043945,
+            -0.17875877022743225,
+            0.10351093858480453,
+            -0.09163311868906021
+          ],
+          "knees_y_b": [
+            0.14674711227416992,
+            -0.058605343103408813,
+            0.26757556200027466,
+            0.08455394208431244
+          ],
+          "max_joint_offset_rad": 2.155313491821289,
+          "bank_state_id": 159
+        },
+        {
+          "trial": 15,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13851085305213928,
+          "gravity_error": 0.46891865134239197,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027701228857040405,
+            -0.17868727445602417,
+            0.10354842990636826,
+            -0.08603795617818832
+          ],
+          "knees_y_b": [
+            0.14675575494766235,
+            -0.058737725019454956,
+            0.2675617039203644,
+            0.08481951057910919
+          ],
+          "max_joint_offset_rad": 2.147369146347046,
+          "bank_state_id": 148
+        },
+        {
+          "trial": 16,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.2070426642894745,
+          "gravity_error": 0.08477224409580231,
+          "vertical_foot_contacts": 3,
+          "feet_y_b": [
+            0.11787538230419159,
+            -0.18875464797019958,
+            0.12454818934202194,
+            -0.09494990110397339
+          ],
+          "knees_y_b": [
+            0.12894180417060852,
+            -0.17656366527080536,
+            0.12677118182182312,
+            -0.09440484642982483
+          ],
+          "max_joint_offset_rad": 0.8323299884796143,
+          "bank_state_id": 136
+        },
+        {
+          "trial": 17,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.1378297209739685,
+          "gravity_error": 0.4717579782009125,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027633696794509888,
+            -0.17811185121536255,
+            0.10351314395666122,
+            -0.09478262066841125
+          ],
+          "knees_y_b": [
+            0.1467282772064209,
+            -0.05633482336997986,
+            0.2675684988498688,
+            0.08348645269870758
+          ],
+          "max_joint_offset_rad": 2.147284746170044,
+          "bank_state_id": 159
+        },
+        {
+          "trial": 18,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.1376979947090149,
+          "gravity_error": 0.47234848141670227,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027580901980400085,
+            -0.1780102699995041,
+            0.1034863293170929,
+            -0.09623172879219055
+          ],
+          "knees_y_b": [
+            0.14670884609222412,
+            -0.055744946002960205,
+            0.26758334040641785,
+            0.08342412114143372
+          ],
+          "max_joint_offset_rad": 2.146450996398926,
+          "bank_state_id": 137
+        },
+        {
+          "trial": 19,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.13778585195541382,
+          "gravity_error": 0.4717654883861542,
+          "vertical_foot_contacts": 1,
+          "feet_y_b": [
+            0.027608536183834076,
+            -0.17805761098861694,
+            0.10349952429533005,
+            -0.0954052209854126
+          ],
+          "knees_y_b": [
+            0.1467234194278717,
+            -0.05637077987194061,
+            0.2675783634185791,
+            0.0831015333533287
+          ],
+          "max_joint_offset_rad": 2.1489171981811523,
+          "bank_state_id": 129
+        }
+      ],
+      "success_rate": 0.0,
+      "median_recovery_s": null,
+      "p90_recovery_s": null,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0,
+      "state_bank_selection": {
+        "available_unique_states": 16,
+        "selected_state_ids": [
+          132,
+          152,
+          128,
+          157,
+          149,
+          144,
+          129,
+          136,
+          140,
+          133,
+          141,
+          153,
+          156,
+          137,
+          159,
+          148,
+          136,
+          159,
+          137,
+          129
+        ],
+        "selected_unique_state_count": 16,
+        "sampling_with_replacement": true,
+        "selected_actual_pose_classes": [
+          "left",
+          "left",
+          "left",
+          "right",
+          "right",
+          "left",
+          "right",
+          "left",
+          "left",
+          "right",
+          "right",
+          "right",
+          "left",
+          "right",
+          "right",
+          "left",
+          "left",
+          "right",
+          "right",
+          "right"
+        ],
+        "selected_requested_pose_classes": [
+          "left",
+          "left",
+          "left",
+          "right",
+          "right",
+          "left",
+          "right",
+          "left",
+          "left",
+          "right",
+          "right",
+          "right",
+          "left",
+          "right",
+          "random",
+          "left",
+          "left",
+          "random",
+          "right",
+          "right"
+        ],
+        "actual_pose_class_counts": {
+          "left": 9,
+          "right": 11
+        },
+        "yaw_augmentation_rad": 0.0
+      },
+      "settled_fallen_unique_state_count": 16,
+      "settled_fallen_median_recovery_s": null
+    }
+  },
+  "diagnostic_trial": 0,
+  "state_bank": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\states.npz",
+    "manifest_path": "E:\\IsaacLab\\go2-rl-open-source\\datasets\\recovery_states\\nominal_pd_v1_20260916\\manifest.json",
+    "sha256": "71b882e92035b4c248e5980339c980dbb242dcb1ec711c05252c33249db48f5a",
+    "schema_version": "nominal_pd_fallen_v1",
+    "split": "heldout",
+    "available_split_states": 30,
+    "selected_state_ids": [
+      132,
+      152,
+      128,
+      157,
+      149,
+      144,
+      129,
+      136,
+      140,
+      133,
+      141,
+      153,
+      156,
+      137,
+      159,
+      148,
+      136,
+      159,
+      137,
+      129
+    ],
+    "selected_unique_state_count": 16,
+    "selection_protocol": "per-class CPU seed; actual class, sorted IDs, random permutation without replacement then extra draws only if trials exceed available states",
+    "comparison_requirement": "Compare checkpoints under the same Bank Play task, bank SHA-256, heldout split, selected IDs/order, seed, trial count and handover duration; repeated draws are not additional independent source states; action-reference pairs intentionally differ in action semantics only; compare recorded action_representation",
+    "fixed_material": {
+      "static_friction": 0.8,
+      "dynamic_friction": 0.6,
+      "restitution": 0.0
+    },
+    "physics": {
+      "dt": 0.005,
+      "decimation": 4
+    },
+    "diagnostic_train_split_only": false
+  },
+  "policy_action_mode": "deterministic_mean",
+  "acceptance_eligible": true,
+  "action_representation": {
+    "reference": "nominal",
+    "scale": 0.25,
+    "target": "q_reference + scale * action, soft-joint-limit clamped",
+    "sample_period_s": 0.02,
+    "held_over_physics_substeps": 4,
+    "pre_policy_handover": "direct nominal-position PD, not policy zero action"
+  },
+  "trace_csv": "model_2598.pt_recovery_trace.csv"
+}

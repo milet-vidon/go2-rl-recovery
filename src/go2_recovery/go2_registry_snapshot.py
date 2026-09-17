@@ -227,7 +227,7 @@ for _variant in ("Control", "Release"):
             },
         )
 
-for _target_variant in ("NominalTarget", "CurrentTarget", "SmithNominal"):
+for _target_variant in ("NominalTarget", "CurrentTarget", "SmithNominal", "DensePosture"):
     for _suffix in ("", "-Play"):
         _cfg = f"UnitreeGo2RecoveryBank{_target_variant}EnvCfg" + ("_PLAY" if _suffix else "")
         gym.register(

@@ -1,0 +1,21 @@
+{
+  "schema": "handoff_supported_startup_exact_comparison_v1",
+  "exact_equivalence": true,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "checked_scalars": 704062,
+  "pose": "upside_down",
+  "comparison": "unselected_or_off_vs_hard",
+  "all_trial_stand_only_trajectory_equivalence_claimed": false,
+  "baseline": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-transition-v1\\hard-upside_down\\model_1999.pt_recovery_metrics.json",
+    "sha256": "0cfe663c826ec23d9e255a8a2fdea3146f37aa8371d35c0bd538be7d6edc1e22"
+  },
+  "candidate": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-v1\\off-upside_down\\model_1999.pt_recovery_metrics.json",
+    "sha256": "00ea66029972f254e1b16c11c77ec296faf595a4bac96dba09560a51f6c4fcb0"
+  },
+  "acceptance_eligible": false,
+  "promotion_performed": false,
+  "notice": "Development diagnostic only. No fresh generalization, integrated locomotion or hardware acceptance."
+}

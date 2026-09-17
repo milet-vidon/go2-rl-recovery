@@ -1,0 +1,226 @@
+{
+  "protocol": "combined_paired_trial0_v1",
+  "pose": "upright",
+  "trials": 20,
+  "video_trial": 0,
+  "sources": [
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-front\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "da25574eddda1a5dfba79c853872e300c5209341a1b2102b82615eb1d59436fd",
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-front\\model_1999.pt_upright.mp4",
+      "video_sha256": "7b96118261cbf3f09da7f995cfa3d4e8f087156c7f8a572db5f26cfdf7e0f5a0",
+      "trace_csv_sha256": "91288126be3736640037efc21a814c3d16b5390bd24645b7f67f57af9d291baf",
+      "transition_trace_sha256": "880c851611d97b0db79fc25e1fa36d046e8594915a4eab6917b083ff166cbb1a",
+      "generated_source_sha256": "e85aded570dbf705a1b091b3443ba9642113bd415953b58107166ae6db891745",
+      "adapter_sha256": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0"
+    },
+    {
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-oblique\\model_1999.pt_recovery_metrics.json",
+      "report_sha256": "52c8c7c58d15be49184da2df5b4f47f522197cdc78bf69c377da25d16ea6d577",
+      "video": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-oblique\\model_1999.pt_upright.mp4",
+      "video_sha256": "71da6561a461d328cf113d1f4a12af9ec397ef19c852a7b1d38e450b3ddf23ec",
+      "trace_csv_sha256": "91288126be3736640037efc21a814c3d16b5390bd24645b7f67f57af9d291baf",
+      "transition_trace_sha256": "880c851611d97b0db79fc25e1fa36d046e8594915a4eab6917b083ff166cbb1a",
+      "generated_source_sha256": "e85aded570dbf705a1b091b3443ba9642113bd415953b58107166ae6db891745",
+      "adapter_sha256": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0"
+    }
+  ],
+  "source_properties": [
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    },
+    {
+      "frames": 276,
+      "fps": 25.0,
+      "width": 960,
+      "height": 540
+    }
+  ],
+  "output": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-combined20-upright-paired\\combined_upright_front_oblique.mp4",
+  "output_sha256": "a1b907bec661681767466fa227e1ebce689003494a0795e172637c1c7a059cb3",
+  "output_properties": {
+    "frames": 276,
+    "fps": 25.0,
+    "width": 1920,
+    "height": 540
+  },
+  "duration_s": 11.04,
+  "pairing_script_sha256": "f52f2d03ad5fd14b679ed254e7179f4f90100d3fe8be03f989d7c70fdb67a463",
+  "all_report_fields_except_view_exact": true,
+  "trial0_csv_exact": true,
+  "successes": 20,
+  "final_valid_stands": 20,
+  "acceptance_eligible": false,
+  "training_collection_eligible": false,
+  "promotion_performed": false,
+  "handoff_controller": {
+    "roll_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-16_19-02-40_20260916-smithnominal128x2000\\model_1999.pt",
+    "roll_sha256": "71e4c7a39ff81836d2ead1c4533988c696e5bd4a0fc939b8cef6b4f6daec1b1c",
+    "stand_checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_handoff_stand\\20260917-handoff-stand128x100\\model_3547.pt",
+    "stand_sha256": "5527c4053cb6ef8e6616da65b7dc32a9464eb8d1366f4966a4eb4b65bc913fdb",
+    "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+    "state_or_action_history_reset_at_switch": false,
+    "manual_standing_pd_at_switch": false,
+    "physics_changed_at_switch": false,
+    "stand_actor_initialization_rng_isolated": true,
+    "joint_limits": {
+      "joint_names": [
+        "FL_hip_joint",
+        "FR_hip_joint",
+        "RL_hip_joint",
+        "RR_hip_joint",
+        "FL_thigh_joint",
+        "FR_thigh_joint",
+        "RL_thigh_joint",
+        "RR_thigh_joint",
+        "FL_calf_joint",
+        "FR_calf_joint",
+        "RL_calf_joint",
+        "RR_calf_joint"
+      ],
+      "default_joint_positions_rad": [
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.10000000149011612,
+        -0.10000000149011612,
+        0.800000011920929,
+        0.800000011920929,
+        1.0,
+        1.0,
+        -1.5,
+        -1.5,
+        -1.5,
+        -1.5
+      ],
+      "soft_joint_limits_rad": [
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -0.9424798488616943,
+          0.9424798488616943
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -1.3177247047424316,
+          3.2376246452331543
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -0.2705249786376953,
+          4.284824371337891
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ],
+        [
+          -2.628453016281128,
+          -0.9320070147514343
+        ]
+      ],
+      "hard_joint_limits_rad": [
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.0471998453140259,
+          1.0471998453140259
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -1.5707999467849731,
+          3.4906997680664062
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -0.5235999226570129,
+          4.537899494171143
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ],
+        [
+          -2.7227001190185547,
+          -0.8377599120140076
+        ]
+      ],
+      "default_target_would_be_clamped": false
+    }
+  },
+  "combined_experiment": {
+    "startup_mode": "supported",
+    "mirror_mode": "initial_right",
+    "startup_mirror_overlap_trials": 0,
+    "startup_mirror_mutual_exclusion_asserted": true,
+    "startup_selection_uses_real_start_snapshot": true,
+    "mirror_selection_uses_real_start_gravity_and_eligibility": true,
+    "both_masks_latched_once": true,
+    "roll_candidate_keeps_fixed_mirror_mask_after_handoff": true,
+    "standing_actor_always_real_observation": true,
+    "stand_active_definition": "startup_selected | genuine_gate_switched",
+    "genuine_gate_switched_excludes_startup_selected": true,
+    "first_actions_all_trials": true,
+    "template_sha256": "cf2fbbdceae0e460727a969bf080e1e230ed716f00f914f47381a167df50ba95",
+    "startup_reference_adapter_sha256": "30e63d6f60261d3e163c212568613d0f8941da9ce2d8b50676ad6fc281800c60",
+    "startup_math_sha256": "47991846f57272192b10171cf43eed5e772fdbc063853cc0601a82110af6fe93",
+    "mirror_math_sha256": "9e3edf7cd402c745242fa41e8dcf3d4ccb3818cb474344cff52c104c00426d91",
+    "adapter_sha256": "0788beb2e8d4457f6c286d9aff80638b269e080a9b75167f9f7977456380bed0",
+    "generated_source_sha256": "e85aded570dbf705a1b091b3443ba9642113bd415953b58107166ae6db891745",
+    "generated_source_file": "combined_generated.py",
+    "trace_file": "model_1999.pt_handoff_combined_trace.json",
+    "no_model_training_or_promotion": true,
+    "trace_sha256": "880c851611d97b0db79fc25e1fa36d046e8594915a4eab6917b083ff166cbb1a"
+  },
+  "note": "Left front, right oblique: independent matched-condition replays, NOT simultaneous cameras. Complete 276 frames at25fps, no trimming, cropping or speed change. Only trial0 of each20-environment development batch is filmed, after1s nominal-PD preparation. This single-pose experiment is NOT a continuous recovery/walk/run workflow; separate poses must be labeled separate experiments. Failed outcomes are retained honestly; pairing is not behavioral acceptance."
+}

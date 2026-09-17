@@ -1,0 +1,26 @@
+{
+  "protocol": "combined_exact_development_audit_v1",
+  "exact_equivalence": true,
+  "checked_scalars": 373056,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "baseline": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-supported-startup-v1\\supported-upright\\model_1999.pt_recovery_metrics.json",
+    "sha256": "3af752d6b28a40bc566df39405bb9978f66fbbcaf4b4bce018323c0950291b29"
+  },
+  "candidate": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-handoff-combined-v2\\s1m0-upright\\model_1999.pt_recovery_metrics.json",
+    "sha256": "c56df98fe423b8e3a26118c1631fc8d1b539b6cd1284656ff0ef0a6a9a351606"
+  },
+  "trace_sha256": "dda711e68ce859ce92b8fc04f37ad52e43c214eea19476a41af6f2b1bfb41e4e",
+  "interface_audit": {
+    "startup_selected": 20,
+    "mirror_selected": 0,
+    "stored_rows_and_first_checked": 1020
+  },
+  "baseline_key": "startup-upright",
+  "final_valid_stands": 20,
+  "acceptance_eligible": false,
+  "promotion_performed": false,
+  "notice": "Repeated development starts; stored neighborhoods are not every-step full trajectories. No integrated locomotion or fresh-generalization acceptance."
+}

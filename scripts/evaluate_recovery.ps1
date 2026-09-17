@@ -11,10 +11,15 @@ param(
     [string[]]$Poses = @('side', 'fore_aft'),
     [ValidateSet('oblique', 'front', 'side')][string]$View = 'oblique',
     [switch]$Video,
+    [string]$StandCheckpoint = '',
     [switch]$StochasticDiagnostic
 )
 $ErrorActionPreference = 'Stop'
 if (-not (Test-Path -LiteralPath $Checkpoint -PathType Leaf)) { throw "Missing checkpoint: $Checkpoint" }
+if (-not [string]::IsNullOrWhiteSpace($StandCheckpoint)) {
+    if ($Task -ne 'Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0' -or $StochasticDiagnostic) { throw 'Dual-policy diagnostics require deterministic SmithNominal Play.' }
+    if (-not (Test-Path -LiteralPath $StandCheckpoint -PathType Leaf)) { throw "Missing stand checkpoint: $StandCheckpoint" }
+}
 if ([IO.Path]::GetPathRoot([IO.Path]::GetFullPath($OutputDir)) -ne 'E:\') { throw 'Outputs must be on E:.' }
 $bankDiagnosticTask = 'Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0'
 $targetTasks = @('Isaac-Recovery-Bank-NominalTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-Play-v0', 'Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0')
@@ -50,6 +55,7 @@ $evalArgs = @((Join-Path $PSScriptRoot 'evaluate_go2_recovery.py'), '--task', $T
     '--min_contacts', '4', '--device', 'cuda:0', '--headless', '--kit_args=--/app/vulkan=false', '--poses') + $Poses
 if ($Video) { $evalArgs += @('--video_pose', 'all', '--view', $View) }
 if ($StochasticDiagnostic) { $evalArgs += '--stochastic_diagnostic' }
+if (-not [string]::IsNullOrWhiteSpace($StandCheckpoint)) { $evalArgs += @('--stand_checkpoint', $StandCheckpoint) }
 if (-not [string]::IsNullOrWhiteSpace($StateBankPath)) {
     $evalArgs += @('--state_bank_path', $StateBankPath, '--state_bank_split', $StateBankSplit)
 }

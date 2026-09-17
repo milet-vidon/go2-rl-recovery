@@ -17,6 +17,7 @@ from isaaclab_tasks.manager_based.locomotion.velocity import mdp
 from . import recovery_mdp
 from . import recovery_bank_mdp
 from . import recovery_smith_mdp
+from . import recovery_supported_mdp
 from .recovery_control_targets import ControlStepJointPositionActionCfg
 from .flat_env_cfg import UnitreeGo2FlatEnvCfg
 
@@ -460,6 +461,28 @@ class UnitreeGo2RecoveryBankSmithNominalEnvCfg(UnitreeGo2RecoveryBankNominalTarg
 
 @configclass
 class UnitreeGo2RecoveryBankSmithNominalEnvCfg_PLAY(UnitreeGo2RecoveryBankSmithNominalEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 1
+        self.observations.policy.enable_corruption = False
+
+
+@configclass
+class UnitreeGo2RecoveryBankDensePostureEnvCfg(UnitreeGo2RecoveryBankSmithNominalEnvCfg):
+    """Add bounded dense joint-pose shaping; no physics/reset/action changes.
+
+    Unlike exponential whole-body pose shaping, this term still distinguishes
+    large but within-range individual joint errors. It does NOT certify support.
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.rewards.dense_posture = RewTerm(
+            func=recovery_supported_mdp.SupportedPostureReward, weight=6.0, params={})
+
+
+@configclass
+class UnitreeGo2RecoveryBankDensePostureEnvCfg_PLAY(UnitreeGo2RecoveryBankDensePostureEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 1

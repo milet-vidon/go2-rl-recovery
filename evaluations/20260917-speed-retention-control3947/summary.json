@@ -1,0 +1,446 @@
+{
+  "schema_version": "speed_candidate_regression_v1",
+  "status": "completed_screening_only",
+  "started_at": "2026-09-17T03:17:35.0016813+08:00",
+  "task": "Isaac-Natural-Stop-Flat-Unitree-Go2-Play-v0",
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_flat\\2026-09-17_03-10-21_20260917-speedretention128x300\\model_3947.pt",
+  "checkpoint_sha256": "3DFBE03E0AC332FEE688C970B420167AFFCDB6E8CACEE16E40FC12120751DF3F",
+  "source_snapshot": [
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_speed_candidate.ps1",
+      "sha256": "2C3E8A5F4175320D13C7F3C112246E3B7C8D2BC3D8A40155EED8D20EF6A1394C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_stand_walk_stop.ps1",
+      "sha256": "601C7223218FEC4C925A06CFDED2E21A8BBC244135276DB19BF4EC10FD9D4926"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\verify_overnight_baselines.py",
+      "sha256": "2FBD670D819278CAA19142D77BC65ECC74F960E4AFC19E8142FEE3E507CBA41C"
+    },
+    {
+      "path": "E:\\IsaacLab\\go2-rl-open-source\\scripts\\evaluate_go2_stand_walk_stop.py",
+      "sha256": "BBBA369177D95BC24163BDD2B5BA96506F5DB7D4B1CE38875F8A8885C49E22E4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\__init__.py",
+      "sha256": "3ADAC45C45374CF840ADC5F441696A3A8F9C673E2CA9C6AA8370F6342402BB3D"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\flat_env_cfg.py",
+      "sha256": "48D949B9B261CA9BE335E4CD31B379179D8FA6011B120E7F9733131A62B45704"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_env_cfg.py",
+      "sha256": "A6CFDBFE8EBC62AD8E74F48FE8E24F7CA6588F024C8A11FDD54BEBEC30BCCAF3"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_robust_env_cfg.py",
+      "sha256": "49316079D0B65334A9B2676377F37514A0140BEDDF834EAC49586C20ACDD9D20"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\natural_stop_env_cfg.py",
+      "sha256": "02A04A057297E3574FAD0E142C886654B3EDCE3EE9DD23147D03A2BC0029DD55"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_back_exploration.py",
+      "sha256": "C39EDA11F96ED6B6CEFA177C31B905BD9D408B78769C9A48EC8E3DF4A0BCD082"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_bank_mdp.py",
+      "sha256": "1B824C4AC1CA0761C37297F481A5D173F2343185FA01DD1F165129FAAA2126F4"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_control_targets.py",
+      "sha256": "5220033D6B0F76BC313527DCE017BB37F67F19A192034A15AC2A9EB7ABD6ECAC"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_env_cfg.py",
+      "sha256": "45836EFA79A4ADED4B9A8CB3F46CA5AC0A0D9C9A0F7D4609884FF65059A7865F"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_math.py",
+      "sha256": "FBA46228C3A46EEC4231614F9CD1280A0DFCE15E486AF13E3CC810D7B56F6814"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_mdp.py",
+      "sha256": "EDE261709A60F9953BCF637CCC700CCA2665631D9767568D4A0CDEEBFC5E26CE"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_math.py",
+      "sha256": "8DB2CCC466C1CB7EC1E7A4678B232903F2DBA9CA717327A317DAE006D9CA0ED9"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_smith_mdp.py",
+      "sha256": "EDD6E0D71EB815D47F0CA76E97936046B3B16343B8A517D4D68AED6E0D3F7263"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_state_bank.py",
+      "sha256": "8839BB2658BCFE87FCCA32BDFC8F903290D57EDB52585EB9764E681043C26442"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_math.py",
+      "sha256": "3146A0265981B20FAE39BA9059964E2E6535034B75B745E260CCF6CF63E40497"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\recovery_supported_mdp.py",
+      "sha256": "2FF13438054FB63ECCF4FDF69AD799D4298077501DE4142749202FEC7AB3E08C"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\robust_env_cfg.py",
+      "sha256": "A9DABE626515C73693B9F90D98AC9A5189D8356B78FF466641F24382B991F7BA"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\rough_env_cfg.py",
+      "sha256": "6D31140968214BA96388A3094EB87877BDD9CDACDBAE2C7EBDC4BE0645093F40"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\standard_env_cfg.py",
+      "sha256": "CD57B11C69747296938E15B5487B0A185C29F45244B20CFB0C71BF57979AF901"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\__init__.py",
+      "sha256": "8A87C5866D1E155EC46168847D6BE890743A813681ABE7882FEA8F198FCB8802"
+    },
+    {
+      "path": "E:\\IsaacLab\\repo\\source\\isaaclab_tasks\\isaaclab_tasks\\manager_based\\locomotion\\velocity\\config\\go2\\agents\\rsl_rl_ppo_cfg.py",
+      "sha256": "498E15670AAB92AA8E9616B5C82A5277E6F7A519762DA3295E4B2FC4CE7F16F4"
+    }
+  ],
+  "rows": [
+    {
+      "max_tilt_deg": 2.2968267723445037,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\normal-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.042878096874557764,
+      "actual_yaw": 0.02594328848875323,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.4702075345175607,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.5,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "actual_vy": 0.001573171435239991,
+      "report_passed": true,
+      "report_sha256": "1EEE522DDCC9005C5A4FC83396086797F18350251D49121F3100F1114686FCEE",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\normal-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 2.482390418932468,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\normal-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.058319868729354386,
+      "actual_yaw": 0.06549853787990287,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5725063925981522,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.5,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.09170491949788162,
+      "report_passed": true,
+      "report_sha256": "472E14B7567F463F222C34C4AD34A6F8DEC345D6C5BB96CDA7A0D4312F54628B",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\normal-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 2.4370533307692157,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\normal-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.05939661355939303,
+      "actual_yaw": 0.05857447987838116,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.560209048305239,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.5,
+      "case": "normal",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.07602591877641056,
+      "report_passed": true,
+      "report_sha256": "E5CCA1A22910DB158B653DD019F9BBED31DDB89DC33BB39B283635BFA3C1AFDE",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\normal-seed20260911.log"
+    },
+    {
+      "max_tilt_deg": 2.5980095133249166,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\retained08-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.07135907597223516,
+      "actual_yaw": -0.008691017966401498,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.7487389659881591,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.8,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.0604754735348979,
+      "report_passed": true,
+      "report_sha256": "9C57EF0C3809BD95741B80171529EF3CC689CB6C55FE9529E4F91B5D7021E7C6",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\retained08-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 3.4005972950496117,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\retained08-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.08436209263875045,
+      "actual_yaw": 0.0487093749617426,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.7519602017743247,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.8,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.02658803675706232,
+      "report_passed": true,
+      "report_sha256": "69CAB63507BA3A3BB66F559FD7A9A4CE0BEA8FEB45FAA4D0E1DD50CBB241440E",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\retained08-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 3.8430033751867354,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\retained08-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.08268165846892261,
+      "actual_yaw": 0.04205225606764933,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.7551992692266192,
+      "straight_drift_passed": true,
+      "commanded_vx": 0.8,
+      "case": "retained08",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.03206248879598986,
+      "report_passed": true,
+      "report_sha256": "91F566EED095B46F7C75E3DB78FE355E34EEF876518A072F8784E00368BB55D2",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\retained08-seed20260911.log"
+    },
+    {
+      "max_tilt_deg": 3.601450746981473,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\target10-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.08070016779717715,
+      "actual_yaw": -0.019688161218156374,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "actual_vx": 0.8404050632885525,
+      "straight_drift_passed": true,
+      "commanded_vx": 1.0,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.0012427503159103382,
+      "report_passed": false,
+      "report_sha256": "1AE61BB706D998A77C3578F30A9D48D7ADB4656C9361F58A00054958CF610060",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\target10-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 5.130447076183596,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\target10-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.11238554910059784,
+      "actual_yaw": 0.043398784194307934,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "actual_vx": 0.8421493245874132,
+      "straight_drift_passed": true,
+      "commanded_vx": 1.0,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "actual_vy": 0.029293006140381165,
+      "report_passed": false,
+      "report_sha256": "EB748D9E330BB7D5EE55430F0CF24C9A5EA61B64A355644BA077D8D86FF6475D",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\target10-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 5.26803269927704,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\target10-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.10868556203315427,
+      "actual_yaw": 0.029499029836900132,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [
+        "walk_tracking"
+      ],
+      "actual_vx": 0.8327861959593637,
+      "straight_drift_passed": true,
+      "commanded_vx": 1.0,
+      "case": "target10",
+      "commanded_yaw": 0.0,
+      "actual_vy": 0.034212977190036326,
+      "report_passed": false,
+      "report_sha256": "FE37E9E473C7511488E261540CB971CA1202178F8CBA3F96D253E8BA44811012",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\target10-seed20260911.log"
+    },
+    {
+      "max_tilt_deg": 4.314540852464199,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\left-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.04109891172743458,
+      "actual_yaw": 0.4449088132807187,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.4658117387975965,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "actual_vy": 0.007743339219263622,
+      "report_passed": true,
+      "report_sha256": "2F68CC51D750CBEE5F09200FA9128B04BA26213BCE976D25FC051B571EECD89E",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\left-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 2.794361870593739,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\left-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.06402602079353979,
+      "actual_yaw": 0.5810184050457818,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5112981990405492,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "actual_vy": -0.07987738139395203,
+      "report_passed": true,
+      "report_sha256": "A85989D1E8D0DB61A910DF2C5098D6F927B06A9854DE110BDD98801F12944678",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\left-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 4.185507906872079,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\left-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.06279103704331948,
+      "actual_yaw": 0.5656315566812242,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5074818886177881,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "left",
+      "commanded_yaw": 0.5,
+      "actual_vy": -0.06808754060417414,
+      "report_passed": true,
+      "report_sha256": "6CF299FF66FAA8C5BFC9E24DB125A53A73F5BE3787048F69276BCBC50F20F769",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\left-seed20260911.log"
+    },
+    {
+      "max_tilt_deg": 2.6912729716770905,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\right-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.05160469283885139,
+      "actual_yaw": -0.44226815121514457,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5047443819897516,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "actual_vy": -0.105828960383577,
+      "report_passed": true,
+      "report_sha256": "B446E095B2AE0C7BEDF2E2CA4C460939C8EB08AC74CCE25B2A249C461E088F9F",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\right-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 2.3863848530719456,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\right-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.05271478380852477,
+      "actual_yaw": -0.4581915550572532,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5435797785861152,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "actual_vy": -0.08406768290059907,
+      "report_passed": true,
+      "report_sha256": "9244A5A91E6B9312F51A351F61E9B22D7664DB5A7A7DC3195C63CD056EB163F3",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\right-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 2.255079162033505,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\right-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.06773200399569564,
+      "actual_yaw": -0.4603069179398673,
+      "push_delta_vy": 0.0,
+      "failed_criteria": [],
+      "actual_vx": 0.5520224021162305,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "right",
+      "commanded_yaw": -0.5,
+      "actual_vy": -0.1090568371117115,
+      "report_passed": true,
+      "report_sha256": "269AA60F0A23FF19F3BB40D9621024C5CA84C018DCCD01417A1D704B8FE599FB",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\right-seed20260911.log"
+    },
+    {
+      "max_tilt_deg": 2.6524143179415955,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\push05-seed20260909\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.046099302014935846,
+      "actual_yaw": 0.028290590862764343,
+      "push_delta_vy": 0.5,
+      "failed_criteria": [],
+      "actual_vx": 0.4753513614620481,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.027653956181436245,
+      "report_passed": true,
+      "report_sha256": "933118EECD3C5601890A6343504B5FD46A3507F6205B761152178D972070DD30",
+      "seed": 20260909,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\push05-seed20260909.log"
+    },
+    {
+      "max_tilt_deg": 3.925721234903821,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\push05-seed20260910\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.05541957732540672,
+      "actual_yaw": 0.0678098600490817,
+      "push_delta_vy": 0.5,
+      "failed_criteria": [],
+      "actual_vx": 0.5647417889322554,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.11096978739968368,
+      "report_passed": true,
+      "report_sha256": "13A30D0FBC189487D8874982A0810A51C8512DA8D66BD43DFA198809D4DCD63C",
+      "seed": 20260910,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\push05-seed20260910.log"
+    },
+    {
+      "max_tilt_deg": 3.3555045995925994,
+      "report": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-speed-retention-control3947\\push05-seed20260911\\model_3947_stand_walk_stop.json",
+      "contact_slip_mean": 0.06350160047893312,
+      "actual_yaw": 0.059867660341951706,
+      "push_delta_vy": 0.5,
+      "failed_criteria": [],
+      "actual_vx": 0.553212873680251,
+      "straight_drift_passed": null,
+      "commanded_vx": 0.5,
+      "case": "push05",
+      "commanded_yaw": 0.0,
+      "actual_vy": -0.09719940995797514,
+      "report_passed": true,
+      "report_sha256": "E2614ACE47A23079E865B348FCBD235BAF9777337ACABBEA84163D16BEB0C6A6",
+      "seed": 20260911,
+      "log": "E:\\IsaacLab\\artifacts\\recovery-20260917\\20260917-speed-retention-control3947\\push05-seed20260911.log"
+    }
+  ],
+  "promotion_performed": false,
+  "acceptance_eligible": false,
+  "limitations": "Development simulation screening only. No high-speed or integrated recovery acceptance. No videos in this batch; turn/push controls require matched frozen-baseline comparison before a no-regression claim.",
+  "finished_at": "2026-09-17T03:37:12.4452072+08:00"
+}

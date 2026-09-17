@@ -1,0 +1,7 @@
+{
+  "protocol": "supported_refinement_full_trajectory_audit_v1",
+  "audit_passed": false,
+  "error": "Frozen audit dependency changed: compare_handoff_combined.py",
+  "promotion_performed": false,
+  "acceptance_eligible": false
+}

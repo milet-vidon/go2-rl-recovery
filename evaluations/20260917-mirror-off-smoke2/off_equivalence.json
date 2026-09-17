@@ -1,0 +1,38 @@
+{
+  "schema_version": "handoff_mirror_baseline_comparison_v1",
+  "exact_baseline_equivalence": true,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "mismatches_truncated": false,
+  "checked_scalar_values": {
+    "result_values": 598,
+    "metadata_values": 166
+  },
+  "allowed_top_level_relabels": [
+    "protocol_version",
+    "controller_type"
+  ],
+  "baseline_protocol_version": "handoff_transition_experimental_v1",
+  "candidate_protocol_version": "handoff_mirror_experimental_v1",
+  "original_evaluator_sha256": "4024ba713e3ed616225d64e1d59de97fd31c8369bba83ac3f4235d93552e9e2f",
+  "original_evaluator_file_verified": false,
+  "acceptance_eligible": false,
+  "training_collection_eligible": false,
+  "promotion_performed": false,
+  "notice": "Exact report equivalence for mirror off only; NOT model/standing/recovery acceptance, training-data approval, or proof of independent simulator execution. Synthetic cloned positives test the comparator only. Mirror initial_right is diagnostic, never auto-accepted.",
+  "exact_mirror_off_equivalence": true,
+  "transition_artifact_identity_exceptions": [
+    "evaluator_source_sha256",
+    "transition_trace_file",
+    "transition_trace_sha256"
+  ],
+  "source_files_verified": true,
+  "baseline": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-transition-hard-smoke2\\model_1999.pt_recovery_metrics.json",
+    "sha256": "b0a7955dfbbb81c8b13740613995b9200f86445e9f7ae4459c3ed40d738f955f"
+  },
+  "candidate": {
+    "path": "E:\\IsaacLab\\go2-rl-open-source\\evaluations\\20260917-mirror-off-smoke2\\model_1999.pt_recovery_metrics.json",
+    "sha256": "fb8de8a9dce6f429e475fb8c36df00281a3309f9b00ed14dbfcdaf3e30878b34"
+  }
+}

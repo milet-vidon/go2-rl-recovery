@@ -1,0 +1,361 @@
+{
+  "angle_deg": 0.0,
+  "checkpoint": "E:\\IsaacLab\\repo\\logs\\rsl_rl\\unitree_go2_recovery\\2026-09-17_00-01-34_20260917-denseposture-smoke\\model_2000.pt",
+  "checkpoint_sha256": "c8d6821ba9bc2939154432f596677390240a995a50d0ddc997958293a1eb9fd6",
+  "task": "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0",
+  "seed": 20260918,
+  "start_protocol": "pre-settled nominal-pose PD: default joint positions commanded directly, bypassing policy action processing; NOT passive zero-torque settling; actual fallen/standing status recorded per trial",
+  "start_protocol_id": "pre_settled_nominal_pose_PD",
+  "settle_requested_s": 1.0,
+  "settle_actual_s": 1.0,
+  "settle_control_steps": 50,
+  "settle_controller": "direct nominal-position PD, not policy zero action; not zero torque",
+  "settle_execution": "physics/action substeps only; termination checked each control step; auto-reset prohibited; no learned policy, reward computation, curriculum or interval events",
+  "settled_definition": "at least 0.25 s continuous any-body contact >1 N, root speed <0.10 m/s, angular speed <0.20 rad/s, every joint speed <0.50 rad/s before policy starts",
+  "fallen_start_definition": "current any-body contact >1 N and either tilt from upright >=60 deg or base contact >1 N with height <0.26 m; eligible only if settled and not already standing",
+  "success_count_definition": "successes counts valid stand acquisition/retention from all starts; only settled_fallen_recovery_successes counts confirmed settled-fallen starts; already-standing starts are never counted as fallen recovery",
+  "time_definition": "policy time starts AFTER optional settling; onset of the first stable interval held for hold_s; policy simulation includes hold_s after horizon_s; settling is excluded",
+  "protocol_version": "stance_geometry_v1_presettled_PD_v1",
+  "joint_names": [
+    "FL_hip_joint",
+    "FR_hip_joint",
+    "RL_hip_joint",
+    "RR_hip_joint",
+    "FL_thigh_joint",
+    "FR_thigh_joint",
+    "RL_thigh_joint",
+    "RR_thigh_joint",
+    "FL_calf_joint",
+    "FR_calf_joint",
+    "RL_calf_joint",
+    "RR_calf_joint"
+  ],
+  "video_view": null,
+  "self_collisions_enabled": true,
+  "criterion": "gravity error < 0.35, height 0.30-0.55 m, speed < 0.50 m/s, angular speed < 1.00 rad/s, 4 simultaneous foot vertical forces > 5 N, no base contact, feet on correct body sides (0.06 < signed lateral < 0.30 m), knees on correct sides (>0.04 m), fore/hind feet on correct ends (>0.08 m), each joint offset <0.65 rad; all continuously held for hold_s",
+  "results": {
+    "upright": {
+      "trials": 2,
+      "successes": 0,
+      "legacy_contact_height_successes": 0,
+      "final_valid_stands": 0,
+      "final_geometry_passes": 0,
+      "release_state_before_settling": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            0.02393271028995514,
+            0.16050224006175995,
+            -0.986745297908783
+          ],
+          "tilt_from_upright_deg": 9.339067459106445,
+          "gravity_error": 0.16281716525554657,
+          "height_m": 0.39021721482276917,
+          "root_position_w_m": [
+            1.0,
+            -1.862645149230957e-09,
+            0.39021721482276917
+          ],
+          "root_quaternion_wxyz": [
+            0.25020456314086914,
+            -0.031834881752729416,
+            -0.07492593675851822,
+            0.9647645950317383
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "joint_positions_rad": [
+            0.06161236763000488,
+            -0.08204688131809235,
+            0.031046152114868164,
+            -0.054373711347579956,
+            0.7663284540176392,
+            0.728587806224823,
+            1.0919755697250366,
+            0.9852610230445862,
+            -1.5844085216522217,
+            -1.554985523223877,
+            -1.4060373306274414,
+            -1.523169755935669
+          ],
+          "max_joint_speed_rad_s": 0.0,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            -0.16609548032283783,
+            -0.057294126600027084,
+            -0.9844438433647156
+          ],
+          "tilt_from_upright_deg": 10.119368553161621,
+          "gravity_error": 0.17638684809207916,
+          "height_m": 0.38142073154449463,
+          "root_position_w_m": [
+            -1.0,
+            -3.725290298461914e-09,
+            0.38142073154449463
+          ],
+          "root_quaternion_wxyz": [
+            0.20568808913230896,
+            0.08751431852579117,
+            0.010923478752374649,
+            0.9746355414390564
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "joint_positions_rad": [
+            0.184249609708786,
+            -0.054565638303756714,
+            0.13754475116729736,
+            -0.13529279828071594,
+            0.8460320830345154,
+            0.8666577935218811,
+            0.9118220210075378,
+            1.0244249105453491,
+            -1.4664393663406372,
+            -1.5607926845550537,
+            -1.4172333478927612,
+            -1.5169345140457153
+          ],
+          "max_joint_speed_rad_s": 0.0,
+          "contacts_fresh_since_pose_write": false,
+          "foot_vertical_forces_N": null,
+          "vertical_foot_contacts": null,
+          "base_contact": null,
+          "any_body_contact": null,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": null,
+          "fallen_at_policy_start": null,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "controlled_drop_unsettled_contacts_not_yet_valid"
+        }
+      ],
+      "policy_start_state": [
+        {
+          "trial": 0,
+          "projected_gravity_b": [
+            -0.02806924283504486,
+            0.016202406957745552,
+            -0.9994746446609497
+          ],
+          "tilt_from_upright_deg": 1.8573049306869507,
+          "gravity_error": 0.032414138317108154,
+          "height_m": 0.2804083824157715,
+          "root_position_w_m": [
+            1.0985043048858643,
+            -0.0056125749833881855,
+            0.2804083824157715
+          ],
+          "root_quaternion_wxyz": [
+            0.2570854425430298,
+            0.01148130651563406,
+            -0.011438912712037563,
+            0.9662527441978455
+          ],
+          "root_linear_velocity_w_m_s": [
+            -0.12380919605493546,
+            -0.015192385762929916,
+            -0.03584276884794235
+          ],
+          "root_angular_velocity_w_rad_s": [
+            0.06271183490753174,
+            -0.27736911177635193,
+            0.03802821412682533
+          ],
+          "joint_positions_rad": [
+            0.10388604551553726,
+            -0.10932950675487518,
+            0.0881335437297821,
+            -0.10947123169898987,
+            0.7816025018692017,
+            0.7313987016677856,
+            0.9316316843032837,
+            0.9457454085350037,
+            -1.7513916492462158,
+            -1.706007480621338,
+            -1.8394110202789307,
+            -1.7907661199569702
+          ],
+          "max_joint_speed_rad_s": 0.8425289988517761,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            41.603267669677734,
+            29.69232177734375,
+            46.813011169433594,
+            39.61246871948242
+          ],
+          "vertical_foot_contacts": 4,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": false,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "other_nonstanding_start_not_confirmed_fallen"
+        },
+        {
+          "trial": 1,
+          "projected_gravity_b": [
+            -0.030355464667081833,
+            -0.012206715531647205,
+            -0.9994646310806274
+          ],
+          "tilt_from_upright_deg": 1.8749237060546875,
+          "gravity_error": 0.03272223472595215,
+          "height_m": 0.28473174571990967,
+          "root_position_w_m": [
+            -0.9739997386932373,
+            -0.02654896304011345,
+            0.28473174571990967
+          ],
+          "root_quaternion_wxyz": [
+            0.21189577877521515,
+            0.016128595918416977,
+            0.0027485666796565056,
+            0.9771552681922913
+          ],
+          "root_linear_velocity_w_m_s": [
+            0.015259362757205963,
+            0.01401948370039463,
+            -0.06618218868970871
+          ],
+          "root_angular_velocity_w_rad_s": [
+            -0.10011754184961319,
+            -0.08888938277959824,
+            -0.05575622618198395
+          ],
+          "joint_positions_rad": [
+            0.10442572087049484,
+            -0.11470867693424225,
+            0.11241893470287323,
+            -0.09364645183086395,
+            0.8399223685264587,
+            0.8180341124534607,
+            0.9355466961860657,
+            0.9186317324638367,
+            -1.7017723321914673,
+            -1.7173901796340942,
+            -1.7691417932510376,
+            -1.808616280555725
+          ],
+          "max_joint_speed_rad_s": 0.7555748224258423,
+          "contacts_fresh_since_pose_write": true,
+          "foot_vertical_forces_N": [
+            38.170997619628906,
+            39.17967224121094,
+            37.05011749267578,
+            41.450477600097656
+          ],
+          "vertical_foot_contacts": 4,
+          "base_contact": false,
+          "any_body_contact": true,
+          "geometry_ok": true,
+          "quiet_supported_window_s": 0.0,
+          "settled": false,
+          "standing_at_policy_start": false,
+          "fallen_at_policy_start": false,
+          "eligible_settled_fallen_recovery": false,
+          "classification": "other_nonstanding_start_not_confirmed_fallen"
+        }
+      ],
+      "standing_starts_not_fallen_recovery": 0,
+      "settled_fallen_trials": 0,
+      "settled_fallen_recovery_successes": 0,
+      "settled_fallen_final_valid_stands": 0,
+      "settled_fallen_recovery_rate": null,
+      "final_diagnostics": [
+        {
+          "trial": 0,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.1482413411140442,
+          "gravity_error": 0.8293102979660034,
+          "vertical_foot_contacts": 2,
+          "feet_y_b": [
+            0.11215031147003174,
+            -0.16481998562812805,
+            0.05655665695667267,
+            -0.09603545814752579
+          ],
+          "knees_y_b": [
+            0.10485193878412247,
+            -0.04500696063041687,
+            -0.014308542013168335,
+            0.07337553799152374
+          ],
+          "max_joint_offset_rad": 1.751913070678711
+        },
+        {
+          "trial": 1,
+          "geometry_ok": false,
+          "stable_hold_s": 0.0,
+          "height_m": 0.14900998771190643,
+          "gravity_error": 0.7987236380577087,
+          "vertical_foot_contacts": 2,
+          "feet_y_b": [
+            0.108602374792099,
+            -0.16257034242153168,
+            0.052733875811100006,
+            -0.1008368581533432
+          ],
+          "knees_y_b": [
+            0.10187101364135742,
+            -0.0395866334438324,
+            -0.014314889907836914,
+            0.0669446513056755
+          ],
+          "max_joint_offset_rad": 1.7526109218597412
+        }
+      ],
+      "success_rate": 0.0,
+      "median_recovery_s": null,
+      "p90_recovery_s": null,
+      "stable_hold_s": 3.0,
+      "horizon_s": 8.0
+    }
+  },
+  "diagnostic_trial": 0,
+  "policy_action_mode": "deterministic_mean",
+  "acceptance_eligible": true,
+  "action_representation": {
+    "reference": "nominal",
+    "scale": 0.25,
+    "target": "q_reference + scale * action, soft-joint-limit clamped",
+    "sample_period_s": 0.02,
+    "held_over_physics_substeps": 4,
+    "pre_policy_handover": "direct nominal-position PD, not policy zero action"
+  },
+  "trace_csv": "model_2000.pt_recovery_trace.csv"
+}

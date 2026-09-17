@@ -1,5 +1,5 @@
 param(
-    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "recovery_bank_smith_nominal", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
+    [ValidateSet("recovery", "recovery_stable", "recovery_phased", "recovery_lift", "recovery_uncrossed", "recovery_aligned", "recovery_rehearsal", "recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "recovery_bank_smith_nominal", "recovery_bank_dense_posture", "locomotion", "standard", "standard_stance", "robust", "natural", "natural_stop", "natural_robust", "natural_robust_push")]
     [string]$Stage = "recovery",
     [int]$NumEnvs = 128,
     [int]$MaxIterations = 0,
@@ -21,7 +21,7 @@ $ErrorActionPreference = "Stop"
 if ($PSBoundParameters.ContainsKey('SmithStandWeight') -and $Stage -ne 'recovery_bank_smith_nominal') {
     throw '-SmithStandWeight is only supported by recovery_bank_smith_nominal for the stand-weight-only experiment.'
 }
-if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "recovery_bank_smith_nominal")) {
+if ($Stage -in @("recovery_bank", "recovery_bank_control", "recovery_bank_release", "recovery_bank_back_explore", "recovery_bank_nominal_target", "recovery_bank_current_target", "recovery_bank_smith_nominal", "recovery_bank_dense_posture")) {
     if ($FallAngleDeg -gt 0 -or $FocusSide -or $CurriculumSteps -gt 0) {
         throw "$Stage uses its configured validated-state mixture; old angle/focus/mixture overrides are not supported."
     }
@@ -111,6 +111,8 @@ $Task = if ($Stage -eq "natural_robust_push") {
     "Isaac-Recovery-Bank-CurrentTarget-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_bank_smith_nominal") {
     "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-v0"
+} elseif ($Stage -eq "recovery_bank_dense_posture") {
+    "Isaac-Recovery-Bank-DensePosture-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery_lift") {
     "Isaac-Recovery-Lift-Flat-Unitree-Go2-v0"
 } elseif ($Stage -eq "recovery") {

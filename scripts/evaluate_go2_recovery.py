@@ -20,6 +20,8 @@ POSE_CLASSES = ("upright", "side", "fore_aft", "upside_down", "random")
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--task", default="Isaac-Recovery-Flat-Unitree-Go2-Play-v0")
 parser.add_argument("--checkpoint", required=True, type=Path)
+parser.add_argument("--stand_checkpoint", type=Path,
+                    help="Optional second actor for a fixed one-way handoff DIAGNOSTIC, not single-policy recovery.")
 parser.add_argument("--output_dir", required=True, type=Path)
 parser.add_argument("--trials", type=int, default=100, help="Independent trials for each pose class.")
 parser.add_argument("--horizon_s", type=float, default=8.0)
@@ -41,6 +43,11 @@ parser.add_argument("--angle_deg", type=float, default=90.0, help="Roll/pitch an
 parser.add_argument("--view", choices=("oblique", "front", "side"), default="oblique")
 AppLauncher.add_app_launcher_args(parser)
 args_cli = parser.parse_args()
+if args_cli.stand_checkpoint:
+    if args_cli.task != "Isaac-Recovery-Bank-SmithNominal-Flat-Unitree-Go2-Play-v0" or args_cli.stochastic_diagnostic:
+        parser.error("Dual-policy diagnostics require deterministic SmithNominal Play")
+    if not args_cli.stand_checkpoint.is_file():
+        parser.error("Missing stand checkpoint")
 if args_cli.poses is None:
     args_cli.poses = ("side", "upside_down") if args_cli.state_bank_path else POSE_CLASSES
 diagnostic_task = "Isaac-Recovery-Bank-BackExplore-Flat-Unitree-Go2-Play-v0"
@@ -472,6 +479,10 @@ def _annotate(frame: np.ndarray, pose_class: str, step: int, dt: float, stable_s
         labels = labels[:-1] + (f"Simulation | state-bank {args_cli.state_bank_split} | nominal PD handover",)
     if start_classification is not None:
         labels += (f"Actual policy start: {start_classification}",)
+    if getattr(args_cli, "stand_checkpoint", None):
+        phase = row.get("policy_phase", "before policy")
+        labels = (f"DUAL POLICY DIAGNOSTIC | {pose_class} | {phase}",) + labels[1:3] + (
+            f"Roll: {args_cli.checkpoint.name} -> Stand: {args_cli.stand_checkpoint.name}",) + labels[4:]
     for i, text in enumerate(labels):
         # Leg shape in body coordinates can pass while upside down. Green is
         # reserved for a CURRENT completed, continuous valid-standing hold.
@@ -618,6 +629,31 @@ def main() -> None:
     runner.load(str(args_cli.checkpoint))
     policy = _select_policy_action(runner, env.device, args_cli.stochastic_diagnostic)
     policy_nn = runner.alg.policy
+    stand_policy = None
+    handoff_limits = None
+    if args_cli.stand_checkpoint:
+        # This is a new diagnostic branch; the default single-policy path is unchanged.
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src" / "go2_recovery"))
+        from recovery_handoff_math import update_handoff_gate
+        if agent_cfg.clip_actions is not None or env_cfg.actions.joint_pos.reference != "nominal" or env_cfg.actions.joint_pos.scale != 0.25:
+            raise RuntimeError("Handoff diagnostics require unclipped raw actions with nominal + .25 soft-clamped targets")
+        # A second random MLP initialization must not perturb later reset RNG.
+        policy_device = torch.device(env.device)
+        rng_devices = ([policy_device.index if policy_device.index is not None else torch.cuda.current_device()]
+                       if policy_device.type == "cuda" else [])
+        with torch.random.fork_rng(devices=rng_devices):
+            stand_runner = OnPolicyRunner(env, agent_cfg.to_dict(), log_dir=None, device=args_cli.device)
+            stand_runner.load(str(args_cli.stand_checkpoint), load_optimizer=False)
+            stand_policy = stand_runner.get_inference_policy(device=env.device)
+        if getattr(policy_nn, "is_recurrent", False) or getattr(stand_runner.alg.policy, "is_recurrent", False):
+            raise RuntimeError("Handoff diagnostic supports stateless feed-forward actors only")
+        a = env.unwrapped.scene["robot"].data
+        handoff_limits = {"joint_names": list(env.unwrapped.scene["robot"].joint_names),
+                          "default_joint_positions_rad": a.default_joint_pos[0].cpu().tolist(),
+                          "soft_joint_limits_rad": a.soft_joint_pos_limits[0].cpu().tolist(),
+                          "hard_joint_limits_rad": a.joint_pos_limits[0].cpu().tolist(),
+                          "default_target_would_be_clamped": bool(((a.default_joint_pos[0] < a.soft_joint_pos_limits[0, :, 0]) |
+                                                                  (a.default_joint_pos[0] > a.soft_joint_pos_limits[0, :, 1])).any())}
     if args_cli.video_pose:
         _diagnostic_scene(env.unwrapped)
     foot_ids = env.unwrapped.scene.sensors["contact_forces"].find_bodies(
@@ -681,6 +717,11 @@ def main() -> None:
             recovered_at = torch.full((env.num_envs,), float("nan"), device=env.device)
             legacy_steps = torch.zeros_like(stable_steps)
             legacy_success = torch.zeros(env.num_envs, device=env.device, dtype=torch.bool)
+            if stand_policy is not None:
+                gate_steps = torch.zeros_like(stable_steps)
+                switched = torch.zeros_like(legacy_success)
+                switch_records = [None] * env.num_envs
+                clamp_counts = torch.zeros_like(env.unwrapped.scene["robot"].data.joint_pos, dtype=torch.int64)
             video_writer = None
             video_path = args_cli.output_dir / f"{checkpoint_name}_{pose_class}.mp4"
             start_label = policy_start_state[0]["classification"] if settle_steps else None
@@ -696,6 +737,8 @@ def main() -> None:
                     raise RuntimeError("No RGB frame returned for the pre-policy state.")
                 video_writer = _open_video(video_path, frame, args_cli.video_fps)
                 initial_row = _trace_row(env.unwrapped, foot_ids, pose_class, -1, stable_steps)
+                if stand_policy is not None:
+                    initial_row.update(handoff_active=False, policy_phase="before policy")
                 if selection is not None:
                     initial_row["bank_state_id"] = selection["selected_state_ids"][0]
                 trace.append(initial_row)
@@ -706,7 +749,50 @@ def main() -> None:
                 # no_grad keeps Isaac Lab's mutable simulator buffers writable across
                 # deterministic pose resets; inference_mode would mark them immutable.
                 with torch.no_grad():
-                    obs, _, dones, _ = env.step(policy(obs))
+                    if stand_policy is None:
+                        obs, _, dones, _ = env.step(policy(obs))
+                    else:
+                        a = env.unwrapped.scene["robot"].data
+                        # t=0 has no completed control interval and must not count
+                        # toward the 0.2-second persistence gate.
+                        just_switched = torch.zeros_like(switched)
+                        if step > 0:
+                            gate_steps, switched, just_switched = update_handoff_gate(
+                                a.projected_gravity_b, a.root_ang_vel_b, gate_steps, switched, env.unwrapped.step_dt)
+                        roll_action, stand_action = policy(obs), stand_policy(obs)
+                        action = torch.where(switched[:, None], stand_action, roll_action)
+                        if action.shape != a.joint_pos.shape:
+                            raise RuntimeError("Unexpected joint/action ordering or dimensions")
+                        raw_target = a.default_joint_pos + .25 * action
+                        limits = a.soft_joint_pos_limits
+                        target = raw_target.clamp(min=limits[:, :, 0], max=limits[:, :, 1])
+                        clamp_counts += ((raw_target < limits[:, :, 0]) | (raw_target > limits[:, :, 1])).to(torch.int64)
+                        for i in just_switched.nonzero(as_tuple=False).flatten().cpu().tolist():
+                            # Record the REAL state before executing the first stand action.
+                            # Do not set poses/velocities, reset history, blend targets or inject PD.
+                            switch_records[i] = {
+                                "trial": i, "policy_time_s": step * env.unwrapped.step_dt,
+                                "root_position_local_m": (a.root_pos_w[i] - env.unwrapped.scene.env_origins[i]).cpu().tolist(),
+                                "root_quaternion_wxyz": a.root_quat_w[i].cpu().tolist(),
+                                "root_linear_velocity_w_m_s": a.root_lin_vel_w[i].cpu().tolist(),
+                                "root_angular_velocity_w_rad_s": a.root_ang_vel_w[i].cpu().tolist(),
+                                "joint_positions_rad": a.joint_pos[i].cpu().tolist(),
+                                "joint_velocities_rad_s": a.joint_vel[i].cpu().tolist(),
+                                "policy_observation": obs["policy"][i].detach().cpu().tolist(),
+                                "previous_raw_action": env.unwrapped.action_manager.action[i].cpu().tolist(),
+                                "previous_previous_raw_action": env.unwrapped.action_manager.prev_action[i].cpu().tolist(),
+                                "velocity_command_b": env.unwrapped.command_manager.get_command("base_velocity")[i].cpu().tolist(),
+                                "previous_executed_joint_target_rad": a.joint_pos_target[i].cpu().tolist(),
+                                "stand_actor_raw_action": stand_action[i].cpu().tolist(),
+                                "roll_actor_raw_action": roll_action[i].cpu().tolist(),
+                                "action_linf_jump": float((action[i] - env.unwrapped.action_manager.action[i]).abs().max()),
+                                "clamped_joint_target_linf_jump_rad": float((target[i] - a.joint_pos_target[i]).abs().max()),
+                                "two_actor_action_linf_difference": float((stand_action[i] - roll_action[i]).abs().max()),
+                            }
+                        obs, _, dones, _ = env.step(action)
+                        if step == 0 or bool(just_switched.any()):
+                            if not torch.allclose(a.joint_pos_target, target, atol=1e-6, rtol=0):
+                                raise RuntimeError("Recorded handoff targets differ from actual actuator targets")
                 if motion is not None:
                     _update_motion_diagnostic(env.unwrapped, motion, policy_nn.action_std)
                 if hasattr(policy_nn, "reset"):
@@ -722,6 +808,9 @@ def main() -> None:
                 stable &= geometry_ok & ~base_contact & current_support
                 stable_steps = torch.where(stable, stable_steps + 1, torch.zeros_like(stable_steps))
                 trace.append(_trace_row(env.unwrapped, foot_ids, pose_class, step, stable_steps))
+                if stand_policy is not None:
+                    trace[-1].update(handoff_active=bool(switched[0]),
+                                     policy_phase="stand" if bool(switched[0]) else "roll")
                 if selection is not None:
                     trace[-1]["bank_state_id"] = selection["selected_state_ids"][0]
                 if dones.any():
@@ -790,6 +879,15 @@ def main() -> None:
             }
             if motion is not None:
                 results[pose_class]["stochastic_motion_diagnostic"] = _motion_diagnostic_report(motion, env.unwrapped.step_dt)
+            if stand_policy is not None:
+                results[pose_class]["handoff_diagnostic"] = {
+                    "triggered_trials": int(switched.sum()), "untriggered_trials": int((~switched).sum()),
+                    "final_valid_after_trigger": int(((stable_steps >= hold_steps) & switched).sum()),
+                    "total_success_denominator_includes_untriggered": True,
+                    "switch_records": switch_records,
+                    "clamped_target_fraction_per_joint": (clamp_counts.float() / steps).cpu().tolist(),
+                    "clamp_sample_period_s": env.unwrapped.step_dt,
+                }
             if selection is not None:
                 results[pose_class]["state_bank_selection"] = selection
                 eligible_ids = {state["bank_state_id"] for state in policy_start_state
@@ -868,6 +966,23 @@ def main() -> None:
             },
         })
     _mark_action_mode(report, args_cli.stochastic_diagnostic)
+    if stand_policy is not None:
+        report["protocol_version"] += "_dual_policy_diagnostic_v1"
+        report["controller_type"] = "two_policy_fixed_one_way_handoff_diagnostic"
+        report["single_policy_acceptance_eligible"] = False
+        report["success_count_definition"] = ("DUAL-POLICY diagnostic counts, NOT performance of the roll checkpoint alone. "
+                                              + report["success_count_definition"])
+        report["handoff_controller"] = {
+            "roll_checkpoint": report["checkpoint"], "roll_sha256": report["checkpoint_sha256"],
+            "stand_checkpoint": str(args_cli.stand_checkpoint.resolve()),
+            "stand_sha256": hashlib.sha256(args_cli.stand_checkpoint.read_bytes()).hexdigest(),
+            "gate": "tilt<30deg and body angular speed<1rad/s continuously for0.2s; one-way latched",
+            "state_or_action_history_reset_at_switch": False,
+            "manual_standing_pd_at_switch": False,
+            "physics_changed_at_switch": False,
+            "stand_actor_initialization_rng_isolated": True,
+            "joint_limits": handoff_limits,
+        }
     if args_cli.task in target_tasks:
         _mark_target_action_report(
             report, env_cfg.actions.joint_pos.reference, env_cfg.actions.joint_pos.scale,
